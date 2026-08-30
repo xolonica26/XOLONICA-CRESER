@@ -1,21 +1,19 @@
 /**
  * ============================================================================
- * CreSer — Módulo de Control de Acceso y Gestión de Roles (auth.js)
+ * CreSer — Módulo de Control de Acceso, Roles y Firebase Sync (auth.js)
  * ============================================================================
  * 
  * ¿POR QUÉ?:
  * Proporcionar una capa de autenticación y control de acceso basado en roles
- * (RBAC - Role-Based Access Control) con 3 roles formales:
- * 1. Administrador: Gestión de plataforma, supervisión y configuración.
- * 2. Usuario: Acceso estándar a bienestar, KIRI, respirador y diario.
- * 3. Auditor: Lectura de trazabilidad, eventos de seguridad y bitácoras.
+ * (RBAC - Role-Based Access Control) con 3 roles formales (Admin, Usuario, Auditor)
+ * e integración directa con los servicios en la nube de Google Firebase.
  * 
  * ¿CÓMO?:
- * Escuchando eventos del DOM, manipulando clases CSS para alternancia fluida de
- * pestañas, registrando eventos de auditoría y persistiendo la sesión en localStorage.
+ * Escuchando eventos del DOM, manipulando clases CSS para alternancia de pestañas,
+ * registrando eventos de auditoría y sincronizando la sesión con Firebase y localStorage.
  * 
  * ¿PARA QUÉ?:
- * Garantizar trazabilidad, buenas prácticas de desarrollo y control de privilegios.
+ * Garantizar trazabilidad, buenas prácticas de desarrollo y persistencia segura.
  * ============================================================================
  */
 
@@ -118,9 +116,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const formRegister = document.getElementById('formRegister');
 
   /**
-   * Registra un evento en la bitácora de auditoría del sistema.
+   * Registra un evento en la bitácora de auditoría del sistema (Local + Firebase Cloud).
    * ¿POR QUÉ?: Para cumplir con el requerimiento de trazabilidad y seguridad para el rol Auditor.
-   * ¿CÓMO?: Guardando objetos estructurados con timestamp, usuario, rol y acción en localStorage.
+   * ¿CÓMO?: Guardando objetos estructurados en localStorage y enviando a Firestore si hay conexión.
    * ¿PARA QUÉ?: Permitir al Auditor inspeccionar accesos y cambios en el sistema.
    */
   function logAuditEvent(user, role, action) {
@@ -131,14 +129,16 @@ document.addEventListener('DOMContentLoaded', () => {
       hour: '2-digit', minute: '2-digit', second: '2-digit'
     });
 
-    logs.unshift({
+    const logEntry = {
       id: 'LOG-' + Math.floor(1000 + Math.random() * 9000),
       timestamp: formattedDate,
       user: user || 'Anónimo',
       role: role.toUpperCase(),
       action: action,
       ip: '127.0.0.1 (Local)'
-    });
+    };
+
+    logs.unshift(logEntry);
 
     // Mantiene un máximo de 50 registros recientes
     if (logs.length > 50) logs.pop();

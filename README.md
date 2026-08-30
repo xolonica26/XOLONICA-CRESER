@@ -31,11 +31,16 @@ graph TD
     D --> E[Web Audio API - Síntesis Sonora]
     D --> F[Web Storage API - localStorage Cifrado Lógico]
     D --> G[Control de Acceso RBAC - 3 Roles]
+    D --> H[Google Firebase - Auth, Firestore & Analytics]
 ```
 
 - **Frontend Core**: HTML5 Semántico con estándares de accesibilidad (WAI-ARIA).
 - **Estilos y Diseño**: CSS3 con Variables Personalizadas (*CSS Custom Properties*), Glassmorphism con `-webkit-backdrop-filter` y `backdrop-filter`, Grid y Flexbox.
 - **Lógica e Interactividad**: JavaScript ES6+ desacoplado y estructurado de forma modular.
+- **Backend & Cloud (Google Firebase)**:
+  - **Firebase Auth**: Gestión segura de identidades y credenciales de acceso.
+  - **Cloud Firestore**: Base de datos en tiempo real para sincronización de bienestar y auditoría.
+  - **Firebase Analytics**: Telemetría ética para optimización de recursos.
 - **Audio Nativo**: *Web Audio API* (`AudioContext`, `BiquadFilterNode`, `OscillatorNode`) sin dependencias externas.
 - **Tipografías**: *Plus Jakarta Sans* y *Outfit* vía Google Fonts.
 

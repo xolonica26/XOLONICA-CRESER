@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>CreSer — Plataforma de Bienestar Emocional y Crecimiento Personal</title>
   <meta name="description" content="Espacio integral para el bienestar emocional, desarrollo personal, recursos educativos y orientación con KIRI."/>
-  <meta name="theme-color" content="#3b82f6"/>
-  <link rel="stylesheet" href="Creser.css?v=3.0">
+  <link rel="stylesheet" href="Creser.css?v=3.1">
 </head>
 <body>
 
@@ -59,9 +58,9 @@
       <button data-page="ayuda">🛟 Ayuda Profesional</button>
       <button data-page="perfil">👤 Perfil & Accesibilidad</button>
       
-      <hr style="border:0;border-top:1px solid var(--line);margin:10px 0">
+      <hr class="drawer-separator">
       
-      <a href="Creserlogin/CreSerlogin.html" style="color:var(--primary);font-weight:700">🔐 Iniciar Sesión / Registro</a>
+      <a href="Creserlogin/CreSerlogin.html" class="drawer-auth-link">🔐 Iniciar Sesión / Registro</a>
       <button data-modal="privacy">🔒 Privacidad y Datos</button>
       <button data-modal="terms">📄 Términos de Servicio</button>
     </div>
@@ -92,12 +91,12 @@
             <h1>Bienvenido a <span class="c1">Cre</span><span class="c3">Ser</span></h1>
             <p>Un entorno digital seguro y accesible diseñado para acompañarte en el autoconocimiento, la gestión de tus emociones y la adopción de hábitos de vida saludables.</p>
             
-            <div style="display:flex;gap:12px;flex-wrap:wrap;margin:1.8rem 0 1.2rem">
+            <div class="hero-cta-group">
               <button class="primary" data-page="bienestar">Comenzar Ahora →</button>
               <button class="secondary" data-page="kiri">Conversar con KIRI</button>
               <button class="secondary" data-page="multimedia">Escuchar Audio Relax</button>
             </div>
-            <p class="small" style="color:var(--ink-muted)">KIRI brinda orientación preventiva y acompañamiento continuo sin sustituir la atención médica o psicológica.</p>
+            <p class="small hero-disclaimer">KIRI brinda orientación preventiva y acompañamiento continuo sin sustituir la atención médica o psicológica.</p>
           </div>
 
           <div class="hero-art-container">
@@ -169,7 +168,7 @@
           <button class="primary" data-page="herramientas">Iniciar Respiración</button>
         </div>
 
-        <div class="grid-2" style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:1.4rem">
+        <div class="grid-wellness-split">
           <div class="card">
             <h3>¿Cómo te sientes en este momento?</h3>
             <p class="small">Selecciona tu estado emocional para recibir recomendaciones personalizadas:</p>
@@ -197,40 +196,40 @@
               </button>
             </div>
 
-            <button class="primary" id="registerMood" style="width:100%">Registrar Estado Emocional</button>
-            <div id="moodSaved" class="notice" style="display:none"></div>
+            <button class="primary btn-full" id="registerMood">Registrar Estado Emocional</button>
+            <div id="moodSaved" class="notice"></div>
           </div>
 
           <div class="card">
             <h3>Constancia y Hábitos</h3>
             <p>Racha de chequeos continuos:</p>
-            <div style="font-size:2rem;font-weight:800;color:var(--secondary);margin:0.4rem 0" id="streakCount">5 días</div>
-            <div class="progress-track"><div class="progress-fill" style="width:72%"></div></div>
-            <p class="small" style="margin-top:0.8rem">Excelente consistencia. Has completado el 72% de tus pausas conscientes esta semana.</p>
+            <div class="streak-number" id="streakCount">5 días</div>
+            <div class="progress-track"><div class="progress-fill"></div></div>
+            <p class="small streak-subtext">Excelente consistencia. Has completado el 72% de tus pausas conscientes esta semana.</p>
           </div>
         </div>
 
-        <div class="section-title" style="margin-top:2rem">
+        <div class="section-title mt-4">
           <h3>Accesos Rápidos de Cuidado</h3>
         </div>
         <div class="grid">
-          <div class="card" style="cursor:pointer" data-page="herramientas">
-            <div style="font-size:2rem;margin-bottom:0.5rem">🫁</div>
+          <div class="card card-clickable" data-page="herramientas">
+            <div class="icon-badge">🫁</div>
             <h4>Pausa de Respiración</h4>
             <p class="small">Calma tu sistema nervioso en solo 36 segundos.</p>
           </div>
-          <div class="card" style="cursor:pointer" data-page="herramientas">
-            <div style="font-size:2rem;margin-bottom:0.5rem">📝</div>
+          <div class="card card-clickable" data-page="herramientas">
+            <div class="icon-badge">📝</div>
             <h4>Diario de Gratitud</h4>
             <p class="small">Registra tus pensamientos y reflexiones privadas.</p>
           </div>
-          <div class="card" style="cursor:pointer" data-page="multimedia">
-            <div style="font-size:2rem;margin-bottom:0.5rem">🎧</div>
+          <div class="card card-clickable" data-page="multimedia">
+            <div class="icon-badge">🎧</div>
             <h4>Sonidos Ambientales</h4>
             <p class="small">Lluvia, olas y frecuencias armónicas para concentrarte.</p>
           </div>
-          <div class="card" style="cursor:pointer" data-page="ayuda">
-            <div style="font-size:2rem;margin-bottom:0.5rem">🛟</div>
+          <div class="card card-clickable" data-page="ayuda">
+            <div class="icon-badge">🛟</div>
             <h4>Líneas de Asistencia</h4>
             <p class="small">Contactos y servicios de orientación profesional.</p>
           </div>
@@ -262,14 +261,14 @@
           </div>
         </div>
 
-        <div class="grid-3" id="resourcesContainer" style="display:grid;gap:1.3rem">
+        <div class="grid-3" id="resourcesContainer">
           <div class="resource-card" data-category="articulos">
             <div>
               <span class="badge">Artículo</span>
               <h3>Manejo Efectivo del Estrés Académico y Laboral</h3>
               <p>Técnicas prácticas para organizar prioridades, prevenir la saturación y mantener momentos de desconexión reparadora.</p>
             </div>
-            <button class="secondary" style="margin-top:1.2rem" data-modal="terms">Leer Artículo</button>
+            <button class="secondary mt-3" data-modal="terms">Leer Artículo</button>
           </div>
 
           <div class="resource-card" data-category="guias">
@@ -278,7 +277,7 @@
               <h3>Identificación y Expresión Emocional Asertiva</h3>
               <p>Herramientas visuales y ejercicios para nombrar lo que sientes y comunicarlo con claridad y respeto en tus relaciones.</p>
             </div>
-            <button class="secondary" style="margin-top:1.2rem" data-modal="terms">Explorar Guía</button>
+            <button class="secondary mt-3" data-modal="terms">Explorar Guía</button>
           </div>
 
           <div class="resource-card" data-category="podcasts">
@@ -287,7 +286,7 @@
               <h3>Mente en Calma: El Poder de la Autocompasión</h3>
               <p>Episodio sobre cómo transformar el diálogo interno autocrítico en una voz comprensiva y motivadora.</p>
             </div>
-            <button class="secondary" style="margin-top:1.2rem" data-page="multimedia">Escuchar Episodio</button>
+            <button class="secondary mt-3" data-page="multimedia">Escuchar Episodio</button>
           </div>
 
           <div class="resource-card" data-category="videos">
@@ -296,7 +295,7 @@
               <h3>Higiene del Sueño y Descanso Profundo</h3>
               <p>Pautas comprobadas para mejorar la calidad del sueño nocturno y despertar con energía renovada.</p>
             </div>
-            <button class="secondary" style="margin-top:1.2rem" data-page="multimedia">Ver Video</button>
+            <button class="secondary mt-3" data-page="multimedia">Ver Video</button>
           </div>
 
           <div class="resource-card" data-category="infografias">
@@ -305,7 +304,7 @@
               <h3>Los 5 Pasos para Gestionar una Crisis de Ansiedad</h3>
               <p>Protocolo paso a paso para recuperar el anclaje al momento presente mediante la técnica 5-4-3-2-1.</p>
             </div>
-            <button class="secondary" style="margin-top:1.2rem" data-modal="terms">Descargar Infografía</button>
+            <button class="secondary mt-3" data-modal="terms">Descargar Infografía</button>
           </div>
 
           <div class="resource-card" data-category="guias">
@@ -314,7 +313,7 @@
               <h3>Microhábitos Diarios para la Salud Mental</h3>
               <p>Pequeñas acciones de dos minutos que acumuladas transforman tu bienestar a largo plazo.</p>
             </div>
-            <button class="secondary" style="margin-top:1.2rem" data-modal="terms">Consultar Guía</button>
+            <button class="secondary mt-3" data-modal="terms">Consultar Guía</button>
           </div>
         </div>
       </section>
@@ -328,7 +327,7 @@
           </div>
         </div>
 
-        <div class="grid-2" style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+        <div class="grid-tools-split">
           <!-- Respirador -->
           <div class="card breathing-box">
             <span class="badge badge-green">Respiración Rítmica 4-4-4</span>
@@ -339,7 +338,7 @@
                 <span class="breathing-timer" id="breathingTimer">Toca iniciar</span>
               </div>
             </div>
-            <p class="small" style="max-width:320px;margin-bottom:1.2rem">Inhala, sostén y exhala de forma fluida para regular el ritmo cardíaco y reducir la tensión física.</p>
+            <p class="small breathing-desc">Inhala, sostén y exhala de forma fluida para regular el ritmo cardíaco y reducir la tensión física.</p>
             <button class="primary" id="startBreathingBtn">Iniciar Respiración 36s</button>
           </div>
 
@@ -347,14 +346,14 @@
           <div class="card">
             <h3>📝 Diario Personal y Reflexiones</h3>
             <p class="small">Espacio seguro y privado para escribir lo que tienes en mente:</p>
-            <textarea id="journalInput" rows="4" style="width:100%;border:1px solid var(--card-border);border-radius:var(--radius-md);padding:12px;background:var(--input-bg);color:var(--ink-primary);margin:0.8rem 0" placeholder="¿Qué estás experimentando hoy? ¿Por qué estás agradecido/a?..."></textarea>
-            <div style="display:flex;justify-content:flex-end">
+            <textarea id="journalInput" rows="4" class="journal-textarea" placeholder="¿Qué estás experimentando hoy? ¿Por qué estás agradecido/a?..."></textarea>
+            <div class="flex-end">
               <button class="primary" id="saveJournalBtn">Guardar Reflexión</button>
             </div>
             
-            <div style="margin-top:1.2rem">
-              <h4 style="font-size:0.95rem;margin-bottom:0.6rem">Entradas Recientes:</h4>
-              <div id="journalList" style="max-height:180px;overflow-y:auto"></div>
+            <div class="mt-3">
+              <h4 class="mb-2">Entradas Recientes:</h4>
+              <div id="journalList" class="journal-history-wrap"></div>
             </div>
           </div>
         </div>
@@ -376,8 +375,8 @@
               <div class="chat-header-info">
                 <div class="chat-avatar">🤖</div>
                 <div>
-                  <h4 style="font-size:1.05rem;color:var(--ink-primary)">KIRI Asistente</h4>
-                  <span class="small" style="color:var(--secondary)"><span class="chat-status-dot"></span>En línea y listo para orientarte</span>
+                  <h4 class="chat-card-title">KIRI Asistente</h4>
+                  <span class="small chat-status-text"><span class="chat-status-dot"></span>En línea y listo para orientarte</span>
                 </div>
               </div>
               <button class="ghost" onclick="document.getElementById('messages').innerHTML='<div class=\'msg k\'>Conversación reiniciada. ¿En qué puedo orientarte hoy?</div>'">Limpiar</button>
@@ -401,10 +400,10 @@
             </div>
           </div>
 
-          <div style="display:flex;flex-direction:column;gap:1.2rem">
+          <div class="btn-group-column">
             <div class="card">
               <h3>Capacidades de KIRI</h3>
-              <ul style="padding-left:1.2rem;margin-top:0.6rem;color:var(--ink-secondary);font-size:0.92rem;line-height:1.7">
+              <ul class="kiri-capabilities-list">
                 <li>Sugerencias de ejercicios de respiración consciente.</li>
                 <li>Recomendación de lecturas y guías preventivas.</li>
                 <li>Navegación asistida por las secciones de CreSer.</li>
@@ -412,8 +411,8 @@
               </ul>
             </div>
 
-            <div class="card" style="border-left:4px solid var(--accent-amber)">
-              <h4 style="color:var(--accent-amber);margin-bottom:0.4rem">⚠️ Uso Responsable</h4>
+            <div class="card card-alert-amber">
+              <h4 class="text-amber mb-1">⚠️ Uso Responsable</h4>
               <p class="small">KIRI es un asistente tecnológico preventivo. Si estás en una situación de crisis severa o riesgo personal, por favor comunícate de inmediato con las líneas telefónicas de emergencia médica de tu localidad.</p>
             </div>
           </div>
@@ -433,8 +432,8 @@
         <div id="ambientPlayer" class="ambient-player-card">
           <div class="player-header">
             <div class="player-track-info">
-              <span class="badge" style="background:rgba(59,130,246,0.3);color:#93c5fd">Sintetizador de Sonidos Naturales</span>
-              <h3 id="currentTrackName" style="margin-top:0.4rem">Lluvia Serena</h3>
+              <span class="badge badge-sound-type">Sintetizador de Sonidos Naturales</span>
+              <h3 id="currentTrackName" class="mt-1">Lluvia Serena</h3>
             </div>
             
             <div class="soundwave-visualizer">
@@ -446,7 +445,7 @@
             </div>
           </div>
 
-          <p style="color:#94a3b8;font-size:0.92rem">Selecciona un ambiente sonoro sintetizado nativamente para acompañar tu estudio, lectura o meditación:</p>
+          <p class="ambient-subtitle">Selecciona un ambiente sonoro sintetizado nativamente para acompañar tu estudio, lectura o meditación:</p>
 
           <div class="soundscapes-grid">
             <button class="soundscape-btn active" data-sound="rain">
@@ -468,11 +467,11 @@
           </div>
 
           <div class="player-controls">
-            <button id="playAmbientBtn" class="primary" style="padding:0.75rem 2rem;font-size:1rem">▶ Reproducir</button>
+            <button id="playAmbientBtn" class="primary btn-ambient-play">▶ Reproducir</button>
             
             <div class="volume-slider-wrap">
-              <span>🔊 Volumen:</span>
-              <input type="range" id="ambientVolume" min="0" max="1" step="0.05" value="0.4">
+              <label for="ambientVolume">🔊 Volumen:</label>
+              <input type="range" id="ambientVolume" min="0" max="1" step="0.05" value="0.4" title="Control de volumen de ambiente" aria-label="Control de volumen de ambiente">
             </div>
           </div>
         </div>
@@ -480,23 +479,23 @@
         <div class="grid-3">
           <div class="card">
             <span class="badge badge-purple">Playlist Temática</span>
-            <h3 style="margin-top:0.6rem">Paz y Concentración</h3>
+            <h3 class="mt-2">Paz y Concentración</h3>
             <p>Selección de melodías acústicas suaves ideales para jornadas de estudio y enfoque cognitivo.</p>
-            <button class="secondary" style="margin-top:1rem" onclick="showPage('kiri')">Solicitar a KIRI</button>
+            <button class="secondary mt-3" onclick="showPage('kiri')">Solicitar a KIRI</button>
           </div>
 
           <div class="card">
             <span class="badge badge-green">Sesión Guiada</span>
-            <h3 style="margin-top:0.6rem">Meditación Mindfulness</h3>
+            <h3 class="mt-2">Meditación Mindfulness</h3>
             <p>10 minutos de escaneo corporal para liberar tensiones acumuladas en cuello, espalda y hombros.</p>
-            <button class="secondary" style="margin-top:1rem" data-page="herramientas">Abrir Ejercicio</button>
+            <button class="secondary mt-3" data-page="herramientas">Abrir Ejercicio</button>
           </div>
 
           <div class="card">
             <span class="badge">Serie de Audio</span>
-            <h3 style="margin-top:0.6rem">Historias de Resiliencia</h3>
+            <h3 class="mt-2">Historias de Resiliencia</h3>
             <p>Relatos breves narrados con enfoque reflexivo sobre la superación y el cuidado personal.</p>
-            <button class="secondary" style="margin-top:1rem" data-page="recursos">Explorar Biblioteca</button>
+            <button class="secondary mt-3" data-page="recursos">Explorar Biblioteca</button>
           </div>
         </div>
       </section>
@@ -511,19 +510,19 @@
           <button class="secondary" data-modal="community">Normas de Convivencia</button>
         </div>
 
-        <div class="grid-2" style="display:grid;grid-template-columns:1fr 1fr;gap:1.4rem">
+        <div class="grid-tools-split">
           <div class="card">
-            <div style="font-size:2.2rem;margin-bottom:0.5rem">👥</div>
+            <div class="icon-badge-lg">👥</div>
             <h3>Círculos de Diálogo Temáticos</h3>
             <p>Grupos moderados enfocados en temas específicos como gestión del estrés universitario, hábitos saludables y bienestar en el trabajo.</p>
-            <button class="primary" style="margin-top:1rem" data-modal="community">Conocer Círculos</button>
+            <button class="primary mt-3" data-modal="community">Conocer Círculos</button>
           </div>
 
           <div class="card">
-            <div style="font-size:2.2rem;margin-bottom:0.5rem">📅</div>
+            <div class="icon-badge-lg">📅</div>
             <h3>Talleres y Webinars en Vivo</h3>
             <p>Sesiones mensuales interactivas guiadas por facilitadores sobre inteligencia emocional y técnicas de relajación.</p>
-            <button class="secondary" style="margin-top:1rem" data-modal="terms">Ver Calendario de Eventos</button>
+            <button class="secondary mt-3" data-modal="terms">Ver Calendario de Eventos</button>
           </div>
         </div>
       </section>
@@ -539,37 +538,37 @@
 
         <div class="grid">
           <div class="card">
-            <div style="font-size:2rem;margin-bottom:0.4rem">🧑‍⚕️</div>
+            <div class="icon-badge-sm">🧑‍⚕️</div>
             <h3>Directorio de Profesionales</h3>
             <p>Red de psicólogos, terapeutas y centros de salud mental verificados con atención presencial y en línea.</p>
-            <button class="primary" style="margin-top:0.8rem">Consultar Directorio</button>
+            <button class="primary mt-2">Consultar Directorio</button>
           </div>
 
           <div class="card">
-            <div style="font-size:2rem;margin-bottom:0.4rem">📞</div>
+            <div class="icon-badge-sm">📞</div>
             <h3>Líneas Oficiales de Apoyo</h3>
             <p>Canales telefónicos y de chat 24/7 gratuitos y confidenciales brindados por instituciones de salud pública.</p>
-            <button class="secondary" style="margin-top:0.8rem" data-modal="legal">Ver Teléfonos de Urgencia</button>
+            <button class="secondary mt-2" data-modal="legal">Ver Teléfonos de Urgencia</button>
           </div>
 
           <div class="card">
-            <div style="font-size:2rem;margin-bottom:0.4rem">❓</div>
+            <div class="icon-badge-sm">❓</div>
             <h3>Centro de Preguntas Frecuentes</h3>
             <p>Respuestas claras a dudas comunes sobre cuándo acudir a terapia y cómo prepararse para una primera sesión.</p>
-            <button class="secondary" style="margin-top:0.8rem" data-modal="terms">Revisar Guía</button>
+            <button class="secondary mt-2" data-modal="terms">Revisar Guía</button>
           </div>
 
           <div class="card">
-            <div style="font-size:2rem;margin-bottom:0.4rem">🗓️</div>
+            <div class="icon-badge-sm">🗓️</div>
             <h3>Agenda de Sesiones</h3>
             <p>Módulo para sincronizar tus citas y recibir recordatorios de tus sesiones de apoyo.</p>
-            <span class="badge" style="margin-top:0.8rem">Módulo en Integración</span>
+            <span class="badge mt-2">Módulo en Integración</span>
           </div>
         </div>
 
-        <div class="card" style="margin-top:1.8rem;background:var(--primary-light);border-color:rgba(59,130,246,0.3)">
-          <h4 style="color:var(--primary);margin-bottom:0.4rem">Información de Seguridad y Emergencias</h4>
-          <p style="font-size:0.9rem">CreSer es una plataforma preventiva. Ante ideaciones de riesgo o crisis agudas, contacta inmediatamente los servicios de emergencias médicas de tu localidad o acude al centro hospitalario más cercano.</p>
+        <div class="card card-alert-blue mt-4">
+          <h4 class="text-primary-blue mb-1">Información de Seguridad y Emergencias</h4>
+          <p class="small">CreSer es una plataforma preventiva. Ante ideaciones de riesgo o crisis agudas, contacta inmediatamente los servicios de emergencias médicas de tu localidad o acude al centro hospitalario más cercano.</p>
         </div>
       </section>
 
@@ -585,10 +584,10 @@
         <div class="grid-3">
           <div class="card">
             <h3>Mi Cuenta</h3>
-            <p style="margin-top:0.4rem"><strong>Usuario:</strong> Andrea (Sesión Demostrativa)</p>
-            <p class="small" style="color:var(--ink-muted)">Modo de navegación local activo</p>
-            <div style="margin-top:1.2rem">
-              <a href="Creserlogin/CreSerlogin.html" class="primary" style="width:100%;text-align:center;display:block">Gestionar Credenciales</a>
+            <p class="user-session-info"><strong>Usuario:</strong> Andrea (Sesión Demostrativa)</p>
+            <p class="small hero-disclaimer">Modo de navegación local activo</p>
+            <div class="mt-3">
+              <a href="Creserlogin/CreSerlogin.html" class="primary btn-full-link">Gestionar Credenciales</a>
             </div>
           </div>
 
@@ -599,7 +598,7 @@
                 <h4>Modo Oscuro</h4>
                 <p>Reduce la fatiga visual nocturna</p>
               </div>
-              <div id="darkToggle" class="toggle-switch" role="switch" aria-label="Alternar modo oscuro"></div>
+              <div id="darkToggle" class="toggle-switch" role="switch" aria-checked="false" aria-label="Alternar modo oscuro" tabindex="0"></div>
             </div>
 
             <div class="setting-item">
@@ -607,16 +606,16 @@
                 <h4>Texto Aumentado</h4>
                 <p>Mejora la legibilidad del texto</p>
               </div>
-              <div id="textToggle" class="toggle-switch" role="switch" aria-label="Alternar texto grande"></div>
+              <div id="textToggle" class="toggle-switch" role="switch" aria-checked="false" aria-label="Alternar texto grande" tabindex="0"></div>
             </div>
           </div>
 
           <div class="card">
             <h3>Control de Privacidad</h3>
             <p class="small">Tus registros residen exclusivamente en tu navegador.</p>
-            <div style="display:flex;flex-direction:column;gap:0.6rem;margin-top:1rem">
+            <div class="btn-group-column">
               <button class="secondary" onclick="alert('Descarga de respaldo generada localmente en formato JSON.')">Exportar mis Datos</button>
-              <button class="secondary" style="color:#ef4444;border-color:#fca5a5" onclick="if(confirm('¿Deseas borrar tus registros locales y notas del diario?')){localStorage.clear();location.reload();}">Borrar Registros Locales</button>
+              <button class="secondary btn-danger-soft" onclick="if(confirm('¿Deseas borrar tus registros locales y notas del diario?')){localStorage.clear();location.reload();}">Borrar Registros Locales</button>
             </div>
           </div>
         </div>
@@ -647,16 +646,16 @@
   <div id="infoModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-dialog">
       <div class="modal-header">
-        <h3 id="modalTitle" style="font-size:1.35rem">Información</h3>
+        <h3 id="modalTitle" class="modal-title-text">Información</h3>
         <button class="ghost" onclick="closeModal('infoModal')" aria-label="Cerrar modal">✕</button>
       </div>
       <div id="modalBody"></div>
-      <div style="display:flex;justify-content:flex-end;margin-top:1.5rem">
+      <div class="modal-footer">
         <button class="primary" onclick="closeModal('infoModal')">Entendido</button>
       </div>
     </div>
   </div>
 
-  <script src="creser_app.js?v=3.0"></script>
+  <script src="creser_app.js?v=3.1"></script>
 </body>
 </html>

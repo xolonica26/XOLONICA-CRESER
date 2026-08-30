@@ -1277,10 +1277,81 @@ function initAdminDashboard() {
   renderAdminUsers();
 }
 
-// Inicialización automática de CMS y Dashboard al cargar el DOM
+/**
+ * Actualiza el estado visual de la barra de navegación según la sesión activa
+ * ¿POR QUÉ?: Si el usuario inició sesión, el botón "Acceder" debe cambiar inmediatamente
+ *             para mostrar el nombre del usuario, su rol y la opción directa de Cerrar Sesión.
+ * ¿CÓMO?: Inspeccionando creser-user-email y creser-user-name en localStorage e inyectando el widget.
+ * ¿PARA QUÉ?: Brindar una experiencia clara, interactiva y profesional de autenticación.
+ */
+function updateNavbarAuthState() {
+  const userEmail = localStorage.getItem('creser-user-email');
+  const isPages = window.location.pathname.includes('/pages/');
+
+  if (!userEmail) return;
+
+  const rawName = localStorage.getItem('creser-user-name') || userEmail.split('@')[0];
+  const userName = rawName.charAt(0).toUpperCase() + rawName.slice(1);
+  const userRole = (localStorage.getItem('creser-user-role') || 'usuario').toUpperCase();
+
+  // 1. Actualizar contenedor de acciones en Topbar
+  const navActions = document.querySelector('.nav-actions');
+  if (navActions) {
+    const roleBadgeClass = userRole === 'ADMIN' ? '' : userRole === 'AUDITOR' ? 'badge-green' : 'badge-purple';
+    navActions.innerHTML = `
+      <div class="user-logged-pill" id="topbarUserWidget">
+        <a href="${isPages ? 'perfil.html' : 'pages/perfil.html'}" class="user-pill-link" title="Ir a mi perfil">
+          <span>👤</span>
+          <span class="user-pill-name">${escapeHtml(userName)}</span>
+          <span class="badge ${roleBadgeClass}">${userRole}</span>
+        </a>
+        <button class="btn-header-logout ghost" id="topbarLogoutBtn" title="Cerrar Sesión">✕ Salir</button>
+      </div>
+    `;
+
+    const btnLogout = document.getElementById('topbarLogoutBtn');
+    if (btnLogout) {
+      btnLogout.addEventListener('click', () => {
+        if (confirm(`¿Deseas cerrar la sesión de ${userName}?`)) {
+          localStorage.removeItem('creser-user-email');
+          localStorage.removeItem('creser-user-name');
+          localStorage.setItem('creser-user-role', 'usuario');
+          recordAuditLog(`Cierre de sesión del usuario ${userName} (${userEmail})`);
+          window.location.reload();
+        }
+      });
+    }
+  }
+
+  // 2. Actualizar enlace en menú móvil lateral (Drawer)
+  const drawerAuthLink = document.querySelector('.drawer-auth-link');
+  if (drawerAuthLink) {
+    const drawerCard = document.createElement('div');
+    drawerCard.className = 'drawer-user-card';
+    drawerCard.innerHTML = `
+      <p class="small">👤 Sesión: <strong>${escapeHtml(userName)}</strong> (${userRole})</p>
+      <button id="drawerLogoutBtn" class="btn ghost btn-sm">Cerrar Sesión</button>
+    `;
+    drawerAuthLink.replaceWith(drawerCard);
+
+    const drawerLogout = document.getElementById('drawerLogoutBtn');
+    if (drawerLogout) {
+      drawerLogout.addEventListener('click', () => {
+        localStorage.removeItem('creser-user-email');
+        localStorage.removeItem('creser-user-name');
+        localStorage.setItem('creser-user-role', 'usuario');
+        window.location.reload();
+      });
+    }
+  }
+}
+
+// Inicialización automática de CMS, Navbar Auth y Dashboard al cargar el DOM
 document.addEventListener('DOMContentLoaded', () => {
   loadDynamicCmsContent();
+  updateNavbarAuthState();
   initAdminDashboard();
 });
+
 
 

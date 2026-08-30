@@ -1,11 +1,17 @@
 <!doctype html>
+<!-- Declaración del tipo de documento HTML5 estándar -->
 <html lang="es">
 <head>
+  <!-- Codificación de caracteres universal UTF-8 para admitir tildes, eñes y caracteres especiales -->
   <meta charset="utf-8"/>
+  <!-- Configuración de escala responsiva para adaptarse a móviles, tablets y ordenadores -->
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>CreSer — Plataforma de Bienestar Emocional y Crecimiento Personal</title>
+  <!-- Título principal que se visualiza en la pestaña del navegador -->
+  <title>CreSer — Inicio | Plataforma de Bienestar Emocional</title>
+  <!-- Meta descripción optimizada para motores de búsqueda y accesibilidad -->
   <meta name="description" content="Espacio integral para el bienestar emocional, desarrollo personal, recursos educativos y orientación con KIRI."/>
-  <link rel="stylesheet" href="assets/css/main.css?v=3.1">
+  <!-- Enlace a la hoja de estilos principal centralizada -->
+  <link rel="stylesheet" href="assets/css/main.css?v=3.2">
 </head>
 <body>
 
@@ -13,24 +19,28 @@
        Barra Superior de Navegación (Topbar)
        ========================================================================= -->
   <header class="topbar">
+    <!-- Botón para abrir el menú lateral en dispositivos móviles y pantallas táctiles -->
     <button id="menuToggle" class="mobile-menu-btn" aria-label="Abrir menú de navegación">☰</button>
 
-    <a href="#" class="brand" data-page="home">
+    <!-- Enlace con la identidad y logotipo de la plataforma -->
+    <a href="index.html" class="brand">
       <span class="c1">Cre</span><span class="c3">Ser</span>
-      <img src="assets/img/valores.gif" alt="CreSer Logo" class="creserlogo">
+      <img src="assets/img/valores.gif" alt="CreSer Logo Animado" class="creserlogo">
     </a>
     
+    <!-- Barra de navegación con enlaces directos a cada una de las páginas individuales -->
     <nav class="nav" aria-label="Navegación principal">
-      <button data-page="home" class="active">Inicio</button>
-      <button data-page="bienestar">Bienestar</button>
-      <button data-page="recursos">Recursos</button>
-      <button data-page="herramientas">Herramientas</button>
-      <button data-page="kiri">KIRI</button>
-      <button data-page="multimedia">Multimedia</button>
-      <button data-page="comunidad">Comunidad</button>
-      <button data-page="ayuda">Ayuda</button>
-      <button data-page="perfil">Perfil</button>
+      <a href="index.html" class="navitem active">Inicio</a>
+      <a href="pages/bienestar.html" class="navitem">Bienestar</a>
+      <a href="pages/recursos.html" class="navitem">Recursos</a>
+      <a href="pages/herramientas.html" class="navitem">Herramientas</a>
+      <a href="pages/kiri.html" class="navitem">KIRI</a>
+      <a href="pages/multimedia.html" class="navitem">Multimedia</a>
+      <a href="pages/comunidad.html" class="navitem">Comunidad</a>
+      <a href="pages/ayuda.html" class="navitem">Ayuda</a>
+      <a href="pages/perfil.html" class="navitem">Perfil</a>
       
+      <!-- Contenedor del botón de acción destacado para autenticación -->
       <div class="nav-actions">
         <a href="pages/login.html" class="navitem btn-header-action btn-auth">Acceder</a>
       </div>
@@ -38,28 +48,34 @@
   </header>
 
   <!-- =========================================================================
-       Menú Lateral Móvil (Drawer)
+       Menú Lateral Móvil Desplegable (Drawer)
        ========================================================================= -->
+  <!-- Fondo oscurecido para enfocar la atención en el menú móvil -->
   <div id="drawerBackdrop" class="drawer-backdrop"></div>
+  <!-- Menú lateral accesible -->
   <aside id="mobileDrawer" class="mobile-drawer" aria-label="Menú móvil">
     <div class="drawer-head">
       <div class="brand"><span class="c1">Cre</span><span class="c3">Ser</span></div>
+      <!-- Botón para cerrar el menú lateral -->
       <button id="drawerClose" class="ghost" aria-label="Cerrar menú">✕</button>
     </div>
 
+    <!-- Lista de enlaces de navegación en versión móvil -->
     <div class="drawer-nav-list">
-      <button data-page="home" class="active">🏠 Inicio</button>
-      <button data-page="bienestar">💚 Bienestar Emocional</button>
-      <button data-page="recursos">📚 Recursos Educativos</button>
-      <button data-page="herramientas">🧰 Herramientas Prácticas</button>
-      <button data-page="kiri">🤖 Asistente KIRI</button>
-      <button data-page="multimedia">🎵 Multimedia & Relax</button>
-      <button data-page="comunidad">👥 Espacios de Comunidad</button>
-      <button data-page="ayuda">🛟 Ayuda Profesional</button>
-      <button data-page="perfil">👤 Perfil & Accesibilidad</button>
+      <a href="index.html" class="active">🏠 Inicio</a>
+      <a href="pages/bienestar.html">💚 Bienestar Emocional</a>
+      <a href="pages/recursos.html">📚 Recursos Educativos</a>
+      <a href="pages/herramientas.html">🧰 Herramientas Prácticas</a>
+      <a href="pages/kiri.html">🤖 Asistente KIRI</a>
+      <a href="pages/multimedia.html">🎵 Multimedia & Relax</a>
+      <a href="pages/comunidad.html">👥 Espacios de Comunidad</a>
+      <a href="pages/ayuda.html">🛟 Ayuda Profesional</a>
+      <a href="pages/perfil.html">👤 Perfil & Accesibilidad</a>
       
+      <!-- Separador visual -->
       <hr class="drawer-separator">
       
+      <!-- Enlaces secundarios en el menú lateral -->
       <a href="pages/login.html" class="drawer-auth-link">🔐 Iniciar Sesión / Registro</a>
       <button data-modal="privacy">🔒 Privacidad y Datos</button>
       <button data-modal="terms">📄 Términos de Servicio</button>
@@ -67,559 +83,110 @@
   </aside>
 
   <!-- =========================================================================
-       Barra Inferior Móvil (Bottom Navigation)
+       Barra Inferior Móvil Fija (Bottom Navigation)
        ========================================================================= -->
   <nav class="mobile-bottom-nav" aria-label="Navegación rápida móvil">
-    <button data-page="home" class="active"><span class="ico">🏠</span><span>Inicio</span></button>
-    <button data-page="bienestar"><span class="ico">💚</span><span>Bienestar</span></button>
-    <button data-page="herramientas"><span class="ico">🫁</span><span>Ejercicios</span></button>
-    <button data-page="kiri"><span class="ico">🤖</span><span>KIRI</span></button>
-    <button data-page="perfil"><span class="ico">⚙️</span><span>Ajustes</span></button>
+    <a href="index.html" class="active"><span class="ico">🏠</span><span>Inicio</span></a>
+    <a href="pages/bienestar.html"><span class="ico">💚</span><span>Bienestar</span></a>
+    <a href="pages/herramientas.html"><span class="ico">🫁</span><span>Ejercicios</span></a>
+    <a href="pages/kiri.html"><span class="ico">🤖</span><span>KIRI</span></a>
+    <a href="pages/perfil.html"><span class="ico">⚙️</span><span>Ajustes</span></a>
   </nav>
 
   <!-- =========================================================================
-       Contenido Principal de la Aplicación
+       Contenido Central de la Página de Inicio
        ========================================================================= -->
   <div class="app">
     <main>
       
-      <!-- ================= VISTA: INICIO ================= -->
-      <section id="home" class="page active">
-        <div class="hero">
-          <div>
-            <span class="badge badge-green">Plataforma Digital de Cuidado Emocional</span>
-            <h1>Bienvenido a <span class="c1">Cre</span><span class="c3">Ser</span></h1>
-            <p>Un entorno digital seguro y accesible diseñado para acompañarte en el autoconocimiento, la gestión de tus emociones y la adopción de hábitos de vida saludables.</p>
-            
-            <div class="hero-cta-group">
-              <button class="primary" data-page="bienestar">Comenzar Ahora →</button>
-              <button class="secondary" data-page="kiri">Conversar con KIRI</button>
-              <button class="secondary" data-page="multimedia">Escuchar Audio Relax</button>
-            </div>
-            <p class="small hero-disclaimer">KIRI brinda orientación preventiva y acompañamiento continuo sin sustituir la atención médica o psicológica.</p>
+      <!-- Sección Hero Principal de Bienvenida -->
+      <section class="hero">
+        <div>
+          <!-- Píldora descriptiva de la plataforma -->
+          <span class="badge badge-green">Plataforma Digital de Cuidado Emocional</span>
+          <!-- Título llamativo con tipografía destacada -->
+          <h1>Bienvenido a <span class="c1">Cre</span><span class="c3">Ser</span></h1>
+          <!-- Párrafo introductorio descriptivo -->
+          <p>Un entorno digital seguro y accesible diseñado para acompañarte en el autoconocimiento, la gestión de tus emociones y la adopción de hábitos de vida saludables.</p>
+          
+          <!-- Botones de llamada a la acción hacia las secciones dedicadas -->
+          <div class="hero-cta-group">
+            <a href="pages/bienestar.html" class="primary">Comenzar Ahora →</a>
+            <a href="pages/kiri.html" class="secondary">Conversar con KIRI</a>
+            <a href="pages/multimedia.html" class="secondary">Escuchar Audio Relax</a>
           </div>
-
-          <div class="hero-art-container">
-            <div class="hero-art-emojis">🧠 💚 🌱</div>
-            <div class="hero-stats">
-              <div class="hero-stat-item">
-                <div class="hero-stat-num">100%</div>
-                <div class="hero-stat-label">Privado y Seguro</div>
-              </div>
-              <div class="hero-stat-item">
-                <div class="hero-stat-num">+30</div>
-                <div class="hero-stat-label">Guías y Audios</div>
-              </div>
-              <div class="hero-stat-item">
-                <div class="hero-stat-num">24/7</div>
-                <div class="hero-stat-label">Asistente KIRI</div>
-              </div>
-            </div>
-          </div>
+          <!-- Mensaje ético aclaratorio -->
+          <p class="small hero-disclaimer">KIRI brinda orientación preventiva y acompañamiento continuo sin sustituir la atención médica o psicológica.</p>
         </div>
 
-        <div class="section-title">
-          <h2>Pilares de CreSer</h2>
-          <span class="small">Metodología integral centrada en el bienestar</span>
-        </div>
-
-        <div class="grid">
-          <div class="card">
-            <div class="card-icon-wrapper">
-              <img src="assets/img/cuidado.gif" alt="Cuidado emocional" class="card-icon">
+        <!-- Panel visual derecho con estadísticas y animaciones -->
+        <div class="hero-art-container">
+          <div class="hero-art-emojis">🧠 💚 🌱</div>
+          <div class="hero-stats">
+            <div class="hero-stat-item">
+              <div class="hero-stat-num">100%</div>
+              <div class="hero-stat-label">Privado y Seguro</div>
             </div>
-            <h3>Bienestar Emocional</h3>
-            <p>Seguimiento diario de tu estado anímico, ejercicios guiados y herramientas de autorregulación emocional.</p>
-          </div>
-
-          <div class="card">
-            <div class="card-icon-wrapper">
-              <img src="assets/img/libros.gif" alt="Aprendizaje" class="card-icon">
+            <div class="hero-stat-item">
+              <div class="hero-stat-num">+30</div>
+              <div class="hero-stat-label">Guías y Audios</div>
             </div>
-            <h3>Recursos Educativos</h3>
-            <p>Biblioteca preventiva basada en evidencia con artículos, podcasts e infografías de fácil comprensión.</p>
-          </div>
-
-          <div class="card">
-            <div class="card-icon-wrapper">
-              <img src="assets/img/arte-de-ia.gif" alt="Asistente KIRI" class="card-icon">
-            </div>
-            <h3>Asistencia con KIRI</h3>
-            <p>Orientación inteligente 24/7 para sugerirte lecturas, audios relajantes y ejercicios prácticos en cada momento.</p>
-          </div>
-
-          <div class="card">
-            <div class="card-icon-wrapper">
-              <img src="assets/img/archivo.gif" alt="Privacidad" class="card-icon">
-            </div>
-            <h3>Privacidad Absoluta</h3>
-            <p>Tus reflexiones y notas se mantienen protegidas en tu dispositivo bajo rigurosos criterios de confidencialidad.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ================= VISTA: BIENESTAR ================= -->
-      <section id="bienestar" class="page">
-        <div class="section-title">
-          <div>
-            <h2>Centro de Bienestar Emocional</h2>
-            <p class="small">Monitorea tus estados anímicos y cultiva hábitos conscientes</p>
-          </div>
-          <button class="primary" data-page="herramientas">Iniciar Respiración</button>
-        </div>
-
-        <div class="grid-wellness-split">
-          <div class="card">
-            <h3>¿Cómo te sientes en este momento?</h3>
-            <p class="small">Selecciona tu estado emocional para recibir recomendaciones personalizadas:</p>
-            
-            <div class="mood-selector">
-              <button class="mood-btn" data-mood="dificil">
-                <span>😟</span>
-                <span>Difícil</span>
-              </button>
-              <button class="mood-btn" data-mood="regular">
-                <span>😕</span>
-                <span>Regular</span>
-              </button>
-              <button class="mood-btn" data-mood="neutral">
-                <span>😐</span>
-                <span>Neutral</span>
-              </button>
-              <button class="mood-btn selected" data-mood="tranquilo">
-                <span>🙂</span>
-                <span>Tranquilo</span>
-              </button>
-              <button class="mood-btn" data-mood="excelente">
-                <span>😄</span>
-                <span>Excelente</span>
-              </button>
-            </div>
-
-            <button class="primary btn-full" id="registerMood">Registrar Estado Emocional</button>
-            <div id="moodSaved" class="notice"></div>
-          </div>
-
-          <div class="card">
-            <h3>Constancia y Hábitos</h3>
-            <p>Racha de chequeos continuos:</p>
-            <div class="streak-number" id="streakCount">5 días</div>
-            <div class="progress-track"><div class="progress-fill"></div></div>
-            <p class="small streak-subtext">Excelente consistencia. Has completado el 72% de tus pausas conscientes esta semana.</p>
-          </div>
-        </div>
-
-        <div class="section-title mt-4">
-          <h3>Accesos Rápidos de Cuidado</h3>
-        </div>
-        <div class="grid">
-          <div class="card card-clickable" data-page="herramientas">
-            <div class="icon-badge">🫁</div>
-            <h4>Pausa de Respiración</h4>
-            <p class="small">Calma tu sistema nervioso en solo 36 segundos.</p>
-          </div>
-          <div class="card card-clickable" data-page="herramientas">
-            <div class="icon-badge">📝</div>
-            <h4>Diario de Gratitud</h4>
-            <p class="small">Registra tus pensamientos y reflexiones privadas.</p>
-          </div>
-          <div class="card card-clickable" data-page="multimedia">
-            <div class="icon-badge">🎧</div>
-            <h4>Sonidos Ambientales</h4>
-            <p class="small">Lluvia, olas y frecuencias armónicas para concentrarte.</p>
-          </div>
-          <div class="card card-clickable" data-page="ayuda">
-            <div class="icon-badge">🛟</div>
-            <h4>Líneas de Asistencia</h4>
-            <p class="small">Contactos y servicios de orientación profesional.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ================= VISTA: RECURSOS ================= -->
-      <section id="recursos" class="page">
-        <div class="section-title">
-          <div>
-            <h2>Biblioteca de Recursos</h2>
-            <p class="small">Contenidos educativos y preventivos desarrollados por especialistas</p>
-          </div>
-        </div>
-
-        <div class="search-filter-bar">
-          <div class="search-input-wrap">
-            <span class="search-icon">🔍</span>
-            <input type="text" id="searchResourcesInput" placeholder="Buscar por tema (ej. estrés, hábitos, sueño, concentración)...">
-          </div>
-
-          <div class="filters-row">
-            <button class="filter-btn active" data-category="todos">Todos los recursos</button>
-            <button class="filter-btn" data-category="articulos">Artículos</button>
-            <button class="filter-btn" data-category="guias">Guías Prácticas</button>
-            <button class="filter-btn" data-category="podcasts">Podcasts</button>
-            <button class="filter-btn" data-category="videos">Videos</button>
-            <button class="filter-btn" data-category="infografias">Infografías</button>
-          </div>
-        </div>
-
-        <div class="grid-3" id="resourcesContainer">
-          <div class="resource-card" data-category="articulos">
-            <div>
-              <span class="badge">Artículo</span>
-              <h3>Manejo Efectivo del Estrés Académico y Laboral</h3>
-              <p>Técnicas prácticas para organizar prioridades, prevenir la saturación y mantener momentos de desconexión reparadora.</p>
-            </div>
-            <button class="secondary mt-3" data-modal="terms">Leer Artículo</button>
-          </div>
-
-          <div class="resource-card" data-category="guias">
-            <div>
-              <span class="badge badge-green">Guía Práctica</span>
-              <h3>Identificación y Expresión Emocional Asertiva</h3>
-              <p>Herramientas visuales y ejercicios para nombrar lo que sientes y comunicarlo con claridad y respeto en tus relaciones.</p>
-            </div>
-            <button class="secondary mt-3" data-modal="terms">Explorar Guía</button>
-          </div>
-
-          <div class="resource-card" data-category="podcasts">
-            <div>
-              <span class="badge badge-purple">Podcast (15 min)</span>
-              <h3>Mente en Calma: El Poder de la Autocompasión</h3>
-              <p>Episodio sobre cómo transformar el diálogo interno autocrítico en una voz comprensiva y motivadora.</p>
-            </div>
-            <button class="secondary mt-3" data-page="multimedia">Escuchar Episodio</button>
-          </div>
-
-          <div class="resource-card" data-category="videos">
-            <div>
-              <span class="badge">Video Taller</span>
-              <h3>Higiene del Sueño y Descanso Profundo</h3>
-              <p>Pautas comprobadas para mejorar la calidad del sueño nocturno y despertar con energía renovada.</p>
-            </div>
-            <button class="secondary mt-3" data-page="multimedia">Ver Video</button>
-          </div>
-
-          <div class="resource-card" data-category="infografias">
-            <div>
-              <span class="badge badge-green">Infografía</span>
-              <h3>Los 5 Pasos para Gestionar una Crisis de Ansiedad</h3>
-              <p>Protocolo paso a paso para recuperar el anclaje al momento presente mediante la técnica 5-4-3-2-1.</p>
-            </div>
-            <button class="secondary mt-3" data-modal="terms">Descargar Infografía</button>
-          </div>
-
-          <div class="resource-card" data-category="guias">
-            <div>
-              <span class="badge badge-purple">Guía de Hábitos</span>
-              <h3>Microhábitos Diarios para la Salud Mental</h3>
-              <p>Pequeñas acciones de dos minutos que acumuladas transforman tu bienestar a largo plazo.</p>
-            </div>
-            <button class="secondary mt-3" data-modal="terms">Consultar Guía</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- ================= VISTA: HERRAMIENTAS ================= -->
-      <section id="herramientas" class="page">
-        <div class="section-title">
-          <div>
-            <h2>Herramientas Interactivas</h2>
-            <p class="small">Prácticas guiadas para aplicar en tu día a día</p>
-          </div>
-        </div>
-
-        <div class="grid-tools-split">
-          <!-- Respirador -->
-          <div class="card breathing-box">
-            <span class="badge badge-green">Respiración Rítmica 4-4-4</span>
-            <div class="breathing-circle-wrapper">
-              <div class="breathing-circle-outer"></div>
-              <div id="breathingInner" class="breathing-circle-inner">
-                <span id="breathingPrompt">Inicia</span>
-                <span class="breathing-timer" id="breathingTimer">Toca iniciar</span>
-              </div>
-            </div>
-            <p class="small breathing-desc">Inhala, sostén y exhala de forma fluida para regular el ritmo cardíaco y reducir la tensión física.</p>
-            <button class="primary" id="startBreathingBtn">Iniciar Respiración 36s</button>
-          </div>
-
-          <!-- Diario -->
-          <div class="card">
-            <h3>📝 Diario Personal y Reflexiones</h3>
-            <p class="small">Espacio seguro y privado para escribir lo que tienes en mente:</p>
-            <textarea id="journalInput" rows="4" class="journal-textarea" placeholder="¿Qué estás experimentando hoy? ¿Por qué estás agradecido/a?..."></textarea>
-            <div class="flex-end">
-              <button class="primary" id="saveJournalBtn">Guardar Reflexión</button>
-            </div>
-            
-            <div class="mt-3">
-              <h4 class="mb-2">Entradas Recientes:</h4>
-              <div id="journalList" class="journal-history-wrap"></div>
+            <div class="hero-stat-item">
+              <div class="hero-stat-num">24/7</div>
+              <div class="hero-stat-label">Asistente KIRI</div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- ================= VISTA: KIRI ASISTENTE ================= -->
-      <section id="kiri" class="page">
-        <div class="section-title">
-          <div>
-            <h2>KIRI — Asistente de Orientación y Bienestar</h2>
-            <p class="small">Acompañamiento empático y navegación inteligente dentro de CreSer</p>
+      <!-- Título de la sección de pilares -->
+      <div class="section-title">
+        <h2>Pilares de CreSer</h2>
+        <span class="small">Metodología integral centrada en el bienestar</span>
+      </div>
+
+      <!-- Cuadrícula con las 4 tarjetas de pilares principales -->
+      <div class="grid">
+        <!-- Tarjeta 1: Bienestar -->
+        <div class="card">
+          <div class="card-icon-wrapper">
+            <img src="assets/img/cuidado.gif" alt="Cuidado emocional" class="card-icon">
           </div>
-          <span class="badge badge-purple">Orientación Continua</span>
+          <h3>Bienestar Emocional</h3>
+          <p>Seguimiento diario de tu estado anímico, ejercicios guiados y herramientas de autorregulación emocional.</p>
+          <a href="pages/bienestar.html" class="secondary mt-2">Ir a Bienestar →</a>
         </div>
 
-        <div class="kiri-layout">
-          <div class="chat-card">
-            <div class="chat-header">
-              <div class="chat-header-info">
-                <div class="chat-avatar">🤖</div>
-                <div>
-                  <h4 class="chat-card-title">KIRI Asistente</h4>
-                  <span class="small chat-status-text"><span class="chat-status-dot"></span>En línea y listo para orientarte</span>
-                </div>
-              </div>
-              <button class="ghost" onclick="document.getElementById('messages').innerHTML='<div class=\'msg k\'>Conversación reiniciada. ¿En qué puedo orientarte hoy?</div>'">Limpiar</button>
-            </div>
-
-            <div class="chat-messages" id="messages">
-              <div class="msg k">¡Hola! Soy KIRI, tu asistente en CreSer. Puedo sugerirte ejercicios de respiración, contenidos sobre gestión del estrés o guiarte en el uso de la plataforma. ¿Qué necesitas hoy?</div>
-              <div class="msg k">Recuerda que brindo orientación preventiva y apoyo general; no realizo diagnósticos médicos ni psicológicos.</div>
-            </div>
-
-            <div class="chat-suggestions">
-              <button class="chip-btn">¿Cómo calmar la ansiedad?</button>
-              <button class="chip-btn">Técnicas para dormir mejor</button>
-              <button class="chip-btn">Recomiéndame sonidos relajantes</button>
-              <button class="chip-btn">¿Dónde pedir ayuda profesional?</button>
-            </div>
-
-            <div class="chat-input-row">
-              <input id="chatInput" type="text" placeholder="Escribe tu consulta o inquietud...">
-              <button id="sendChat" class="chat-send-btn" aria-label="Enviar mensaje">➤</button>
-            </div>
+        <!-- Tarjeta 2: Aprendizaje -->
+        <div class="card">
+          <div class="card-icon-wrapper">
+            <img src="assets/img/libros.gif" alt="Aprendizaje" class="card-icon">
           </div>
-
-          <div class="btn-group-column">
-            <div class="card">
-              <h3>Capacidades de KIRI</h3>
-              <ul class="kiri-capabilities-list">
-                <li>Sugerencias de ejercicios de respiración consciente.</li>
-                <li>Recomendación de lecturas y guías preventivas.</li>
-                <li>Navegación asistida por las secciones de CreSer.</li>
-                <li>Canalización hacia directorios y líneas de ayuda.</li>
-              </ul>
-            </div>
-
-            <div class="card card-alert-amber">
-              <h4 class="text-amber mb-1">⚠️ Uso Responsable</h4>
-              <p class="small">KIRI es un asistente tecnológico preventivo. Si estás en una situación de crisis severa o riesgo personal, por favor comunícate de inmediato con las líneas telefónicas de emergencia médica de tu localidad.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ================= VISTA: MULTIMEDIA ================= -->
-      <section id="multimedia" class="page">
-        <div class="section-title">
-          <div>
-            <h2>Multimedia & Paisajes Sonoros</h2>
-            <p class="small">Generador de sonidos relajantes y contenido audiovisual para el equilibrio mental</p>
-          </div>
+          <h3>Recursos Educativos</h3>
+          <p>Biblioteca preventiva basada en evidencia con artículos, podcasts e infografías de fácil comprensión.</p>
+          <a href="pages/recursos.html" class="secondary mt-2">Ver Biblioteca →</a>
         </div>
 
-        <!-- Reproductor de Sonidos Sintetizados -->
-        <div id="ambientPlayer" class="ambient-player-card">
-          <div class="player-header">
-            <div class="player-track-info">
-              <span class="badge badge-sound-type">Sintetizador de Sonidos Naturales</span>
-              <h3 id="currentTrackName" class="mt-1">Lluvia Serena</h3>
-            </div>
-            
-            <div class="soundwave-visualizer">
-              <div class="soundwave-bar"></div>
-              <div class="soundwave-bar"></div>
-              <div class="soundwave-bar"></div>
-              <div class="soundwave-bar"></div>
-              <div class="soundwave-bar"></div>
-            </div>
+        <!-- Tarjeta 3: Asistencia IA -->
+        <div class="card">
+          <div class="card-icon-wrapper">
+            <img src="assets/img/arte-de-ia.gif" alt="Asistente KIRI" class="card-icon">
           </div>
-
-          <p class="ambient-subtitle">Selecciona un ambiente sonoro sintetizado nativamente para acompañar tu estudio, lectura o meditación:</p>
-
-          <div class="soundscapes-grid">
-            <button class="soundscape-btn active" data-sound="rain">
-              <span class="ico">🌧️</span>
-              <span>Lluvia Serena</span>
-            </button>
-            <button class="soundscape-btn" data-sound="forest">
-              <span class="ico">🌲</span>
-              <span>Bosque Calmo</span>
-            </button>
-            <button class="soundscape-btn" data-sound="waves">
-              <span class="ico">🌊</span>
-              <span>Olas de Mar</span>
-            </button>
-            <button class="soundscape-btn" data-sound="focus">
-              <span class="ico">✨</span>
-              <span>Armonía 432 Hz</span>
-            </button>
-          </div>
-
-          <div class="player-controls">
-            <button id="playAmbientBtn" class="primary btn-ambient-play">▶ Reproducir</button>
-            
-            <div class="volume-slider-wrap">
-              <label for="ambientVolume">🔊 Volumen:</label>
-              <input type="range" id="ambientVolume" min="0" max="1" step="0.05" value="0.4" title="Control de volumen de ambiente" aria-label="Control de volumen de ambiente">
-            </div>
-          </div>
+          <h3>Asistencia con KIRI</h3>
+          <p>Orientación inteligente 24/7 para sugerirte lecturas, audios relajantes y ejercicios prácticos en cada momento.</p>
+          <a href="pages/kiri.html" class="secondary mt-2">Abrir KIRI →</a>
         </div>
 
-        <div class="grid-3">
-          <div class="card">
-            <span class="badge badge-purple">Playlist Temática</span>
-            <h3 class="mt-2">Paz y Concentración</h3>
-            <p>Selección de melodías acústicas suaves ideales para jornadas de estudio y enfoque cognitivo.</p>
-            <button class="secondary mt-3" onclick="showPage('kiri')">Solicitar a KIRI</button>
+        <!-- Tarjeta 4: Privacidad -->
+        <div class="card">
+          <div class="card-icon-wrapper">
+            <img src="assets/img/archivo.gif" alt="Privacidad" class="card-icon">
           </div>
-
-          <div class="card">
-            <span class="badge badge-green">Sesión Guiada</span>
-            <h3 class="mt-2">Meditación Mindfulness</h3>
-            <p>10 minutos de escaneo corporal para liberar tensiones acumuladas en cuello, espalda y hombros.</p>
-            <button class="secondary mt-3" data-page="herramientas">Abrir Ejercicio</button>
-          </div>
-
-          <div class="card">
-            <span class="badge">Serie de Audio</span>
-            <h3 class="mt-2">Historias de Resiliencia</h3>
-            <p>Relatos breves narrados con enfoque reflexivo sobre la superación y el cuidado personal.</p>
-            <button class="secondary mt-3" data-page="recursos">Explorar Biblioteca</button>
-          </div>
+          <h3>Privacidad Absoluta</h3>
+          <p>Tus reflexiones y notas se mantienen protegidas en tu dispositivo bajo rigurosos criterios de confidencialidad.</p>
+          <a href="pages/perfil.html" class="secondary mt-2">Ver Ajustes →</a>
         </div>
-      </section>
-
-      <!-- ================= VISTA: COMUNIDAD ================= -->
-      <section id="comunidad" class="page">
-        <div class="section-title">
-          <div>
-            <h2>Espacios de Comunidad</h2>
-            <p class="small">Entornos moderados, seguros y solidarios para compartir vivencias</p>
-          </div>
-          <button class="secondary" data-modal="community">Normas de Convivencia</button>
-        </div>
-
-        <div class="grid-tools-split">
-          <div class="card">
-            <div class="icon-badge-lg">👥</div>
-            <h3>Círculos de Diálogo Temáticos</h3>
-            <p>Grupos moderados enfocados en temas específicos como gestión del estrés universitario, hábitos saludables y bienestar en el trabajo.</p>
-            <button class="primary mt-3" data-modal="community">Conocer Círculos</button>
-          </div>
-
-          <div class="card">
-            <div class="icon-badge-lg">📅</div>
-            <h3>Talleres y Webinars en Vivo</h3>
-            <p>Sesiones mensuales interactivas guiadas por facilitadores sobre inteligencia emocional y técnicas de relajación.</p>
-            <button class="secondary mt-3" data-modal="terms">Ver Calendario de Eventos</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- ================= VISTA: AYUDA PROFESIONAL ================= -->
-      <section id="ayuda" class="page">
-        <div class="section-title">
-          <div>
-            <h2>Orientación y Ayuda Profesional</h2>
-            <p class="small">Directorio verificado y servicios de soporte humano</p>
-          </div>
-        </div>
-
-        <div class="grid">
-          <div class="card">
-            <div class="icon-badge-sm">🧑‍⚕️</div>
-            <h3>Directorio de Profesionales</h3>
-            <p>Red de psicólogos, terapeutas y centros de salud mental verificados con atención presencial y en línea.</p>
-            <button class="primary mt-2">Consultar Directorio</button>
-          </div>
-
-          <div class="card">
-            <div class="icon-badge-sm">📞</div>
-            <h3>Líneas Oficiales de Apoyo</h3>
-            <p>Canales telefónicos y de chat 24/7 gratuitos y confidenciales brindados por instituciones de salud pública.</p>
-            <button class="secondary mt-2" data-modal="legal">Ver Teléfonos de Urgencia</button>
-          </div>
-
-          <div class="card">
-            <div class="icon-badge-sm">❓</div>
-            <h3>Centro de Preguntas Frecuentes</h3>
-            <p>Respuestas claras a dudas comunes sobre cuándo acudir a terapia y cómo prepararse para una primera sesión.</p>
-            <button class="secondary mt-2" data-modal="terms">Revisar Guía</button>
-          </div>
-
-          <div class="card">
-            <div class="icon-badge-sm">🗓️</div>
-            <h3>Agenda de Sesiones</h3>
-            <p>Módulo para sincronizar tus citas y recibir recordatorios de tus sesiones de apoyo.</p>
-            <span class="badge mt-2">Módulo en Integración</span>
-          </div>
-        </div>
-
-        <div class="card card-alert-blue mt-4">
-          <h4 class="text-primary-blue mb-1">Información de Seguridad y Emergencias</h4>
-          <p class="small">CreSer es una plataforma preventiva. Ante ideaciones de riesgo o crisis agudas, contacta inmediatamente los servicios de emergencias médicas de tu localidad o acude al centro hospitalario más cercano.</p>
-        </div>
-      </section>
-
-      <!-- ================= VISTA: PERFIL Y AJUSTES ================= -->
-      <section id="perfil" class="page">
-        <div class="section-title">
-          <div>
-            <h2>Perfil, Accesibilidad y Privacidad</h2>
-            <p class="small">Configura tu experiencia y gestiona tus preferencias locales</p>
-          </div>
-        </div>
-
-        <div class="grid-3">
-          <div class="card">
-            <h3>Mi Cuenta</h3>
-            <p class="user-session-info"><strong>Usuario:</strong> Andrea (Sesión Demostrativa)</p>
-            <p class="small hero-disclaimer">Modo de navegación local activo</p>
-            <div class="mt-3">
-              <a href="pages/login.html" class="primary btn-full-link">Gestionar Credenciales</a>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>Preferencias Visuales</h3>
-            <div class="setting-item">
-              <div class="setting-info">
-                <h4>Modo Oscuro</h4>
-                <p>Reduce la fatiga visual nocturna</p>
-              </div>
-              <div id="darkToggle" class="toggle-switch" role="switch" aria-checked="false" aria-label="Alternar modo oscuro" tabindex="0"></div>
-            </div>
-
-            <div class="setting-item">
-              <div class="setting-info">
-                <h4>Texto Aumentado</h4>
-                <p>Mejora la legibilidad del texto</p>
-              </div>
-              <div id="textToggle" class="toggle-switch" role="switch" aria-checked="false" aria-label="Alternar texto grande" tabindex="0"></div>
-            </div>
-          </div>
-
-          <div class="card">
-            <h3>Control de Privacidad</h3>
-            <p class="small">Tus registros residen exclusivamente en tu navegador.</p>
-            <div class="btn-group-column">
-              <button class="secondary" onclick="alert('Descarga de respaldo generada localmente en formato JSON.')">Exportar mis Datos</button>
-              <button class="secondary btn-danger-soft" onclick="if(confirm('¿Deseas borrar tus registros locales y notas del diario?')){localStorage.clear();location.reload();}">Borrar Registros Locales</button>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
 
     </main>
 
@@ -628,6 +195,7 @@
          ========================================================================= -->
     <footer class="footer">
       <div class="footer-inner">
+        <!-- Enlaces legales y de políticas en modal -->
         <div class="footer-links">
           <a data-modal="privacy">Política de Privacidad</a>
           <a data-modal="terms">Términos y Condiciones</a>
@@ -635,13 +203,14 @@
           <a data-modal="community">Normas de Convivencia</a>
           <a data-modal="legal">Aviso Legal</a>
         </div>
+        <!-- Derechos reservados -->
         <p class="footer-copy">© 2026 CreSer — Plataforma de Bienestar Emocional y Prevención Digital. Entorno de desarrollo.</p>
       </div>
     </footer>
   </div>
 
   <!-- =========================================================================
-       Modal de Información y Legal
+       Modal de Información y Legal Accesible
        ========================================================================= -->
   <div id="infoModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-dialog">
@@ -656,6 +225,7 @@
     </div>
   </div>
 
-  <script src="assets/js/app.js?v=3.1"></script>
+  <!-- Inclusión del script general de la aplicación -->
+  <script src="assets/js/app.js?v=3.2"></script>
 </body>
 </html>

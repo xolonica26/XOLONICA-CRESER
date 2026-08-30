@@ -1,0 +1,226 @@
+<!doctype html>
+<!-- Declaración del tipo de documento HTML5 estándar -->
+<html lang="es">
+<head>
+  <!-- Codificación UTF-8 para garantizar compatibilidad lingüística -->
+  <meta charset="utf-8"/>
+  <!-- Adaptabilidad en dispositivos móviles y de escritorio -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <!-- Título de la sección de Bienestar -->
+  <title>CreSer — Bienestar Emocional | Monitoreo y Hábitos</title>
+  <!-- Descripción de la página para accesibilidad -->
+  <meta name="description" content="Centro de bienestar emocional de CreSer: registro anímico diario, progreso de hábitos y pausas conscientes."/>
+  <!-- Enlace relativo a los estilos principales -->
+  <link rel="stylesheet" href="../assets/css/main.css?v=3.2">
+</head>
+<body>
+
+  <!-- =========================================================================
+       Barra Superior de Navegación (Topbar)
+       ========================================================================= -->
+  <header class="topbar">
+    <!-- Botón hamburguesa para móviles -->
+    <button id="menuToggle" class="mobile-menu-btn" aria-label="Abrir menú de navegación">☰</button>
+
+    <!-- Logotipo y nombre de marca -->
+    <a href="../index.html" class="brand">
+      <span class="c1">Cre</span><span class="c3">Ser</span>
+      <img src="../assets/img/valores.gif" alt="CreSer Logo Animado" class="creserlogo">
+    </a>
+    
+    <!-- Menú de navegación principal con estado activo en Bienestar -->
+    <nav class="nav" aria-label="Navegación principal">
+      <a href="../index.html" class="navitem">Inicio</a>
+      <a href="bienestar.html" class="navitem active">Bienestar</a>
+      <a href="recursos.html" class="navitem">Recursos</a>
+      <a href="herramientas.html" class="navitem">Herramientas</a>
+      <a href="kiri.html" class="navitem">KIRI</a>
+      <a href="multimedia.html" class="navitem">Multimedia</a>
+      <a href="comunidad.html" class="navitem">Comunidad</a>
+      <a href="ayuda.html" class="navitem">Ayuda</a>
+      <a href="perfil.html" class="navitem">Perfil</a>
+      
+      <div class="nav-actions">
+        <a href="login.html" class="navitem btn-header-action btn-auth">Acceder</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- =========================================================================
+       Menú Lateral Móvil (Drawer)
+       ========================================================================= -->
+  <div id="drawerBackdrop" class="drawer-backdrop"></div>
+  <aside id="mobileDrawer" class="mobile-drawer" aria-label="Menú móvil">
+    <div class="drawer-head">
+      <div class="brand"><span class="c1">Cre</span><span class="c3">Ser</span></div>
+      <button id="drawerClose" class="ghost" aria-label="Cerrar menú">✕</button>
+    </div>
+
+    <!-- Lista de enlaces para pantalla móvil -->
+    <div class="drawer-nav-list">
+      <a href="../index.html">🏠 Inicio</a>
+      <a href="bienestar.html" class="active">💚 Bienestar Emocional</a>
+      <a href="recursos.html">📚 Recursos Educativos</a>
+      <a href="herramientas.html">🧰 Herramientas Prácticas</a>
+      <a href="kiri.html">🤖 Asistente KIRI</a>
+      <a href="multimedia.html">🎵 Multimedia & Relax</a>
+      <a href="comunidad.html">👥 Espacios de Comunidad</a>
+      <a href="ayuda.html">🛟 Ayuda Profesional</a>
+      <a href="perfil.html">👤 Perfil & Accesibilidad</a>
+      
+      <hr class="drawer-separator">
+      
+      <a href="login.html" class="drawer-auth-link">🔐 Iniciar Sesión / Registro</a>
+      <button data-modal="privacy">🔒 Privacidad y Datos</button>
+      <button data-modal="terms">📄 Términos de Servicio</button>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       Barra Inferior Móvil (Bottom Navigation)
+       ========================================================================= -->
+  <nav class="mobile-bottom-nav" aria-label="Navegación rápida móvil">
+    <a href="../index.html"><span class="ico">🏠</span><span>Inicio</span></a>
+    <a href="bienestar.html" class="active"><span class="ico">💚</span><span>Bienestar</span></a>
+    <a href="herramientas.html"><span class="ico">🫁</span><span>Ejercicios</span></a>
+    <a href="kiri.html"><span class="ico">🤖</span><span>KIRI</span></a>
+    <a href="perfil.html"><span class="ico">⚙️</span><span>Ajustes</span></a>
+  </nav>
+
+  <!-- =========================================================================
+       Contenido Central: Centro de Bienestar Emocional
+       ========================================================================= -->
+  <div class="app">
+    <main>
+      
+      <!-- Cabecera de la sección -->
+      <div class="section-title">
+        <div>
+          <h2>Centro de Bienestar Emocional</h2>
+          <p class="small">Monitorea tus estados anímicos y cultiva hábitos conscientes día a día</p>
+        </div>
+        <!-- Enlace rápido para iniciar respiración guiada -->
+        <a href="herramientas.html" class="primary">Iniciar Respiración</a>
+      </div>
+
+      <!-- Cuadrícula dividida con el selector de emociones y la racha de hábitos -->
+      <div class="grid-wellness-split">
+        
+        <!-- Tarjeta Interactiva: Selector de Estado Emocional -->
+        <div class="card">
+          <h3>¿Cómo te sientes en este momento?</h3>
+          <p class="small">Selecciona tu estado emocional para recibir recomendaciones personalizadas y registrar tu progreso:</p>
+          
+          <!-- Botones interactivos con 5 estados anímicos -->
+          <div class="mood-selector">
+            <button class="mood-btn" data-mood="dificil" aria-label="Estado difícil">
+              <span>😟</span>
+              <span>Difícil</span>
+            </button>
+            <button class="mood-btn" data-mood="regular" aria-label="Estado regular">
+              <span>😕</span>
+              <span>Regular</span>
+            </button>
+            <button class="mood-btn" data-mood="neutral" aria-label="Estado neutral">
+              <span>😐</span>
+              <span>Neutral</span>
+            </button>
+            <button class="mood-btn selected" data-mood="tranquilo" aria-label="Estado tranquilo">
+              <span>🙂</span>
+              <span>Tranquilo</span>
+            </button>
+            <button class="mood-btn" data-mood="excelente" aria-label="Estado excelente">
+              <span>😄</span>
+              <span>Excelente</span>
+            </button>
+          </div>
+
+          <!-- Botón para procesar y guardar el registro -->
+          <button class="primary btn-full" id="registerMood">Registrar Estado Emocional</button>
+          <!-- Mensaje dinámico de confirmación con persistencia -->
+          <div id="moodSaved" class="notice"></div>
+        </div>
+
+        <!-- Tarjeta: Constancia y Progreso de Hábitos -->
+        <div class="card">
+          <h3>Constancia y Hábitos</h3>
+          <p>Racha de chequeos continuos:</p>
+          <!-- Contador dinámico de racha actualizado por JavaScript -->
+          <div class="streak-number" id="streakCount">5 días</div>
+          <!-- Barra de progreso visual -->
+          <div class="progress-track"><div class="progress-fill"></div></div>
+          <p class="small streak-subtext">Excelente consistencia. Has completado el 72% de tus pausas conscientes esta semana.</p>
+        </div>
+      </div>
+
+      <!-- Sección de Atajos Rápidos a Otras Herramientas -->
+      <div class="section-title mt-4">
+        <h3>Accesos Rápidos de Cuidado</h3>
+      </div>
+      <div class="grid">
+        <!-- Atajo a Respiración -->
+        <a href="herramientas.html" class="card card-clickable">
+          <div class="icon-badge">🫁</div>
+          <h4>Pausa de Respiración</h4>
+          <p class="small">Calma tu sistema nervioso en solo 36 segundos.</p>
+        </a>
+
+        <!-- Atajo a Diario -->
+        <a href="herramientas.html" class="card card-clickable">
+          <div class="icon-badge">📝</div>
+          <h4>Diario de Gratitud</h4>
+          <p class="small">Registra tus pensamientos y reflexiones privadas.</p>
+        </a>
+
+        <!-- Atajo a Multimedia -->
+        <a href="multimedia.html" class="card card-clickable">
+          <div class="icon-badge">🎧</div>
+          <h4>Sonidos Ambientales</h4>
+          <p class="small">Lluvia, olas y frecuencias armónicas para concentrarte.</p>
+        </a>
+
+        <!-- Atajo a Ayuda -->
+        <a href="ayuda.html" class="card card-clickable">
+          <div class="icon-badge">🛟</div>
+          <h4>Líneas de Asistencia</h4>
+          <p class="small">Contactos y servicios de orientación profesional.</p>
+        </a>
+      </div>
+
+    </main>
+
+    <!-- =========================================================================
+         Pie de Página (Footer)
+         ========================================================================= -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-links">
+          <a data-modal="privacy">Política de Privacidad</a>
+          <a data-modal="terms">Términos y Condiciones</a>
+          <a data-modal="cookies">Gestión de Cookies</a>
+          <a data-modal="community">Normas de Convivencia</a>
+          <a data-modal="legal">Aviso Legal</a>
+        </div>
+        <p class="footer-copy">© 2026 CreSer — Plataforma de Bienestar Emocional y Prevención Digital. Entorno de desarrollo.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Modal accesible para avisos legales -->
+  <div id="infoModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="modalTitle" class="modal-title-text">Información</h3>
+        <button class="ghost" onclick="closeModal('infoModal')" aria-label="Cerrar modal">✕</button>
+      </div>
+      <div id="modalBody"></div>
+      <div class="modal-footer">
+        <button class="primary" onclick="closeModal('infoModal')">Entendido</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script modular de la aplicación -->
+  <script src="../assets/js/app.js?v=3.2"></script>
+</body>
+</html>

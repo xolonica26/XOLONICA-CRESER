@@ -1,0 +1,172 @@
+<!doctype html>
+<!-- Declaración de documento HTML5 -->
+<html lang="es">
+<head>
+  <!-- Codificación universal de caracteres -->
+  <meta charset="utf-8"/>
+  <!-- Adaptabilidad responsive -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <!-- Título de la página de Ayuda Profesional -->
+  <title>CreSer — Ayuda Profesional | Directorio y Asistencia</title>
+  <!-- Descripción -->
+  <meta name="description" content="Directorio de profesionales verificados, centros de atención y líneas de ayuda de emergencia psicológica."/>
+  <!-- Enlace a estilos CSS -->
+  <link rel="stylesheet" href="../assets/css/main.css?v=3.2">
+</head>
+<body>
+
+  <!-- =========================================================================
+       Barra Superior de Navegación (Topbar)
+       ========================================================================= -->
+  <header class="topbar">
+    <button id="menuToggle" class="mobile-menu-btn" aria-label="Abrir menú de navegación">☰</button>
+
+    <a href="../index.html" class="brand">
+      <span class="c1">Cre</span><span class="c3">Ser</span>
+      <img src="../assets/img/valores.gif" alt="CreSer Logo Animado" class="creserlogo">
+    </a>
+    
+    <!-- Menú principal con estado activo en Ayuda -->
+    <nav class="nav" aria-label="Navegación principal">
+      <a href="../index.html" class="navitem">Inicio</a>
+      <a href="bienestar.html" class="navitem">Bienestar</a>
+      <a href="recursos.html" class="navitem">Recursos</a>
+      <a href="herramientas.html" class="navitem">Herramientas</a>
+      <a href="kiri.html" class="navitem">KIRI</a>
+      <a href="multimedia.html" class="navitem">Multimedia</a>
+      <a href="comunidad.html" class="navitem">Comunidad</a>
+      <a href="ayuda.html" class="navitem active">Ayuda</a>
+      <a href="perfil.html" class="navitem">Perfil</a>
+      
+      <div class="nav-actions">
+        <a href="login.html" class="navitem btn-header-action btn-auth">Acceder</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Menú lateral para versión móvil -->
+  <div id="drawerBackdrop" class="drawer-backdrop"></div>
+  <aside id="mobileDrawer" class="mobile-drawer" aria-label="Menú móvil">
+    <div class="drawer-head">
+      <div class="brand"><span class="c1">Cre</span><span class="c3">Ser</span></div>
+      <button id="drawerClose" class="ghost" aria-label="Cerrar menú">✕</button>
+    </div>
+
+    <div class="drawer-nav-list">
+      <a href="../index.html">🏠 Inicio</a>
+      <a href="bienestar.html">💚 Bienestar Emocional</a>
+      <a href="recursos.html">📚 Recursos Educativos</a>
+      <a href="herramientas.html">🧰 Herramientas Prácticas</a>
+      <a href="kiri.html">🤖 Asistente KIRI</a>
+      <a href="multimedia.html">🎵 Multimedia & Relax</a>
+      <a href="comunidad.html">👥 Espacios de Comunidad</a>
+      <a href="ayuda.html" class="active">🛟 Ayuda Profesional</a>
+      <a href="perfil.html">👤 Perfil & Accesibilidad</a>
+      
+      <hr class="drawer-separator">
+      
+      <a href="login.html" class="drawer-auth-link">🔐 Iniciar Sesión / Registro</a>
+      <button data-modal="privacy">🔒 Privacidad y Datos</button>
+      <button data-modal="terms">📄 Términos de Servicio</button>
+    </div>
+  </aside>
+
+  <!-- Barra de navegación inferior móvil -->
+  <nav class="mobile-bottom-nav" aria-label="Navegación rápida móvil">
+    <a href="../index.html"><span class="ico">🏠</span><span>Inicio</span></a>
+    <a href="bienestar.html"><span class="ico">💚</span><span>Bienestar</span></a>
+    <a href="herramientas.html"><span class="ico">🫁</span><span>Ejercicios</span></a>
+    <a href="kiri.html"><span class="ico">🤖</span><span>KIRI</span></a>
+    <a href="perfil.html"><span class="ico">⚙️</span><span>Ajustes</span></a>
+  </nav>
+
+  <!-- =========================================================================
+       Contenido Central: Orientación y Ayuda Profesional
+       ========================================================================= -->
+  <div class="app">
+    <main>
+      
+      <!-- Título de cabecera -->
+      <div class="section-title">
+        <div>
+          <h2>Orientación y Ayuda Profesional</h2>
+          <p class="small">Directorio verificado y servicios de soporte humano especializado</p>
+        </div>
+      </div>
+
+      <!-- Cuadrícula con las opciones de asistencia -->
+      <div class="grid">
+        <!-- Servicio 1: Directorio -->
+        <div class="card">
+          <div class="icon-badge-sm">🧑‍⚕️</div>
+          <h3>Directorio de Profesionales</h3>
+          <p>Red de psicólogos, terapeutas y centros de salud mental verificados con atención presencial y en línea.</p>
+          <button class="primary mt-2">Consultar Directorio</button>
+        </div>
+
+        <!-- Servicio 2: Líneas oficiales -->
+        <div class="card">
+          <div class="icon-badge-sm">📞</div>
+          <h3>Líneas Oficiales de Apoyo</h3>
+          <p>Canales telefónicos y de chat 24/7 gratuitos y confidenciales brindados por instituciones de salud pública.</p>
+          <button class="secondary mt-2" data-modal="legal">Ver Teléfonos de Urgencia</button>
+        </div>
+
+        <!-- Servicio 3: Preguntas frecuentes -->
+        <div class="card">
+          <div class="icon-badge-sm">❓</div>
+          <h3>Centro de Preguntas Frecuentes</h3>
+          <p>Respuestas claras a dudas comunes sobre cuándo acudir a terapia y cómo prepararse para una primera sesión.</p>
+          <button class="secondary mt-2" data-modal="terms">Revisar Guía</button>
+        </div>
+
+        <!-- Servicio 4: Agenda -->
+        <div class="card">
+          <div class="icon-badge-sm">🗓️</div>
+          <h3>Agenda de Sesiones</h3>
+          <p>Módulo para sincronizar tus citas y recibir recordatorios de tus sesiones de apoyo.</p>
+          <span class="badge mt-2">Módulo en Integración</span>
+        </div>
+      </div>
+
+      <!-- Cuadro de aviso importante sobre emergencias -->
+      <div class="card card-alert-blue mt-4">
+        <h4 class="text-primary-blue mb-1">Información de Seguridad y Emergencias</h4>
+        <p class="small">CreSer es una plataforma preventiva. Ante ideaciones de riesgo o crisis agudas, contacta inmediatamente los servicios de emergencias médicas de tu localidad o acude al centro hospitalario más cercano.</p>
+      </div>
+
+    </main>
+
+    <!-- Pie de página -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-links">
+          <a data-modal="privacy">Política de Privacidad</a>
+          <a data-modal="terms">Términos y Condiciones</a>
+          <a data-modal="cookies">Gestión de Cookies</a>
+          <a data-modal="community">Normas de Convivencia</a>
+          <a data-modal="legal">Aviso Legal</a>
+        </div>
+        <p class="footer-copy">© 2026 CreSer — Plataforma de Bienestar Emocional y Prevención Digital. Entorno de desarrollo.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Modal legal -->
+  <div id="infoModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="modalTitle" class="modal-title-text">Información</h3>
+        <button class="ghost" onclick="closeModal('infoModal')" aria-label="Cerrar modal">✕</button>
+      </div>
+      <div id="modalBody"></div>
+      <div class="modal-footer">
+        <button class="primary" onclick="closeModal('infoModal')">Entendido</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lógica JavaScript -->
+  <script src="../assets/js/app.js?v=3.2"></script>
+</body>
+</html>

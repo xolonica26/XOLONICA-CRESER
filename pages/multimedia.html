@@ -1,0 +1,206 @@
+<!doctype html>
+<!-- Declaración de documento HTML5 -->
+<html lang="es">
+<head>
+  <!-- Codificación de caracteres -->
+  <meta charset="utf-8"/>
+  <!-- Adaptabilidad responsive -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <!-- Título de la sección Multimedia -->
+  <title>CreSer — Multimedia | Paisajes Sonoros y Relajación</title>
+  <!-- Descripción -->
+  <meta name="description" content="Sintetizador de sonidos naturales relajantes y contenidos audiovisuales para el descanso y la concentración."/>
+  <!-- Enlace a estilos CSS -->
+  <link rel="stylesheet" href="../assets/css/main.css?v=3.2">
+</head>
+<body>
+
+  <!-- =========================================================================
+       Barra Superior de Navegación (Topbar)
+       ========================================================================= -->
+  <header class="topbar">
+    <button id="menuToggle" class="mobile-menu-btn" aria-label="Abrir menú de navegación">☰</button>
+
+    <a href="../index.html" class="brand">
+      <span class="c1">Cre</span><span class="c3">Ser</span>
+      <img src="../assets/img/valores.gif" alt="CreSer Logo Animado" class="creserlogo">
+    </a>
+    
+    <!-- Menú principal con estado activo en Multimedia -->
+    <nav class="nav" aria-label="Navegación principal">
+      <a href="../index.html" class="navitem">Inicio</a>
+      <a href="bienestar.html" class="navitem">Bienestar</a>
+      <a href="recursos.html" class="navitem">Recursos</a>
+      <a href="herramientas.html" class="navitem">Herramientas</a>
+      <a href="kiri.html" class="navitem">KIRI</a>
+      <a href="multimedia.html" class="navitem active">Multimedia</a>
+      <a href="comunidad.html" class="navitem">Comunidad</a>
+      <a href="ayuda.html" class="navitem">Ayuda</a>
+      <a href="perfil.html" class="navitem">Perfil</a>
+      
+      <div class="nav-actions">
+        <a href="login.html" class="navitem btn-header-action btn-auth">Acceder</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Menú lateral para versión móvil -->
+  <div id="drawerBackdrop" class="drawer-backdrop"></div>
+  <aside id="mobileDrawer" class="mobile-drawer" aria-label="Menú móvil">
+    <div class="drawer-head">
+      <div class="brand"><span class="c1">Cre</span><span class="c3">Ser</span></div>
+      <button id="drawerClose" class="ghost" aria-label="Cerrar menú">✕</button>
+    </div>
+
+    <div class="drawer-nav-list">
+      <a href="../index.html">🏠 Inicio</a>
+      <a href="bienestar.html">💚 Bienestar Emocional</a>
+      <a href="recursos.html">📚 Recursos Educativos</a>
+      <a href="herramientas.html">🧰 Herramientas Prácticas</a>
+      <a href="kiri.html">🤖 Asistente KIRI</a>
+      <a href="multimedia.html" class="active">🎵 Multimedia & Relax</a>
+      <a href="comunidad.html">👥 Espacios de Comunidad</a>
+      <a href="ayuda.html">🛟 Ayuda Profesional</a>
+      <a href="perfil.html">👤 Perfil & Accesibilidad</a>
+      
+      <hr class="drawer-separator">
+      
+      <a href="login.html" class="drawer-auth-link">🔐 Iniciar Sesión / Registro</a>
+      <button data-modal="privacy">🔒 Privacidad y Datos</button>
+      <button data-modal="terms">📄 Términos de Servicio</button>
+    </div>
+  </aside>
+
+  <!-- Barra de navegación inferior móvil -->
+  <nav class="mobile-bottom-nav" aria-label="Navegación rápida móvil">
+    <a href="../index.html"><span class="ico">🏠</span><span>Inicio</span></a>
+    <a href="bienestar.html"><span class="ico">💚</span><span>Bienestar</span></a>
+    <a href="herramientas.html"><span class="ico">🫁</span><span>Ejercicios</span></a>
+    <a href="kiri.html"><span class="ico">🤖</span><span>KIRI</span></a>
+    <a href="perfil.html"><span class="ico">⚙️</span><span>Ajustes</span></a>
+  </nav>
+
+  <!-- =========================================================================
+       Contenido Central: Multimedia y Paisajes Sonoros
+       ========================================================================= -->
+  <div class="app">
+    <main>
+      
+      <!-- Título de cabecera -->
+      <div class="section-title">
+        <div>
+          <h2>Multimedia & Paisajes Sonoros</h2>
+          <p class="small">Generador de sonidos relajantes y contenido audiovisual para el equilibrio mental</p>
+        </div>
+      </div>
+
+      <!-- Tarjeta del Reproductor Sintetizado de Audio Nativo (Web Audio API) -->
+      <div id="ambientPlayer" class="ambient-player-card">
+        <div class="player-header">
+          <div class="player-track-info">
+            <span class="badge badge-sound-type">Sintetizador de Sonidos Naturales</span>
+            <h3 id="currentTrackName" class="mt-1">Lluvia Serena</h3>
+          </div>
+          
+          <!-- Visualizador de ondas de sonido animadas -->
+          <div class="soundwave-visualizer">
+            <div class="soundwave-bar"></div>
+            <div class="soundwave-bar"></div>
+            <div class="soundwave-bar"></div>
+            <div class="soundwave-bar"></div>
+            <div class="soundwave-bar"></div>
+          </div>
+        </div>
+
+        <p class="ambient-subtitle">Selecciona un ambiente sonoro sintetizado nativamente para acompañar tu estudio, lectura o meditación:</p>
+
+        <!-- Selector de tipos de ambiente sonoro -->
+        <div class="soundscapes-grid">
+          <button class="soundscape-btn active" data-sound="rain">
+            <span class="ico">🌧️</span>
+            <span>Lluvia Serena</span>
+          </button>
+          <button class="soundscape-btn" data-sound="forest">
+            <span class="ico">🌲</span>
+            <span>Bosque Calmo</span>
+          </button>
+          <button class="soundscape-btn" data-sound="waves">
+            <span class="ico">🌊</span>
+            <span>Olas de Mar</span>
+          </button>
+          <button class="soundscape-btn" data-sound="focus">
+            <span class="ico">✨</span>
+            <span>Armonía 432 Hz</span>
+          </button>
+        </div>
+
+        <!-- Controles de reproducción y volumen -->
+        <div class="player-controls">
+          <button id="playAmbientBtn" class="primary btn-ambient-play">▶ Reproducir</button>
+          
+          <div class="volume-slider-wrap">
+            <label for="ambientVolume">🔊 Volumen:</label>
+            <input type="range" id="ambientVolume" min="0" max="1" step="0.05" value="0.4" title="Control de volumen de ambiente" aria-label="Control de volumen de ambiente">
+          </div>
+        </div>
+      </div>
+
+      <!-- Cuadrícula con listas temáticas recomendadas -->
+      <div class="grid-3">
+        <div class="card">
+          <span class="badge badge-purple">Playlist Temática</span>
+          <h3 class="mt-2">Paz y Concentración</h3>
+          <p>Selección de melodías acústicas suaves ideales para jornadas de estudio y enfoque cognitivo.</p>
+          <a href="kiri.html" class="secondary mt-3">Solicitar a KIRI</a>
+        </div>
+
+        <div class="card">
+          <span class="badge badge-green">Sesión Guiada</span>
+          <h3 class="mt-2">Meditación Mindfulness</h3>
+          <p>10 minutos de escaneo corporal para liberar tensiones acumuladas en cuello, espalda y hombros.</p>
+          <a href="herramientas.html" class="secondary mt-3">Abrir Ejercicio</a>
+        </div>
+
+        <div class="card">
+          <span class="badge">Serie de Audio</span>
+          <h3 class="mt-2">Historias de Resiliencia</h3>
+          <p>Relatos breves narrados con enfoque reflexivo sobre la superación y el cuidado personal.</p>
+          <a href="recursos.html" class="secondary mt-3">Explorar Biblioteca</a>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Pie de página -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-links">
+          <a data-modal="privacy">Política de Privacidad</a>
+          <a data-modal="terms">Términos y Condiciones</a>
+          <a data-modal="cookies">Gestión de Cookies</a>
+          <a data-modal="community">Normas de Convivencia</a>
+          <a data-modal="legal">Aviso Legal</a>
+        </div>
+        <p class="footer-copy">© 2026 CreSer — Plataforma de Bienestar Emocional y Prevención Digital. Entorno de desarrollo.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Modal legal -->
+  <div id="infoModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="modalTitle" class="modal-title-text">Información</h3>
+        <button class="ghost" onclick="closeModal('infoModal')" aria-label="Cerrar modal">✕</button>
+      </div>
+      <div id="modalBody"></div>
+      <div class="modal-footer">
+        <button class="primary" onclick="closeModal('infoModal')">Entendido</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lógica JavaScript -->
+  <script src="../assets/js/app.js?v=3.2"></script>
+</body>
+</html>

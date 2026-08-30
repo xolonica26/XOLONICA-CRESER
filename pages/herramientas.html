@@ -1,0 +1,174 @@
+<!doctype html>
+<!-- Declaración de documento HTML5 -->
+<html lang="es">
+<head>
+  <!-- Codificación de caracteres -->
+  <meta charset="utf-8"/>
+  <!-- Adaptabilidad en múltiples pantallas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <!-- Título de la página -->
+  <title>CreSer — Herramientas Prácticas | Respiración y Diario</title>
+  <!-- Descripción -->
+  <meta name="description" content="Herramientas interactivas de autocuidado: ejercicio de respiración consciente 4-4-4 y diario privado de reflexiones."/>
+  <!-- Enlace a estilos CSS -->
+  <link rel="stylesheet" href="../assets/css/main.css?v=3.2">
+</head>
+<body>
+
+  <!-- =========================================================================
+       Barra Superior de Navegación (Topbar)
+       ========================================================================= -->
+  <header class="topbar">
+    <button id="menuToggle" class="mobile-menu-btn" aria-label="Abrir menú de navegación">☰</button>
+
+    <a href="../index.html" class="brand">
+      <span class="c1">Cre</span><span class="c3">Ser</span>
+      <img src="../assets/img/valores.gif" alt="CreSer Logo Animado" class="creserlogo">
+    </a>
+    
+    <!-- Menú principal con estado activo en Herramientas -->
+    <nav class="nav" aria-label="Navegación principal">
+      <a href="../index.html" class="navitem">Inicio</a>
+      <a href="bienestar.html" class="navitem">Bienestar</a>
+      <a href="recursos.html" class="navitem">Recursos</a>
+      <a href="herramientas.html" class="navitem active">Herramientas</a>
+      <a href="kiri.html" class="navitem">KIRI</a>
+      <a href="multimedia.html" class="navitem">Multimedia</a>
+      <a href="comunidad.html" class="navitem">Comunidad</a>
+      <a href="ayuda.html" class="navitem">Ayuda</a>
+      <a href="perfil.html" class="navitem">Perfil</a>
+      
+      <div class="nav-actions">
+        <a href="login.html" class="navitem btn-header-action btn-auth">Acceder</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Menú lateral para versión móvil -->
+  <div id="drawerBackdrop" class="drawer-backdrop"></div>
+  <aside id="mobileDrawer" class="mobile-drawer" aria-label="Menú móvil">
+    <div class="drawer-head">
+      <div class="brand"><span class="c1">Cre</span><span class="c3">Ser</span></div>
+      <button id="drawerClose" class="ghost" aria-label="Cerrar menú">✕</button>
+    </div>
+
+    <div class="drawer-nav-list">
+      <a href="../index.html">🏠 Inicio</a>
+      <a href="bienestar.html">💚 Bienestar Emocional</a>
+      <a href="recursos.html">📚 Recursos Educativos</a>
+      <a href="herramientas.html" class="active">🧰 Herramientas Prácticas</a>
+      <a href="kiri.html">🤖 Asistente KIRI</a>
+      <a href="multimedia.html">🎵 Multimedia & Relax</a>
+      <a href="comunidad.html">👥 Espacios de Comunidad</a>
+      <a href="ayuda.html">🛟 Ayuda Profesional</a>
+      <a href="perfil.html">👤 Perfil & Accesibilidad</a>
+      
+      <hr class="drawer-separator">
+      
+      <a href="login.html" class="drawer-auth-link">🔐 Iniciar Sesión / Registro</a>
+      <button data-modal="privacy">🔒 Privacidad y Datos</button>
+      <button data-modal="terms">📄 Términos de Servicio</button>
+    </div>
+  </aside>
+
+  <!-- Barra de navegación inferior móvil -->
+  <nav class="mobile-bottom-nav" aria-label="Navegación rápida móvil">
+    <a href="../index.html"><span class="ico">🏠</span><span>Inicio</span></a>
+    <a href="bienestar.html"><span class="ico">💚</span><span>Bienestar</span></a>
+    <a href="herramientas.html" class="active"><span class="ico">🫁</span><span>Ejercicios</span></a>
+    <a href="kiri.html"><span class="ico">🤖</span><span>KIRI</span></a>
+    <a href="perfil.html"><span class="ico">⚙️</span><span>Ajustes</span></a>
+  </nav>
+
+  <!-- =========================================================================
+       Contenido Central: Herramientas Prácticas
+       ========================================================================= -->
+  <div class="app">
+    <main>
+      
+      <!-- Título de cabecera -->
+      <div class="section-title">
+        <div>
+          <h2>Herramientas Interactivas</h2>
+          <p class="small">Prácticas guiadas para aplicar y cultivar calma en tu día a día</p>
+        </div>
+      </div>
+
+      <!-- Cuadrícula dividida con el respirador y el diario -->
+      <div class="grid-tools-split">
+        
+        <!-- Herramienta 1: Respirador Visual Guiado -->
+        <div class="card breathing-box">
+          <span class="badge badge-green">Respiración Rítmica 4-4-4</span>
+          
+          <!-- Contenedor del círculo interactivo animado -->
+          <div class="breathing-circle-wrapper">
+            <div class="breathing-circle-outer"></div>
+            <div id="breathingInner" class="breathing-circle-inner">
+              <span id="breathingPrompt">Inicia</span>
+              <span class="breathing-timer" id="breathingTimer">Toca iniciar</span>
+            </div>
+          </div>
+          
+          <!-- Descripción del beneficio de la técnica -->
+          <p class="small breathing-desc">Inhala, sostén y exhala de forma fluida para regular el ritmo cardíaco y reducir la tensión física.</p>
+          <!-- Botón disparador del temporizador de respiración -->
+          <button class="primary" id="startBreathingBtn">Iniciar Respiración 36s</button>
+        </div>
+
+        <!-- Herramienta 2: Diario Personal con Almacenamiento Local -->
+        <div class="card">
+          <h3>📝 Diario Personal y Reflexiones</h3>
+          <p class="small">Espacio seguro y privado para escribir lo que tienes en mente:</p>
+          
+          <!-- Campo de texto para la reflexión -->
+          <textarea id="journalInput" rows="4" class="journal-textarea" placeholder="¿Qué estás experimentando hoy? ¿Por qué estás agradecido/a?..."></textarea>
+          
+          <!-- Botón de guardado -->
+          <div class="flex-end">
+            <button class="primary" id="saveJournalBtn">Guardar Reflexión</button>
+          </div>
+          
+          <!-- Contenedor dinámico del historial de reflexiones guardadas en localStorage -->
+          <div class="mt-3">
+            <h4 class="mb-2">Entradas Recientes:</h4>
+            <div id="journalList" class="journal-history-wrap"></div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Pie de página -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="footer-links">
+          <a data-modal="privacy">Política de Privacidad</a>
+          <a data-modal="terms">Términos y Condiciones</a>
+          <a data-modal="cookies">Gestión de Cookies</a>
+          <a data-modal="community">Normas de Convivencia</a>
+          <a data-modal="legal">Aviso Legal</a>
+        </div>
+        <p class="footer-copy">© 2026 CreSer — Plataforma de Bienestar Emocional y Prevención Digital. Entorno de desarrollo.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Modal legal -->
+  <div id="infoModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="modalTitle" class="modal-title-text">Información</h3>
+        <button class="ghost" onclick="closeModal('infoModal')" aria-label="Cerrar modal">✕</button>
+      </div>
+      <div id="modalBody"></div>
+      <div class="modal-footer">
+        <button class="primary" onclick="closeModal('infoModal')">Entendido</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lógica JavaScript -->
+  <script src="../assets/js/app.js?v=3.2"></script>
+</body>
+</html>

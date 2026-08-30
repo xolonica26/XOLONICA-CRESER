@@ -1,71 +1,56 @@
 # CreSer — Plataforma de Bienestar Emocional y Crecimiento Personal
 
-> Un espacio digital accesible, seguro y reflexivo diseñado para el autoconocimiento, la gestión de las emociones y la adopción de hábitos de vida saludables, acompañado por el asistente virtual de orientación **KIRI**.
+> Un espacio digital accesible, modular y seguro diseñado para el autoconocimiento, la gestión de las emociones y la adopción de hábitos de vida saludables, acompañado por el asistente virtual de orientación **KIRI**.
 
 ---
 
 ## 🌟 Descripción General
 
-**CreSer** es una aplicación web interactiva y responsiva concebida para brindar apoyo preventivo, herramientas de autorregulación emocional y recursos educativos en salud mental. La plataforma combina un diseño visual moderno con efecto de cristal (*glassmorphism*), modo nocturno de descanso visual y utilidades interactivas nativas.
+**CreSer** es una aplicación web multipágina (MPA) organizada modularmente para un rendimiento ligero, carga rápida y navegación limpia. Cada sección de la plataforma cuenta con su propio archivo HTML independiente, estilos centralizados y código ampliamente comentado con fines pedagógicos y de mantenimiento profesional.
 
 ---
 
-## ✨ Características Principales
+## ✨ Estructura de Páginas y Módulos
 
-### 🧠 1. Asistente Virtual de Orientación — KIRI
-- **Acompañamiento 24/7**: Orientación inmediata sobre manejo de estrés, técnicas de estudio, higiene del sueño y calma emocional.
-- **Sugerencias Rápidas**: Píldoras interactivas para acceder a recomendaciones con un solo clic.
-- **Enfoque Preventivo**: Canalización transparente hacia servicios de ayuda profesional cuando se requiere atención especializada.
-
-### 💚 2. Centro de Bienestar y Monitoreo Emocional
-- **Registro Diario del Estado de Ánimo**: Selección intuitiva con 5 niveles emocionales y mensajes reflexivos personalizados.
-- **Contador de Racha y Progreso**: Seguimiento visual de la consistencia en el autocuidado semanal.
-- **Accesos Rápidos**: Atajos directos a pausas de respiración, diario y audios relajantes.
-
-### 🫁 3. Herramientas Interactivas de Autocuidado
-- **Respiración Consciente (Ciclo 4-4-4)**: Círculo animado con guía visual rítmica (*Inhala, Sostén, Exhala*) y temporizador.
-- **Diario Personal de Gratitud y Reflexión**: Gestor de notas privadas con almacenamiento en tu propio navegador (`localStorage`), marcas de fecha/hora y opción de eliminación.
-
-### 🎧 4. Multimedia & Paisajes Sonoros (Web Audio API)
-- **Sintetizador de Sonidos Naturales**: Generación de frecuencias y ambientes relajantes nativos:
-  - 🌧️ *Lluvia Serena*
-  - 🌲 *Bosque Calmo*
-  - 🌊 *Olas de Mar*
-  - ✨ *Frecuencia Armónica 432 Hz*
-- **Visualizador de Ondas**: Ecualizador gráfico animado y control dinámico de volumen.
-
-### 📚 5. Biblioteca de Recursos Educativos
-- **Buscador en Tiempo Real**: Filtrado predictivo por palabras clave mientras escribes.
-- **Filtros por Categoría**: Acceso ordenado a *Artículos*, *Guías Prácticas*, *Podcasts*, *Videos* e *Infografías*.
-
-### 🔐 6. Portal de Autenticación y Acceso
-- **Diseño Glassmorphism**: Interfaz estética con fondos translúcidos sobre escenarios naturales.
-- **Conmutador de Pestañas**: Alternancia fluida entre *Iniciar Sesión* y *Crear Cuenta*.
-- **Campos Flotantes Accesibles**: Formularios con validación en cliente y navegación fluida hacia la plataforma.
-
-### ⚙️ 7. Accesibilidad y Preferencias
-- **Modo Oscuro Integrado**: Paleta profunda para reducir la fatiga visual nocturna con persistencia local.
-- **Modo de Texto Aumentado**: Opción de escalado tipográfico para personas con necesidades de accesibilidad.
-- **Control Total de Datos**: Opciones para exportar o eliminar el historial y notas almacenadas.
+| Página / Archivo | Propósito y Contenido |
+| :--- | :--- |
+| **`index.html`** | 🏠 **Página Principal**: Sección Hero con métricas, estadísticas en tiempo real y pilares de cuidado emocional. |
+| **`pages/bienestar.html`** | 💚 **Centro de Bienestar**: Selector interactivo de estado de ánimo, mensajes reflexivos, racha y progresos. |
+| **`pages/recursos.html`** | 📚 **Biblioteca Educativa**: Buscador en tiempo real y filtros dinámicos por artículos, guías, podcasts, videos e infografías. |
+| **`pages/herramientas.html`** | 🫁 **Herramientas de Autocuidado**: Respirador rítmico guiado 4-4-4 y diario personal privado con `localStorage`. |
+| **`pages/kiri.html`** | 🤖 **Asistente Virtual KIRI**: Chat conversacional con respuestas inteligentes, sugerencias rápidas y uso responsable. |
+| **`pages/multimedia.html`** | 🎧 **Multimedia & Relax**: Sintetizador nativo con *Web Audio API* (*Lluvia, Bosque, Olas y 432 Hz*) y visualizador. |
+| **`pages/comunidad.html`** | 👥 **Espacios Comunitarios**: Círculos de diálogo temáticos, talleres virtuales y normas de convivencia. |
+| **`pages/ayuda.html`** | 🛟 **Ayuda Profesional**: Directorios verificados de terapeutas, líneas de emergencia 24/7 y preguntas frecuentes. |
+| **`pages/perfil.html`** | 👤 **Perfil & Accesibilidad**: Modo oscuro, texto aumentado, gestión de sesión y exportación/borrado de datos. |
+| **`pages/login.html`** | 🔐 **Portal de Autenticación**: Tarjeta *glassmorphic* con alternancia fluida entre *Iniciar Sesión* y *Crear Cuenta*. |
 
 ---
 
-## 📁 Estructura del Proyecto
+## 📁 Árbol del Proyecto
 
 ```text
 XOLONICA-CRESER/
-├── index.html                 # Punto de entrada principal de la aplicación
-├── README.md                  # Documentación del proyecto
-├── pages/
-│   └── login.html             # Portal de inicio de sesión y registro
-└── assets/
+├── index.html                 # 🏠 Página de inicio principal
+├── README.md                  # 📖 Documentación completa
+├── pages/                     # 📄 Páginas individuales del sitio
+│   ├── bienestar.html         # 💚 Monitoreo de ánimo y hábitos
+│   ├── recursos.html          # 📚 Biblioteca con buscador y filtros
+│   ├── herramientas.html      # 🫁 Respiración 4-4-4 y diario
+│   ├── kiri.html              # 🤖 Asistente virtual KIRI
+│   ├── multimedia.html        # 🎧 Reproductor de sonidos relajantes
+│   ├── comunidad.html         # 👥 Círculos y talleres
+│   ├── ayuda.html             # 🛟 Directorio y líneas de asistencia
+│   ├── perfil.html            # 👤 Ajustes, modo oscuro y privacidad
+│   └── login.html             # 🔐 Acceso y registro
+└── assets/                    # 📦 Recursos compartidos
     ├── css/
-    │   ├── main.css           # Estilos principales, variables CSS y animaciones
-    │   └── auth.css           # Estilos glassmorphic para el portal de acceso
+    │   ├── main.css           # 🎨 Estilos globales y animaciones
+    │   └── auth.css           # 💎 Estilos glassmorphism de acceso
     ├── js/
-    │   ├── app.js             # Lógica de navegación, KIRI, respirador y audio
-    │   └── auth.js            # Controlador de pestañas y validaciones de login
-    └── img/                   # Galería de imágenes, gifs y recursos multimedia
+    │   ├── app.js             # ⚙️ Lógica modular (KIRI, audio, respirador)
+    │   └── auth.js            # 🔑 Controlador de autenticación
+    └── img/                   # 🖼️ Galería de imágenes y recursos
         ├── valores.gif
         ├── cuidado.gif
         ├── libros.gif
@@ -90,24 +75,23 @@ XOLONICA-CRESER/
    cd XOLONICA-CRESER
    ```
 
-2. **Abrir en el navegador**:
-   - Haz doble clic directamente en `index.html` en la raíz del proyecto para abrirlo en tu navegador (Chrome, Edge, Firefox, Safari).
-   - O utiliza un servidor local como *Live Server* en VS Code.
+2. **Abrir en tu navegador**:
+   - Haz doble clic en `index.html` para abrir la página principal y navegar por todas las secciones.
 
 ---
 
-## 🛠️ Tecnologías Empleadas
+## 🛠️ Tecnologías y Estándares
 
-- **HTML5 Semántico**: Estructura accesible (`header`, `main`, `section`, `nav`, `aside`, `footer`, roles ARIA).
-- **CSS3 Moderno**: Variables personalizadas (*CSS Custom Properties*), Glassmorphism con `backdrop-filter`, Flexbox, CSS Grid y animaciones fluidas con `@keyframes`.
-- **JavaScript ES6+**: Arquitectura modular desacoplada, gestión de eventos, Web Audio API para síntesis sonora y Web Storage API (`localStorage`).
-- **Tipografías**: *Plus Jakarta Sans* y *Outfit* vía Google Fonts.
+- **HTML5 Multipágina**: Semántica estricta (`header`, `main`, `nav`, `aside`, `section`, `footer`) y accesibilidad ARIA.
+- **CSS3 Moderno**: Variables personalizadas, Glassmorphism con `backdrop-filter`, diseño responsivo y animaciones fluidas.
+- **JavaScript ES6+**: Módulos desacoplados, Web Audio API para síntesis sonora y Web Storage API (`localStorage`).
+- **Código Comentado**: Documentación exhaustiva en cada archivo y función para facilitar el aprendizaje y soporte.
 
 ---
 
 ## ⚠️ Uso Responsable y Alcance
 
-> **Aviso Importante**: CreSer y el asistente virtual KIRI ofrecen contenidos de carácter informativo, psicoeducativo y preventivo. **No constituyen un servicio de diagnóstico clínico ni reemplazan la atención médica o psicoterapéutica profesional**. Ante situaciones de crisis aguda o emergencia, se recomienda contactar de inmediato a los servicios de salud oficiales de tu localidad.
+> **Aviso Importante**: CreSer y el asistente virtual KIRI ofrecen contenidos informativos, psicoeducativos y preventivos. **No constituyen un servicio de diagnóstico clínico ni reemplazan la atención médica o psicológica profesional**. Ante situaciones de crisis aguda o emergencia, se recomienda contactar de inmediato a los servicios de salud oficiales de tu localidad.
 
 ---
 

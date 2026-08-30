@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CreSer — Acceso y Registro</title>
   <meta name="description" content="Inicia sesión o crea tu cuenta en CreSer para acceder a tus recursos de bienestar y herramientas de crecimiento personal.">
-  <link rel="stylesheet" href="CreSerlogin.css?v=3.0">
+  <link rel="stylesheet" href="../assets/css/auth.css?v=3.1">
 </head>
 <body>
 
@@ -13,12 +13,12 @@
        Encabezado
        ========================================================================= -->
   <header class="login-header">
-    <a href="../CreSer_Prototipo_Responsive.html" class="brand-link">
+    <a href="../index.html" class="brand-link">
       <span class="c1">Cre</span><span class="c3">Ser</span>
     </a>
     
     <nav class="nav-links">
-      <a href="../CreSer_Prototipo_Responsive.html" class="nav-back-link">← Volver al Inicio</a>
+      <a href="../index.html" class="nav-back-link">← Volver al Inicio</a>
       <button class="btnlogin" id="headerAuthBtn">Acceder</button>
     </nav>
   </header>
@@ -66,7 +66,7 @@
           <h2>Bienvenido de vuelta</h2>
           <p class="form-desc">Ingresa tus credenciales para continuar</p>
           
-          <form id="formLogin" action="../CreSer_Prototipo_Responsive.html" method="GET">
+          <form id="formLogin" action="../index.html" method="GET">
             <div class="input-box">
               <span class="input-icon">✉️</span>
               <input type="email" id="loginEmail" required placeholder=" " value="andrea@ejemplo.com">
@@ -97,7 +97,7 @@
           <h2>Crea tu cuenta</h2>
           <p class="form-desc">Comienza tu camino de bienestar hoy mismo</p>
           
-          <form id="formRegister" action="../CreSer_Prototipo_Responsive.html" method="GET">
+          <form id="formRegister" action="../index.html" method="GET">
             <div class="input-box">
               <span class="input-icon">👤</span>
               <input type="text" id="regName" required placeholder=" ">
@@ -132,6 +132,6 @@
     </div>
   </main>
 
-  <script src="../CreSerfunciones.js"></script>
+  <script src="../assets/js/auth.js"></script>
 </body>
 </html>

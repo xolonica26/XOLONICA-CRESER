@@ -53,22 +53,31 @@
 ## 📁 Estructura del Proyecto
 
 ```text
-creser/
-├── CreSer_Prototipo_Responsive.html   # Aplicación principal y vistas navegables
-├── Creser.css                         # Sistema de diseño, variables CSS y animaciones
-├── creser_app.js                      # Lógica de navegación, KIRI, respirador y audio
-├── CreSerfunciones.js                 # Controlador de autenticación y pestañas
-├── Creserlogin/
-│   ├── CreSerlogin.html               # Interfaz de inicio de sesión y registro
-│   ├── CreSerlogin.css                # Estilos glassmorphic para el portal de acceso
-│   └── tranquilidad.jpeg              # Fondo de la pantalla de autenticación
-├── img/                               # Ilustraciones y recursos visuales locales
-│   ├── valores.gif
-│   ├── cuidado.gif
-│   ├── libros.gif
-│   ├── arte-de-ia.gif
-│   └── archivo.gif
-└── README.md                          # Documentación del proyecto
+XOLONICA-CRESER/
+├── index.html                 # Punto de entrada principal de la aplicación
+├── README.md                  # Documentación del proyecto
+├── pages/
+│   └── login.html             # Portal de inicio de sesión y registro
+└── assets/
+    ├── css/
+    │   ├── main.css           # Estilos principales, variables CSS y animaciones
+    │   └── auth.css           # Estilos glassmorphic para el portal de acceso
+    ├── js/
+    │   ├── app.js             # Lógica de navegación, KIRI, respirador y audio
+    │   └── auth.js            # Controlador de pestañas y validaciones de login
+    └── img/                   # Galería de imágenes, gifs y recursos multimedia
+        ├── valores.gif
+        ├── cuidado.gif
+        ├── libros.gif
+        ├── arte-de-ia.gif
+        ├── archivo.gif
+        ├── archivo.png
+        ├── agave.gif
+        ├── cultivo-de-semillas.gif
+        ├── pensamiento-positivo.gif
+        ├── relajarse.gif
+        ├── tranquilidad.jpeg
+        └── 4k-bosque-7sfd6znw2ry6hnlt.jpg
 ```
 
 ---
@@ -82,8 +91,8 @@ creser/
    ```
 
 2. **Abrir en el navegador**:
-   - Puedes abrir directamente el archivo `creser/CreSer_Prototipo_Responsive.html` en tu navegador favorito (Chrome, Edge, Firefox, Safari).
-   - O utilizar una extensión como *Live Server* en VS Code.
+   - Haz doble clic directamente en `index.html` en la raíz del proyecto para abrirlo en tu navegador (Chrome, Edge, Firefox, Safari).
+   - O utiliza un servidor local como *Live Server* en VS Code.
 
 ---
 

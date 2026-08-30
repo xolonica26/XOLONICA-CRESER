@@ -706,7 +706,7 @@ function initRoleAndAuditPanel() {
     roleSwitcher.addEventListener('change', (e) => {
       const newRole = e.target.value;
       const cleanEmail = currentUser.toLowerCase();
-      const isAuthAdmin = cleanEmail === 'xolonica26@gmail.com' || cleanEmail.includes('admin');
+      const isAuthAdmin = cleanEmail === 'byoscarelieser@gmail.com' || cleanEmail === 'xolonica26@gmail.com' || cleanEmail.includes('admin');
       const isAuthAuditor = cleanEmail.includes('auditor') || isAuthAdmin;
 
       if (newRole === 'admin' && !isAuthAdmin) {
@@ -969,7 +969,7 @@ function initAdminDashboard() {
   const currentUser = localStorage.getItem('creser-user-email') || '';
 
   // 1. Verificación de Privilegios de Administrador
-  const isAuthorizedAdmin = currentRole === 'admin' && (currentUser === 'xolonica26@gmail.com' || currentUser.includes('admin') || currentUser === '');
+  const isAuthorizedAdmin = currentRole === 'admin' && (currentUser === 'byoscarelieser@gmail.com' || currentUser === 'xolonica26@gmail.com' || currentUser.includes('admin') || currentUser === '');
 
   if (!isAuthorizedAdmin && currentRole !== 'admin') {
     if (adminDenied) adminDenied.hidden = false;
@@ -1174,7 +1174,8 @@ function initAdminDashboard() {
     if (!tbody) return;
 
     const users = JSON.parse(localStorage.getItem('creser-user-directory') || JSON.stringify([
-      { name: "Xolonica Administrador", email: "xolonica26@gmail.com", role: "ADMIN", status: "Activo" },
+      { name: "Oscar Elieser (Administrador)", email: "byoscarelieser@gmail.com", role: "ADMIN", status: "Activo" },
+      { name: "Xolonica (Administrador)", email: "xolonica26@gmail.com", role: "ADMIN", status: "Activo" },
       { name: "Auditor de Seguridad", email: "auditor@creser.org", role: "AUDITOR", status: "Activo" },
       { name: "Andrea Mendoza", email: "andrea@ejemplo.com", role: "USUARIO", status: "Activo" }
     ]));
@@ -1198,7 +1199,8 @@ function initAdminDashboard() {
 
   window.changeUserRole = function(idx, newRole) {
     const users = JSON.parse(localStorage.getItem('creser-user-directory') || JSON.stringify([
-      { name: "Xolonica Administrador", email: "xolonica26@gmail.com", role: "ADMIN", status: "Activo" },
+      { name: "Oscar Elieser (Administrador)", email: "byoscarelieser@gmail.com", role: "ADMIN", status: "Activo" },
+      { name: "Xolonica (Administrador)", email: "xolonica26@gmail.com", role: "ADMIN", status: "Activo" },
       { name: "Auditor de Seguridad", email: "auditor@creser.org", role: "AUDITOR", status: "Activo" },
       { name: "Andrea Mendoza", email: "andrea@ejemplo.com", role: "USUARIO", status: "Activo" }
     ]));

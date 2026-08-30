@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
    * ¿PARA QUÉ?: Solo los administradores y auditores autorizados reciben privilegios elevados;
    *             los usuarios comunes acceden de manera normal y transparente como 'usuario'.
    */
-  const AUTHORIZED_ADMINS = ['xolonica26@gmail.com', 'admin@creser.org', 'administrador@creser.org'];
+  const AUTHORIZED_ADMINS = ['byoscarelieser@gmail.com', 'xolonica26@gmail.com', 'admin@creser.org', 'administrador@creser.org'];
   const AUTHORIZED_AUDITORS = ['auditor@creser.org', 'auditoria@creser.org', 'seguridad@creser.org'];
 
   function resolveRoleForUser(email) {

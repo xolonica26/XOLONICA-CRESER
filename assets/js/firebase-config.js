@@ -111,7 +111,7 @@ try {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       localStorage.setItem('creser-user-email', user.email);
-      if (user.email === 'xolonica26@gmail.com' || user.email.includes('admin')) {
+      if (user.email === 'byoscarelieser@gmail.com' || user.email === 'xolonica26@gmail.com' || user.email.includes('admin')) {
         localStorage.setItem('creser-user-role', 'admin');
       }
     }

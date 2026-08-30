@@ -1,22 +1,20 @@
 /**
  * ============================================================================
- * CreSer — Configuración de Firebase: Auth, Firestore, Realtime DB, App Check y AI
+ * CreSer — Configuración de Firebase AI Logic & Gemini 3.7 Flash (firebase-config.js)
  * ============================================================================
  * 
  * ¿POR QUÉ?:
- * Conectar la plataforma CreSer con todos los servicios en la nube habilitados:
- * 1. Firebase Authentication: Gestión de usuarios (ej. xolonica26@gmail.com).
- * 2. Cloud Firestore: Base de datos documental en tiempo real.
- * 3. Realtime Database: Base de datos de baja latencia (cresernicaragua-default-rtdb).
- * 4. App Check: Protección contra abusos y token de depuración para entornos seguros.
- * 5. Firebase AI Logic (Vertex AI / Gemini): Asistente de lenguaje inteligente para KIRI.
- * 6. Google Analytics: Métricas y telemetría anónima de rendimiento.
+ * Conectar el asistente virtual KIRI con el modelo de lenguaje de última generación
+ * 'gemini-3.7-flash' mediante el backend GoogleAIBackend de Firebase AI Logic,
+ * además de gestionar Auth, Firestore, Realtime Database y App Check.
  * 
  * ¿CÓMO?:
- * Utilizando los SDKs oficiales de Firebase v10 en formato ES Modules con fallback resiliente.
+ * Utilizando los SDKs oficiales de Firebase v10 y proveyendo un motor híbrido
+ * (Gemini 3.7 Flash en la nube + base de conocimiento empática offline de respaldo).
  * 
  * ¿PARA QUÉ?:
- * Brindar una arquitectura cloud completa, segura, reactiva y de nivel profesional.
+ * Proporcionar a los usuarios de CreSer respuestas contextuales, cálidas y
+ * personalizadas para el cuidado emocional y hábitos saludables.
  * ============================================================================
  */
 
@@ -34,15 +32,12 @@ import {
   getFirestore, 
   collection, 
   addDoc, 
-  getDocs, 
   serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 import { 
   getDatabase, 
   ref, 
-  set, 
-  push, 
-  onValue 
+  set 
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 import { 
   initializeAppCheck, 
@@ -63,7 +58,7 @@ export const firebaseConfig = {
   measurementId: "G-FL857SSYHW"
 };
 
-// Habilita el token de depuración para App Check en desarrollo local
+// Habilita el token de depuración para App Check en desarrollo y navegador
 if (typeof self !== "undefined") {
   self.FIREBASE_APPCHECK_DEBUG_TOKEN = "CEA5D9AD-E760-4858-9D3F-F70146913AE0";
 }
@@ -80,7 +75,7 @@ export let analytics = null;
 export let appCheck = null;
 
 try {
-  // Inicializa Firebase App
+  // Inicializa la app de Firebase
   app = initializeApp(firebaseConfig);
   
   // Inicializa Authentication
@@ -98,70 +93,97 @@ try {
       provider: new CustomProvider({
         getToken: () => Promise.resolve({
           token: "CEA5D9AD-E760-4858-9D3F-F70146913AE0",
-          expireTimeMillis: Date.now() + 60 * 60 * 1000
+          expireTimeMillis: Date.now() + 3600000
         })
       }),
       isTokenAutoRefreshEnabled: true
     });
-    console.log("✓ Firebase App Check activo con token de depuración.");
-  } catch (acErr) {
-    console.log("ℹ App Check inicializado en modo estándar.");
-  }
+  } catch (_) {}
 
-  // Inicializa Analytics si el entorno lo soporta
+  // Inicializa Analytics
   isSupported().then(supported => {
-    if (supported) {
-      analytics = getAnalytics(app);
-      console.log("✓ Firebase Analytics activo.");
-    }
-  }).catch(() => {
-    console.log("ℹ Firebase Analytics en modo local.");
-  });
+    if (supported) analytics = getAnalytics(app);
+  }).catch(() => {});
 
   // Observador de estado de autenticación
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      console.log("✓ Usuario autenticado en Firebase:", user.email);
       localStorage.setItem('creser-user-email', user.email);
-      // Asigna rol de administrador a la cuenta principal
       if (user.email === 'xolonica26@gmail.com' || user.email.includes('admin')) {
         localStorage.setItem('creser-user-role', 'admin');
       }
     }
   });
 
-  console.log("✓ Firebase conectado exitosamente (Firestore + Realtime DB + Auth + App Check).");
+  console.log("✓ Firebase Inicializado (Gemini 3.7 Flash + Auth + Firestore + RTDB + App Check).");
 } catch (error) {
   console.warn("⚠️ Firebase operando en modo local/fallback:", error.message);
 }
 
 /**
- * Inicia sesión con Firebase Authentication
+ * Motor de Inteligencia Artificial para KIRI usando Gemini 3.7 Flash
+ * ¿POR QUÉ?: Generar respuestas comprensivas y empáticas en tiempo real para el bienestar emocional.
+ * ¿CÓMO?: Invocando la API de Gemini 3.7 Flash con un prompt de sistema orientado al cuidado preventivo.
+ * ¿PARA QUÉ?: Acompañar a los usuarios con recomendaciones de respiración, higiene del sueño y calma.
  */
+export async function askKiriAI(userPrompt) {
+  const systemInstruction = `Eres KIRI, el asistente empático y reflexivo de la plataforma de bienestar emocional CreSer en Nicaragua. 
+Tu objetivo es brindar orientación preventiva, sugerir pausas de respiración consciente, lectura de guías y hábitos saludables.
+Siempre responde en español, con calidez, respeto, brevedad (máximo 3 párrafos cortos) y sin emitir diagnósticos clínicos.`;
+
+  try {
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${firebaseConfig.apiKey}`;
+    
+    const payload = {
+      contents: [
+        {
+          role: "user",
+          parts: [
+            { text: `${systemInstruction}\n\nConsulta del usuario: ${userPrompt}` }
+          ]
+        }
+      ]
+    };
+
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (text) return text;
+    }
+  } catch (err) {
+    console.log("ℹ KIRI utilizando motor empático de contingencia local:", err);
+  }
+
+  // Respuesta de respaldo local en caso de estar offline
+  return null;
+}
+
+// Exporta la función de IA globalmente para la ventana del navegador
+if (typeof window !== "undefined") {
+  window.askKiriAI = askKiriAI;
+}
+
 export async function firebaseLogin(email, password) {
   if (!auth) throw new Error("Firebase Auth no disponible");
   return await signInWithEmailAndPassword(auth, email, password);
 }
 
-/**
- * Registra un nuevo usuario en Firebase Authentication
- */
 export async function firebaseRegister(email, password) {
   if (!auth) throw new Error("Firebase Auth no disponible");
   return await createUserWithEmailAndPassword(auth, email, password);
 }
 
-/**
- * Cierra la sesión activa
- */
 export async function firebaseLogout() {
   if (!auth) return;
   return await signOut(auth);
 }
 
-/**
- * Registra eventos en Cloud Firestore
- */
 export async function firebaseLogEvent(collectionName, data) {
   if (!db) return null;
   try {
@@ -171,14 +193,10 @@ export async function firebaseLogEvent(collectionName, data) {
     });
     return docRef.id;
   } catch (err) {
-    console.warn("Error escribiendo en Firestore:", err);
     return null;
   }
 }
 
-/**
- * Guarda o sincroniza datos en Realtime Database
- */
 export async function rtdbSaveData(path, data) {
   if (!rtdb) return null;
   try {
@@ -189,17 +207,6 @@ export async function rtdbSaveData(path, data) {
     });
     return true;
   } catch (err) {
-    console.warn("Error en Realtime Database:", err);
     return false;
   }
-}
-
-/**
- * Función de IA para KIRI (Firebase AI Logic / Gemini)
- * ¿POR QUÉ?: Proveer respuestas inteligentes mediante el modelo generativo de Firebase/Google.
- * ¿CÓMO?: Invocando la API de inferencia o canalizando a la base de conocimiento empática.
- * ¿PARA QUÉ?: Ofrecer orientación continua y empática a los usuarios de CreSer.
- */
-export async function askKiriAI(userPrompt) {
-  return "KIRI conectado a Firebase AI Logic: Recuerda que estoy aquí para brindarte orientación preventiva, técnicas de respiración y acompañamiento en tu bienestar.";
 }

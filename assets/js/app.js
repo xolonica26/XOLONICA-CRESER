@@ -312,7 +312,7 @@ function initKiriAssistant() {
     messagesWrap.scrollTop = messagesWrap.scrollHeight;
   }
 
-  function handleSend() {
+  async function handleSend() {
     if (!chatInput) return;
     const text = chatInput.value.trim();
     if (!text) return;
@@ -320,6 +320,20 @@ function initKiriAssistant() {
     appendMessage(text, true);
     chatInput.value = '';
 
+    // Intento 1: Consulta a Gemini AI vía Firebase AI Logic
+    let aiGenerated = null;
+    if (typeof window.askKiriAI === 'function') {
+      try {
+        aiGenerated = await window.askKiriAI(text);
+      } catch (_) {}
+    }
+
+    if (aiGenerated) {
+      appendMessage(aiGenerated, false);
+      return;
+    }
+
+    // Intento 2: Base de conocimiento empática reflexiva de respaldo
     setTimeout(() => {
       const lower = text.toLowerCase();
       let chosenReply = null;

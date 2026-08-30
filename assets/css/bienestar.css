@@ -1,0 +1,816 @@
+/* ==========================================================================
+   CreSer — Centro Integral de Bienestar Emocional (bienestar.css)
+   Hoja de estilos dedicada exclusivamente para la sección de Bienestar.
+   ========================================================================== */
+
+/* Cabecera Hero de Bienestar */
+.wellness-hero {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(16, 185, 129, 0.08) 100%);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 2.2rem 2rem;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.wellness-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  padding: 4px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.wellness-hero-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--ink-primary);
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.02em;
+}
+
+.wellness-hero-sub {
+  font-size: 1.05rem;
+  color: var(--ink-secondary);
+  max-width: 720px;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.wellness-hero-privacy-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  color: var(--ink-muted);
+  background: rgba(255, 255, 255, 0.4);
+  padding: 6px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+body.dark .wellness-hero-privacy-note {
+  background: rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Grilla Modular Principal */
+.wellness-section {
+  margin-bottom: 2.5rem;
+}
+
+.wellness-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.wellness-section-head h2 {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  margin-bottom: 0.25rem;
+}
+
+.wellness-section-head p {
+  font-size: 0.92rem;
+  color: var(--ink-secondary);
+  margin: 0;
+}
+
+/* Selector de 8 Emociones */
+.mood-grid-8 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.mood-card-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 1rem 0.5rem;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--trans-fast);
+  color: var(--ink-primary);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.mood-card-btn .mood-emoji {
+  font-size: 2rem;
+  transition: transform var(--trans-fast);
+}
+
+.mood-card-btn:hover {
+  border-color: var(--primary);
+  background: var(--surface-2);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-sm);
+}
+
+.mood-card-btn:hover .mood-emoji {
+  transform: scale(1.15);
+}
+
+.mood-card-btn.selected {
+  border-color: var(--primary);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(16, 185, 129, 0.12) 100%);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+  font-weight: 700;
+}
+
+/* Factores de Influencia (Tags) */
+.influences-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink-primary);
+  margin-bottom: 0.75rem;
+}
+
+.influences-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.influence-chip {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  color: var(--ink-secondary);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all var(--trans-fast);
+  user-select: none;
+}
+
+.influence-chip:hover {
+  border-color: var(--primary);
+  color: var(--ink-primary);
+}
+
+.influence-chip.active {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+}
+
+/* ¿Qué necesitas ahora? (Pills de Necesidades) */
+.needs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.85rem;
+}
+
+.need-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.15rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--trans-fast);
+  color: var(--ink-primary);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.need-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+  background: var(--surface-2);
+}
+
+.need-card.active {
+  border-color: var(--secondary);
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--ink-primary);
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
+}
+
+/* Recomendación Adaptativa Destacada */
+.adaptive-recommendation-card {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
+  border: 1.5px solid rgba(59, 130, 246, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.adaptive-rec-content {
+  flex: 1;
+  min-width: 260px;
+}
+
+.adaptive-rec-tag {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--primary);
+  margin-bottom: 0.4rem;
+}
+
+.adaptive-rec-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  margin-bottom: 0.35rem;
+}
+
+.adaptive-rec-desc {
+  font-size: 0.92rem;
+  color: var(--ink-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Herramientas Rápidas (8 Cards) */
+.quick-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.15rem;
+}
+
+.quick-tool-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all var(--trans-fast);
+}
+
+.quick-tool-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.quick-tool-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  margin-bottom: 0.75rem;
+}
+
+.quick-tool-icon {
+  font-size: 1.75rem;
+  background: var(--surface-2);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.quick-tool-info h4 {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  margin-bottom: 0.2rem;
+}
+
+.quick-tool-duration {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+  font-weight: 500;
+}
+
+.quick-tool-desc {
+  font-size: 0.88rem;
+  color: var(--ink-secondary);
+  line-height: 1.5;
+  margin-bottom: 1.1rem;
+  flex-grow: 1;
+}
+
+/* Mi Bienestar esta Semana */
+.weekly-wellness-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-wellness-box {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 1.2rem;
+  text-align: center;
+}
+
+.stat-wellness-val {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 0.2rem;
+}
+
+.stat-wellness-lbl {
+  font-size: 0.84rem;
+  color: var(--ink-secondary);
+  font-weight: 600;
+}
+
+.weekly-pattern-bar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 90px;
+  padding: 0.75rem 1rem 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  gap: 0.5rem;
+}
+
+.pattern-day-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.pattern-day-bar {
+  width: 100%;
+  max-width: 24px;
+  background: linear-gradient(180deg, var(--primary) 0%, var(--secondary) 100%);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  transition: height 0.4s ease;
+}
+
+.pattern-day-lbl {
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  font-weight: 600;
+}
+
+/* Diario Emocional */
+.journal-split-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 860px) {
+  .journal-split-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.journal-form-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+}
+
+.journal-history-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  max-height: 480px;
+  overflow-y: auto;
+}
+
+/* Sueño, Energía y Hábitos */
+.sleep-energy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.energy-battery-selector {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
+
+.energy-battery-btn {
+  flex: 1;
+  min-width: 70px;
+  padding: 0.6rem 0.4rem;
+  background: var(--surface-2);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-align: center;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--ink-primary);
+  transition: all var(--trans-fast);
+}
+
+.energy-battery-btn:hover {
+  border-color: var(--primary);
+}
+
+.energy-battery-btn.active {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+}
+
+.habits-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+
+.habit-checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.9rem;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--trans-fast);
+  font-size: 0.9rem;
+  color: var(--ink-primary);
+}
+
+.habit-checkbox-item:hover {
+  border-color: var(--secondary);
+}
+
+.habit-checkbox-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--secondary);
+  cursor: pointer;
+}
+
+/* Ámbitos de Vida: Académico, Laboral, Familiar */
+.life-areas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 1.5rem;
+}
+
+.life-area-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all var(--trans-fast);
+}
+
+.life-area-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.life-area-card.academic { border-top: 4px solid #3b82f6; }
+.life-area-card.work { border-top: 4px solid #10b981; }
+.life-area-card.family { border-top: 4px solid #8b5cf6; }
+
+.life-area-topics {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.life-area-topics li {
+  font-size: 0.88rem;
+  color: var(--ink-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Biblioteca de Bienestar */
+.library-search-bar {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.library-search-input {
+  flex: 1;
+  min-width: 220px;
+  padding: 0.75rem 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-full);
+  color: var(--ink-primary);
+  font-size: 0.92rem;
+}
+
+.library-category-pills {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.library-pill-btn {
+  padding: 5px 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-full);
+  color: var(--ink-secondary);
+  font-size: 0.84rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--trans-fast);
+}
+
+.library-pill-btn:hover {
+  border-color: var(--primary);
+  color: var(--ink-primary);
+}
+
+.library-pill-btn.active {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+}
+
+.library-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.15rem;
+}
+
+.library-resource-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all var(--trans-fast);
+}
+
+.library-resource-card:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Retos de Bienestar Personales */
+.challenges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.15rem;
+}
+
+.challenge-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 1.35rem;
+}
+
+.challenge-progress-bar {
+  height: 8px;
+  background: var(--surface-2);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin: 0.85rem 0 0.5rem;
+}
+
+.challenge-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  border-radius: var(--radius-full);
+  transition: width 0.3s ease;
+}
+
+/* Sección Necesito Ayuda */
+.help-support-card {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(245, 158, 11, 0.08) 100%);
+  border: 1.5px solid rgba(239, 68, 68, 0.25);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+}
+
+.help-grid-contacts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin: 1.25rem 0;
+}
+
+.help-contact-box {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 1.15rem;
+}
+
+.help-contact-box strong {
+  display: block;
+  font-size: 0.98rem;
+  color: var(--ink-primary);
+  margin-bottom: 0.25rem;
+}
+
+.help-contact-box code {
+  display: inline-block;
+  background: var(--surface-2);
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  color: #ef4444;
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0.35rem 0;
+}
+
+/* Modales Interactivos de Herramientas */
+.wellness-tool-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.wellness-tool-modal.open {
+  display: flex;
+}
+
+.wellness-tool-dialog {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  max-width: 580px;
+  width: 100%;
+  padding: 2rem;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.wellness-tool-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--ink-muted);
+}
+
+.wellness-tool-close-btn:hover {
+  color: #ef4444;
+}
+
+/* Animación del círculo de respiración en modal */
+.modal-breath-circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin: 1.5rem auto;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.35) 0%, rgba(16, 185, 129, 0.45) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  border: 3px solid var(--primary);
+  transition: transform 4s ease-in-out;
+}
+
+.modal-breath-circle.inhale {
+  transform: scale(1.4);
+}
+
+.modal-breath-circle.hold {
+  transform: scale(1.4);
+  border-color: var(--secondary);
+}
+
+.modal-breath-circle.exhale {
+  transform: scale(0.85);
+}
+
+/* Clases de apoyo y utilidades de Bienestar (Zero Inline Styles) */
+.wellness-tip-box {
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--ink-secondary);
+}
+
+.wellness-disclaimer-box {
+  background: rgba(255, 255, 255, 0.6);
+  padding: 0.9rem;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  font-size: 0.85rem;
+  color: var(--ink-secondary);
+  margin-top: 1rem;
+}
+
+body.dark .wellness-disclaimer-box {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.wellness-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+@media (max-width: 600px) {
+  .wellness-grid-2col {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wellness-privacy-footer-box {
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+.wellness-privacy-footer-box p {
+  margin-bottom: 0.6rem;
+}
+
+.grounding-step-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.25rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.grounding-step-item {
+  background: var(--surface-2);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+}
+
+.timer-large-display {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  text-align: center;
+  margin: 1.5rem 0;
+}
+

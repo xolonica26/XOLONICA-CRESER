@@ -7,11 +7,13 @@
   <!-- Adaptabilidad en dispositivos móviles y de escritorio -->
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <!-- Título de la sección de Bienestar -->
-  <title>CreSer — Bienestar Emocional | Monitoreo y Hábitos</title>
-  <!-- Descripción de la página para accesibilidad -->
-  <meta name="description" content="Centro de bienestar emocional de CreSer: registro anímico diario, progreso de hábitos y pausas conscientes."/>
-  <!-- Enlace relativo a los estilos principales -->
+  <title>CreSer — Centro de Bienestar Emocional | Acompañamiento y Autocuidado</title>
+  <!-- Descripción de la página para accesibilidad y SEO -->
+  <meta name="description" content="Centro Integral de Bienestar Emocional de CreSer: acompañamiento adaptativo, herramientas prácticas, seguimiento de hábitos y recursos de autocuidado."/>
+  <!-- Enlace relativo a los estilos globales principales -->
   <link rel="stylesheet" href="../assets/css/main.css?v=3.2">
+  <!-- Hoja de estilos modular dedicada exclusivamente a Bienestar -->
+  <link rel="stylesheet" href="../assets/css/bienestar.css?v=1.0">
 </head>
 <body>
 
@@ -19,16 +21,13 @@
        Barra Superior de Navegación (Topbar)
        ========================================================================= -->
   <header class="topbar">
-    <!-- Botón hamburguesa para móviles -->
     <button id="menuToggle" class="mobile-menu-btn" aria-label="Abrir menú de navegación">☰</button>
 
-    <!-- Logotipo y nombre de marca -->
     <a href="../index.html" class="brand">
       <span class="c1">Cre</span><span class="c3">Ser</span>
       <img src="../assets/img/valores.gif" alt="CreSer Logo Animado" class="creserlogo">
     </a>
     
-    <!-- Menú de navegación principal con estado activo en Bienestar -->
     <nav class="nav" aria-label="Navegación principal">
       <a href="../index.html" class="navitem">Inicio</a>
       <a href="bienestar.html" class="navitem active">Bienestar</a>
@@ -56,7 +55,6 @@
       <button id="drawerClose" class="ghost" aria-label="Cerrar menú">✕</button>
     </div>
 
-    <!-- Lista de enlaces para pantalla móvil -->
     <div class="drawer-nav-list">
       <a href="../index.html">🏠 Inicio</a>
       <a href="bienestar.html" class="active">💚 Bienestar Emocional</a>
@@ -71,8 +69,8 @@
       <hr class="drawer-separator">
       
       <a href="login.html" class="drawer-auth-link">🔐 Iniciar Sesión / Registro</a>
-      <button data-modal="privacy">🔒 Privacidad y Datos</button>
-      <button data-modal="terms">📄 Términos de Servicio</button>
+      <a href="privacidad.html">🔒 Privacidad y Datos</a>
+      <a href="terminos.html">📄 Términos de Servicio</a>
     </div>
   </aside>
 
@@ -88,110 +86,643 @@
   </nav>
 
   <!-- =========================================================================
-       Contenido Central: Centro de Bienestar Emocional
+       Contenido Central: Centro Integral de Bienestar Emocional
        ========================================================================= -->
   <div class="app">
     <main>
       
-      <!-- Cabecera de la sección -->
-      <div class="section-title">
-        <div>
-          <h2>Centro de Bienestar Emocional</h2>
-          <p class="small">Monitorea tus estados anímicos y cultiva hábitos conscientes día a día</p>
+      <!-- =====================================================================
+           1. HERO / BIENVENIDA CONTEXTUAL
+           ===================================================================== -->
+      <section class="wellness-hero" aria-labelledby="heroWellnessTitle">
+        <span class="wellness-hero-badge">🌿 Centro de Bienestar Emocional</span>
+        <h1 id="heroWellnessTitle" class="wellness-hero-title">Hola 👋 ¿Qué necesitas cuidar hoy?</h1>
+        <p class="wellness-hero-sub">Cuida cómo te sientes, comprende tus emociones y construye hábitos que favorezcan tu bienestar diario.</p>
+        <div class="wellness-hero-privacy-note">
+          <span>🔒</span>
+          <span>Este espacio es privado, confidencial y está diseñado para acompañarte en tu autocuidado.</span>
         </div>
-        <!-- Enlace rápido para iniciar respiración guiada -->
-        <a href="herramientas.html" class="primary">Iniciar Respiración</a>
-      </div>
+      </section>
 
-      <!-- Cuadrícula dividida con el selector de emociones y la racha de hábitos -->
-      <div class="grid-wellness-split">
-        
-        <!-- Tarjeta Interactiva: Selector de Estado Emocional -->
-        <div class="card">
-          <h3>¿Cómo te sientes en este momento?</h3>
-          <p class="small">Selecciona tu estado emocional para recibir recomendaciones personalizadas y registrar tu progreso:</p>
-          
-          <!-- Botones interactivos con 5 estados anímicos -->
-          <div class="mood-selector">
-            <button class="mood-btn" data-mood="dificil" aria-label="Estado difícil">
-              <span>😟</span>
-              <span>Difícil</span>
-            </button>
-            <button class="mood-btn" data-mood="regular" aria-label="Estado regular">
-              <span>😕</span>
-              <span>Regular</span>
-            </button>
-            <button class="mood-btn" data-mood="neutral" aria-label="Estado neutral">
-              <span>😐</span>
-              <span>Neutral</span>
-            </button>
-            <button class="mood-btn selected" data-mood="tranquilo" aria-label="Estado tranquilo">
-              <span>🙂</span>
-              <span>Tranquilo</span>
-            </button>
-            <button class="mood-btn" data-mood="excelente" aria-label="Estado excelente">
-              <span>😄</span>
-              <span>Excelente</span>
-            </button>
+      <!-- =====================================================================
+           14. RECOMENDACIÓN PERSONALIZADA ADAPTATIVA (Posicionada al inicio para respuesta reactiva)
+           ===================================================================== -->
+      <section class="adaptive-recommendation-card" id="adaptiveRecommendationBanner" aria-live="polite">
+        <div class="adaptive-rec-content">
+          <span class="adaptive-rec-tag" id="adaptiveRecTag">Recomendado para ti</span>
+          <h3 class="adaptive-rec-title" id="adaptiveRecTitle">Continúa cultivando tu bienestar diario</h3>
+          <p class="adaptive-rec-desc" id="adaptiveRecDesc">Un estado sereno es el mejor momento para una pausa consciente de 3 minutos y mantener la hidratación y el descanso activo.</p>
+        </div>
+        <button id="adaptiveRecActionBtn" class="primary" aria-label="Probar herramienta recomendada">Probar: Pausa Consciente</button>
+      </section>
+
+      <!-- =====================================================================
+           2. ESTADO EMOCIONAL (8 Emociones + Factores de Influencia)
+           ===================================================================== -->
+      <section class="wellness-section card" aria-labelledby="moodSectionTitle">
+        <div class="wellness-section-head">
+          <div>
+            <h2 id="moodSectionTitle">¿Cómo te sientes hoy?</h2>
+            <p>Selecciona la emoción principal que mejor describe tu momento presente:</p>
+          </div>
+        </div>
+
+        <div class="mood-grid-8" role="radiogroup" aria-label="Selector de estado emocional">
+          <button class="mood-card-btn" data-mood="excelente" role="radio" aria-checked="false">
+            <span class="mood-emoji">😊</span>
+            <span>Excelente</span>
+          </button>
+          <button class="mood-card-btn selected" data-mood="bien" role="radio" aria-checked="true">
+            <span class="mood-emoji">🙂</span>
+            <span>Bien</span>
+          </button>
+          <button class="mood-card-btn" data-mood="neutral" role="radio" aria-checked="false">
+            <span class="mood-emoji">😐</span>
+            <span>Neutral</span>
+          </button>
+          <button class="mood-card-btn" data-mood="preocupado" role="radio" aria-checked="false">
+            <span class="mood-emoji">😟</span>
+            <span>Preocupado/a</span>
+          </button>
+          <button class="mood-card-btn" data-mood="triste" role="radio" aria-checked="false">
+            <span class="mood-emoji">😔</span>
+            <span>Triste</span>
+          </button>
+          <button class="mood-card-btn" data-mood="abrumado" role="radio" aria-checked="false">
+            <span class="mood-emoji">😣</span>
+            <span>Abrumado/a</span>
+          </button>
+          <button class="mood-card-btn" data-mood="frustrado" role="radio" aria-checked="false">
+            <span class="mood-emoji">😡</span>
+            <span>Frustrado/a</span>
+          </button>
+          <button class="mood-card-btn" data-mood="cansado" role="radio" aria-checked="false">
+            <span class="mood-emoji">😴</span>
+            <span>Cansado/a</span>
+          </button>
+        </div>
+
+        <h3 class="influences-title">¿Qué está influyendo en cómo te sientes?</h3>
+        <div class="influences-wrap" aria-label="Factores de influencia">
+          <button class="influence-chip active" data-influence="Estudios">📚 Estudios</button>
+          <button class="influence-chip" data-influence="Trabajo">💼 Trabajo</button>
+          <button class="influence-chip" data-influence="Familia">👨‍👩‍👧 Familia</button>
+          <button class="influence-chip" data-influence="Relaciones">👥 Relaciones</button>
+          <button class="influence-chip" data-influence="Economía">💰 Economía</button>
+          <button class="influence-chip" data-influence="Sueño">🌙 Sueño</button>
+          <button class="influence-chip" data-influence="Salud">🍎 Salud</button>
+          <button class="influence-chip" data-influence="Soledad">🌱 Soledad</button>
+          <button class="influence-chip" data-influence="Situaciones personales">🧩 Situaciones personales</button>
+          <button class="influence-chip" data-influence="No estoy seguro/a">❓ No estoy seguro/a</button>
+        </div>
+
+        <div class="text-left">
+          <button id="btnRegisterWellnessMood" class="primary">Registrar Estado Emocional</button>
+        </div>
+        <div id="wellnessMoodNotice" class="notice" style="display:none; margin-top:1rem;"></div>
+      </section>
+
+      <!-- =====================================================================
+           3. ¿QUÉ NECESITAS AHORA?
+           ===================================================================== -->
+      <section class="wellness-section" aria-labelledby="needsSectionTitle">
+        <div class="wellness-section-head">
+          <div>
+            <h2 id="needsSectionTitle">¿Qué necesitas ahora?</h2>
+            <p>Elige tu objetivo actual para acceder inmediatamente a la recomendación ideal:</p>
+          </div>
+        </div>
+
+        <div class="needs-grid">
+          <button class="need-card" data-target-tool="respiracion"><span>🧘</span><span>Calmarme</span></button>
+          <button class="need-card" data-target-tool="respiracion"><span>🌬️</span><span>Respirar y relajarme</span></button>
+          <button class="need-card" data-target-tool="sonidos"><span>😴</span><span>Dormir mejor</span></button>
+          <button class="need-card" data-target-tool="concentracion"><span>🎯</span><span>Concentrarme</span></button>
+          <button class="need-card" data-target-tool="escritura"><span>💭</span><span>Ordenar mis pensamientos</span></button>
+          <a href="kiri.html" class="need-card"><span>❤️</span><span>Hablar sobre lo que siento</span></a>
+          <a href="#academicWellnessSec" class="need-card"><span>📚</span><span>Manejar el estrés académico</span></a>
+          <a href="#workWellnessSec" class="need-card"><span>💼</span><span>Manejar el estrés laboral</span></a>
+          <a href="#familyWellnessSec" class="need-card"><span>👥</span><span>Mejorar mis relaciones</span></a>
+          <a href="#helpSupportSec" class="need-card"><span>🆘</span><span>Necesito ayuda</span></a>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           4. HERRAMIENTAS RÁPIDAS (8 Micro-Herramientas Funcionales)
+           ===================================================================== -->
+      <section class="wellness-section" aria-labelledby="quickToolsTitle">
+        <div class="wellness-section-head">
+          <div>
+            <h2 id="quickToolsTitle">Herramientas para este momento</h2>
+            <p>Pausas interactivas breves diseñadas para modular tu ritmo y restaurar tu equilibrio:</p>
+          </div>
+        </div>
+
+        <div class="quick-tools-grid">
+          <!-- 1. Respiración -->
+          <div class="quick-tool-card">
+            <div>
+              <div class="quick-tool-header">
+                <div class="quick-tool-icon">🫁</div>
+                <div class="quick-tool-info">
+                  <h4>Pausa de respiración</h4>
+                  <span class="quick-tool-duration">⏱️ 1-3 min</span>
+                </div>
+              </div>
+              <p class="quick-tool-desc">Respiración cuadrada 4-4-4 para desacelerar el ritmo cardíaco y calmar la tensión.</p>
+            </div>
+            <button class="primary btn-full" data-open-tool="respiracion">Comenzar</button>
           </div>
 
-          <!-- Botón para procesar y guardar el registro -->
-          <button class="primary btn-full" id="registerMood">Registrar Estado Emocional</button>
-          <!-- Mensaje dinámico de confirmación con persistencia -->
-          <div id="moodSaved" class="notice"></div>
+          <!-- 2. Grounding -->
+          <div class="quick-tool-card">
+            <div>
+              <div class="quick-tool-header">
+                <div class="quick-tool-icon">🌿</div>
+                <div class="quick-tool-info">
+                  <h4>Grounding 5-4-3-2-1</h4>
+                  <span class="quick-tool-duration">⏱️ 3 min</span>
+                </div>
+              </div>
+              <p class="quick-tool-desc">Técnica sensorial para conectar con el entorno presente y reducir pensamientos rumiantes.</p>
+            </div>
+            <button class="secondary btn-full" data-open-tool="grounding">Comenzar</button>
+          </div>
+
+          <!-- 3. Relajación Muscular -->
+          <div class="quick-tool-card">
+            <div>
+              <div class="quick-tool-header">
+                <div class="quick-tool-icon">💆</div>
+                <div class="quick-tool-info">
+                  <h4>Relajación muscular</h4>
+                  <span class="quick-tool-duration">⏱️ 5 min</span>
+                </div>
+              </div>
+              <p class="quick-tool-desc">Secuencia suave para tensar y soltar grupos musculares liberando la sobrecarga física.</p>
+            </div>
+            <button class="primary btn-full" data-open-tool="muscular">Comenzar</button>
+          </div>
+
+          <!-- 4. Descanso Visual -->
+          <div class="quick-tool-card">
+            <div>
+              <div class="quick-tool-header">
+                <div class="quick-tool-icon">👁️</div>
+                <div class="quick-tool-info">
+                  <h4>Descanso visual</h4>
+                  <span class="quick-tool-duration">⏱️ 2 min</span>
+                </div>
+              </div>
+              <p class="quick-tool-desc">Regla 20-20-20 para aliviar la fatiga de pantallas y relajar la musculatura ocular.</p>
+            </div>
+            <button class="secondary btn-full" data-open-tool="visual">Comenzar</button>
+          </div>
+
+          <!-- 5. Escritura Emocional -->
+          <div class="quick-tool-card">
+            <div>
+              <div class="quick-tool-header">
+                <div class="quick-tool-icon">✍️</div>
+                <div class="quick-tool-info">
+                  <h4>Escritura emocional</h4>
+                  <span class="quick-tool-duration">⏱️ 5 min</span>
+                </div>
+              </div>
+              <p class="quick-tool-desc">Desahogo reflexivo libre para plasmar lo que sientes sin juicios ni censuras.</p>
+            </div>
+            <button class="primary btn-full" data-open-tool="escritura">Comenzar</button>
+          </div>
+
+          <!-- 6. Ejercicio de Concentración -->
+          <div class="quick-tool-card">
+            <div>
+              <div class="quick-tool-header">
+                <div class="quick-tool-icon">🎯</div>
+                <div class="quick-tool-info">
+                  <h4>Concentración guiada</h4>
+                  <span class="quick-tool-duration">⏱️ 3 min</span>
+                </div>
+              </div>
+              <p class="quick-tool-desc">Intervalo de foco mental para recuperar la atención y disipar la dispersión.</p>
+            </div>
+            <button class="secondary btn-full" data-open-tool="concentracion">Comenzar</button>
+          </div>
+
+          <!-- 7. Pausa Consciente -->
+          <div class="quick-tool-card">
+            <div>
+              <div class="quick-tool-header">
+                <div class="quick-tool-icon">🧘</div>
+                <div class="quick-tool-info">
+                  <h4>Pausa consciente</h4>
+                  <span class="quick-tool-duration">⏱️ 3 min</span>
+                </div>
+              </div>
+              <p class="quick-tool-desc">Escaneo corporal paso a paso para reconectar con tu postura y respiración.</p>
+            </div>
+            <button class="primary btn-full" data-open-tool="pausa">Comenzar</button>
+          </div>
+
+          <!-- 8. Sonidos Ambientales -->
+          <div class="quick-tool-card">
+            <div>
+              <div class="quick-tool-header">
+                <div class="quick-tool-icon">🎧</div>
+                <div class="quick-tool-info">
+                  <h4>Sonidos ambientales</h4>
+                  <span class="quick-tool-duration">⏱️ 5-30 min</span>
+                </div>
+              </div>
+              <p class="quick-tool-desc">Frecuencias y paisajes sonoros sintetizados para generar una atmósfera de calma.</p>
+            </div>
+            <button class="secondary btn-full" data-open-tool="sonidos">Comenzar</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           5. MI BIENESTAR ESTA SEMANA (Métricas No Diagnósticas)
+           ===================================================================== -->
+      <section class="wellness-section card" aria-labelledby="weeklyWellnessTitle">
+        <div class="wellness-section-head">
+          <div>
+            <h2 id="weeklyWellnessTitle">Mi bienestar esta semana</h2>
+            <p>Patrones de constancia y actividad de autocuidado registrados:</p>
+          </div>
         </div>
 
-        <!-- Tarjeta: Constancia y Progreso de Hábitos -->
-        <div class="card">
-          <h3>Constancia y Hábitos</h3>
-          <p>Racha de chequeos continuos:</p>
-          <!-- Contador dinámico de racha actualizado por JavaScript -->
-          <div class="streak-number" id="streakCount">5 días</div>
-          <!-- Barra de progreso visual -->
-          <div class="progress-track"><div class="progress-fill"></div></div>
-          <p class="small streak-subtext">Excelente consistencia. Has completado el 72% de tus pausas conscientes esta semana.</p>
+        <div class="weekly-wellness-grid">
+          <div class="stat-wellness-box">
+            <div class="stat-wellness-val" id="statStreakDays">5 días</div>
+            <div class="stat-wellness-lbl">Días de constancia</div>
+          </div>
+          <div class="stat-wellness-box">
+            <div class="stat-wellness-val" id="statTotalPauses">12</div>
+            <div class="stat-wellness-lbl">Pausas conscientes</div>
+          </div>
+          <div class="stat-wellness-box">
+            <div class="stat-wellness-val" id="statTotalReflections">5</div>
+            <div class="stat-wellness-lbl">Reflexiones registradas</div>
+          </div>
+          <div class="stat-wellness-box">
+            <div class="stat-wellness-val" id="statTotalHabits">4 cumplidos</div>
+            <div class="stat-wellness-lbl">Hábitos saludables</div>
+          </div>
         </div>
-      </div>
 
-      <!-- Sección de Atajos Rápidos a Otras Herramientas -->
-      <div class="section-title mt-4">
-        <h3>Accesos Rápidos de Cuidado</h3>
-      </div>
-      <div class="grid">
-        <!-- Atajo a Respiración -->
-        <a href="herramientas.html" class="card card-clickable">
-          <div class="icon-badge">🫁</div>
-          <h4>Pausa de Respiración</h4>
-          <p class="small">Calma tu sistema nervioso en solo 36 segundos.</p>
-        </a>
+        <div class="weekly-pattern-bar" aria-label="Evolución semanal de pausas y chequeos">
+          <div class="pattern-day-col">
+            <div class="pattern-day-bar" style="height: 60%;"></div>
+            <span class="pattern-day-lbl">Lun</span>
+          </div>
+          <div class="pattern-day-col">
+            <div class="pattern-day-bar" style="height: 80%;"></div>
+            <span class="pattern-day-lbl">Mar</span>
+          </div>
+          <div class="pattern-day-col">
+            <div class="pattern-day-bar" style="height: 45%;"></div>
+            <span class="pattern-day-lbl">Mié</span>
+          </div>
+          <div class="pattern-day-col">
+            <div class="pattern-day-bar" style="height: 90%;"></div>
+            <span class="pattern-day-lbl">Jue</span>
+          </div>
+          <div class="pattern-day-col">
+            <div class="pattern-day-bar" style="height: 75%;"></div>
+            <span class="pattern-day-lbl">Vie</span>
+          </div>
+          <div class="pattern-day-col">
+            <div class="pattern-day-bar" style="height: 50%;"></div>
+            <span class="pattern-day-lbl">Sáb</span>
+          </div>
+          <div class="pattern-day-col">
+            <div class="pattern-day-bar" style="height: 85%;"></div>
+            <span class="pattern-day-lbl">Dom</span>
+          </div>
+        </div>
+      </section>
 
-        <!-- Atajo a Diario -->
-        <a href="herramientas.html" class="card card-clickable">
-          <div class="icon-badge">📝</div>
-          <h4>Diario de Gratitud</h4>
-          <p class="small">Registra tus pensamientos y reflexiones privadas.</p>
-        </a>
+      <!-- =====================================================================
+           6. DIARIO EMOCIONAL Y GRATITUD
+           ===================================================================== -->
+      <section class="wellness-section" aria-labelledby="journalSectionTitle">
+        <div class="wellness-section-head">
+          <div>
+            <h2 id="journalSectionTitle">Mi diario emocional</h2>
+            <p>Espacio confidencial para registrar pensamientos, desahogo y motivos de gratitud:</p>
+          </div>
+          <button id="btnViewJournalPatterns" class="btn ghost btn-sm">Ver mis patrones</button>
+        </div>
 
-        <!-- Atajo a Multimedia -->
-        <a href="multimedia.html" class="card card-clickable">
-          <div class="icon-badge">🎧</div>
-          <h4>Sonidos Ambientales</h4>
-          <p class="small">Lluvia, olas y frecuencias armónicas para concentrarte.</p>
-        </a>
+        <div class="journal-split-grid">
+          <!-- Formulario de Entrada -->
+          <div class="journal-form-card">
+            <form id="formWellnessJournal">
+              <label for="journalEntryType" class="field-label">Tipo de reflexión:</label>
+              <select id="journalEntryType" class="input" style="margin-bottom:0.75rem;">
+                <option value="Lo que siento">💭 Lo que siento</option>
+                <option value="Gratitud">🌟 Gratitud diaria</option>
+                <option value="Pensamientos">🧠 Pensamientos y desahogo</option>
+                <option value="Algo que me preocupa">🌧️ Algo que me preocupa</option>
+                <option value="Algo que logré">🏆 Algo que logré hoy</option>
+                <option value="Algo que quiero recordar">📌 Algo que quiero recordar</option>
+              </select>
 
-        <!-- Atajo a Ayuda -->
-        <a href="ayuda.html" class="card card-clickable">
-          <div class="icon-badge">🛟</div>
-          <h4>Líneas de Asistencia</h4>
-          <p class="small">Contactos y servicios de orientación profesional.</p>
-        </a>
-      </div>
+              <label for="journalEntryTitle" class="field-label">Título opcional:</label>
+              <input type="text" id="journalEntryTitle" class="input" placeholder="Ej. Un momento de calma hoy..." style="margin-bottom:0.75rem;">
+
+              <label for="journalEntryText" class="field-label">Escribe lo que sientes:</label>
+              <textarea id="journalEntryText" class="input" rows="4" placeholder="Escribe libremente... Este espacio solo tú puedes verlo." required style="margin-bottom:1rem;"></textarea>
+
+              <button type="submit" class="primary">Guardar Reflexión</button>
+            </form>
+          </div>
+
+          <!-- Historial de Entradas -->
+          <div class="journal-history-card">
+            <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:0.75rem;">Entradas Anteriores</h3>
+            <div id="wellnessJournalList"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           7 & 8. SUEÑO, DESCANSO, ENERGÍA Y HÁBITOS
+           ===================================================================== -->
+      <section class="wellness-section">
+        <div class="sleep-energy-grid">
+          
+          <!-- Sueño y Descanso -->
+          <div class="card">
+            <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:0.4rem;">🌙 Sueño y descanso</h3>
+            <p class="small text-muted">El descanso de calidad es la base de la autorregulación emocional:</p>
+            
+            <form id="formSleepTracker" style="margin-top:1rem;">
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:0.75rem;">
+                <div>
+                  <label for="sleepHoursInput" class="field-label">Horas aproximadas:</label>
+                  <input type="number" id="sleepHoursInput" class="input" value="7.5" step="0.5" min="2" max="14">
+                </div>
+                <div>
+                  <label for="sleepQualityInput" class="field-label">Calidad del descanso:</label>
+                  <select id="sleepQualityInput" class="input">
+                    <option value="Muy reparador">✨ Muy reparador</option>
+                    <option value="Buena" selected>🙂 Buena</option>
+                    <option value="Regular">😐 Regular</option>
+                    <option value="Interrumpido">🌧️ Interrumpido</option>
+                  </select>
+                </div>
+              </div>
+              <button type="submit" class="btn ghost btn-sm">Guardar Registro de Sueño</button>
+            </form>
+
+            <div style="background:var(--surface-2); border-radius:var(--radius-sm); padding:0.85rem; margin-top:1rem; font-size:0.85rem; color:var(--ink-secondary);">
+              💡 <em>Consejo de higiene del sueño:</em> Desconectar pantallas 30 minutos antes de dormir facilita la liberación de melatonina natural.
+            </div>
+          </div>
+
+          <!-- Energía y Hábitos -->
+          <div class="card">
+            <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:0.4rem;">🔋 ¿Cómo está tu energía hoy?</h3>
+            <p class="small text-muted">Escucha las señales de tu cuerpo y activa hábitos según tu nivel:</p>
+
+            <div class="energy-battery-selector" role="radiogroup" aria-label="Nivel de energía">
+              <button type="button" class="energy-battery-btn" data-energy="Alta">🔋 Alta</button>
+              <button type="button" class="energy-battery-btn" data-energy="Buena">🔋 Buena</button>
+              <button type="button" class="energy-battery-btn active" data-energy="Normal">🔋 Normal</button>
+              <button type="button" class="energy-battery-btn" data-energy="Baja">🪫 Baja</button>
+              <button type="button" class="energy-battery-btn" data-energy="Muy baja">🪫 Muy baja</button>
+            </div>
+
+            <h4 style="font-size:0.95rem; font-weight:700; margin-top:1.2rem;">Seguimiento de Hábitos Diarios</h4>
+            <div class="habits-checklist">
+              <label class="habit-checkbox-item">
+                <input type="checkbox" id="habit_hidrata" class="habit-check-input">
+                <span>💧 Hidratación consciente (8 vasos de agua)</span>
+              </label>
+              <label class="habit-checkbox-item">
+                <input type="checkbox" id="habit_pausa" class="habit-check-input" checked>
+                <span>🫁 Pausa activa o de respiración de 3 min</span>
+              </label>
+              <label class="habit-checkbox-item">
+                <input type="checkbox" id="habit_movimiento" class="habit-check-input">
+                <span>🚶 Caminata o estiramiento corporal</span>
+              </label>
+              <label class="habit-checkbox-item">
+                <input type="checkbox" id="habit_desconexion" class="habit-check-input" checked>
+                <span>📱 15 minutos de desconexión de pantallas</span>
+              </label>
+              <label class="habit-checkbox-item">
+                <input type="checkbox" id="habit_gratitud" class="habit-check-input" checked>
+                <span>🌟 Registrar una reflexión o gratitud</span>
+              </label>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           9, 10, 11. ÁMBITOS DE VIDA: ACADÉMICO, LABORAL Y FAMILIAR
+           ===================================================================== -->
+      <section class="wellness-section" aria-labelledby="lifeAreasTitle">
+        <div class="wellness-section-head">
+          <div>
+            <h2 id="lifeAreasTitle">Bienestar en tus ámbitos de vida</h2>
+            <p>Guías especializadas y estrategias para cada entorno:</p>
+          </div>
+        </div>
+
+        <div class="life-areas-grid">
+          
+          <!-- Bienestar Académico -->
+          <div class="life-area-card academic" id="academicWellnessSec">
+            <div>
+              <span class="badge" style="background:rgba(59, 130, 246, 0.15); color:#3b82f6; margin-bottom:0.5rem; display:inline-block;">📚 Vida Académica</span>
+              <h3 style="font-size:1.2rem; font-weight:700; color:var(--ink-primary);">Bienestar Académico</h3>
+              <p class="small text-muted" style="margin-top:0.3rem;">Herramientas para estudiantes y docentes:</p>
+              
+              <ul class="life-area-topics">
+                <li><span>📋</span><span>Organización del estudio y prioridades</span></li>
+                <li><span>⏰</span><span>Gestión del tiempo sin procrastinación</span></li>
+                <li><span>😰</span><span>Manejo de la ansiedad ante exámenes</span></li>
+                <li><span>🎯</span><span>Estrategias de concentración profunda</span></li>
+                <li><span>🤝</span><span>Relaciones constructivas con compañeros</span></li>
+              </ul>
+            </div>
+            <a href="recursos.html" class="btn ghost btn-sm">Ver Guías Académicas →</a>
+          </div>
+
+          <!-- Bienestar Laboral -->
+          <div class="life-area-card work" id="workWellnessSec">
+            <div>
+              <span class="badge badge-green" style="margin-bottom:0.5rem; display:inline-block;">💼 Ámbito Laboral</span>
+              <h3 style="font-size:1.2rem; font-weight:700; color:var(--ink-primary);">Bienestar Laboral</h3>
+              <p class="small text-muted" style="margin-top:0.3rem;">Estrategias para trabajadores y profesionales:</p>
+              
+              <ul class="life-area-topics">
+                <li><span>🛑</span><span>Prevención del agotamiento (Burnout)</span></li>
+                <li><span>⏰</span><span>Pausas activas y microdescansos</span></li>
+                <li><span>🚪</span><span>Límites y desconexión tras la jornada</span></li>
+                <li><span>💬</span><span>Comunicación asertiva y resolución de conflictos</span></li>
+                <li><span>🌱</span><span>Autocuidado en entornos de alta exigencia</span></li>
+              </ul>
+            </div>
+            <a href="recursos.html" class="btn ghost btn-sm">Ver Guías Laborales →</a>
+          </div>
+
+          <!-- Bienestar Familiar -->
+          <div class="life-area-card family" id="familyWellnessSec">
+            <div>
+              <span class="badge badge-purple" style="margin-bottom:0.5rem; display:inline-block;">👨‍👩‍👧 Vida Familiar</span>
+              <h3 style="font-size:1.2rem; font-weight:700; color:var(--ink-primary);">Bienestar Familiar</h3>
+              <p class="small text-muted" style="margin-top:0.3rem;">Fortalecimiento de vínculos y convivencia:</p>
+              
+              <ul class="life-area-topics">
+                <li><span>👂</span><span>Escucha activa y validación mutua</span></li>
+                <li><span>❤️</span><span>Conversaciones difíciles sin confrontación</span></li>
+                <li><span>📱</span><span>Uso saludable de tecnología en el hogar</span></li>
+                <li><span>🤝</span><span>Rutinas compartidas y tiempo de calidad</span></li>
+                <li><span>🏠</span><span>Cuidado emocional intergeneracional</span></li>
+              </ul>
+            </div>
+            <a href="recursos.html" class="btn ghost btn-sm">Ver Guías Familiares →</a>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           12. BIBLIOTECA DE BIENESTAR (Búsqueda y Filtros de 11 Categorías)
+           ===================================================================== -->
+      <section class="wellness-section card" aria-labelledby="librarySectionTitle">
+        <div class="wellness-section-head">
+          <div>
+            <h2 id="librarySectionTitle">Biblioteca de Bienestar</h2>
+            <p>Lecturas breves, ejercicios prácticos y recursos organizados por temas:</p>
+          </div>
+        </div>
+
+        <div class="library-search-bar">
+          <input type="text" id="librarySearchInp" class="library-search-input" placeholder="🔍 Buscar temas, ejercicios o guías...">
+        </div>
+
+        <div class="library-category-pills" role="tablist" aria-label="Categorías de bienestar">
+          <button class="library-pill-btn active" data-cat="todos">Todos</button>
+          <button class="library-pill-btn" data-cat="estres">Estrés</button>
+          <button class="library-pill-btn" data-cat="ansiedad">Ansiedad</button>
+          <button class="library-pill-btn" data-cat="emociones">Emociones</button>
+          <button class="library-pill-btn" data-cat="sueno">Sueño</button>
+          <button class="library-pill-btn" data-cat="relaciones">Relaciones</button>
+          <button class="library-pill-btn" data-cat="habitos">Hábitos</button>
+          <button class="library-pill-btn" data-cat="concentracion">Concentración</button>
+          <button class="library-pill-btn" data-cat="autocuidado">Autocuidado</button>
+          <button class="library-pill-btn" data-cat="familia">Familia</button>
+          <button class="library-pill-btn" data-cat="academico">Académico</button>
+          <button class="library-pill-btn" data-cat="laboral">Laboral</button>
+        </div>
+
+        <div class="library-cards-grid" id="libraryCardsContainer"></div>
+      </section>
+
+      <!-- =====================================================================
+           13. RETOS DE BIENESTAR PERSONALES
+           ===================================================================== -->
+      <section class="wellness-section" aria-labelledby="challengesTitle">
+        <div class="wellness-section-head">
+          <div>
+            <h2 id="challengesTitle">Retos de bienestar personales</h2>
+            <p>Metas individuales progresivas para incorporar el autocuidado en tu día a día:</p>
+          </div>
+        </div>
+
+        <div class="challenges-grid">
+          <!-- Reto 1 -->
+          <div class="challenge-card">
+            <span class="badge badge-green">🌱 7 Días</span>
+            <h4 style="font-size:1.05rem; font-weight:700; margin:0.4rem 0 0.2rem;">Reto 7 días de bienestar</h4>
+            <p class="small text-muted">Realiza al menos una pausa consciente o registro diario durante una semana.</p>
+            <div class="challenge-progress-bar">
+              <div class="challenge-progress-fill" id="challengeFill_7dias" style="width: 42%;"></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="small text-muted" id="challengeText_7dias">Día 3 de 7 completado</span>
+              <button class="btn ghost btn-sm btn-advance-challenge" data-challenge="7dias">+1 Día</button>
+            </div>
+          </div>
+
+          <!-- Reto 2 -->
+          <div class="challenge-card">
+            <span class="badge" style="background:rgba(59,130,246,0.15); color:#3b82f6;">🫁 Respiración</span>
+            <h4 style="font-size:1.05rem; font-weight:700; margin:0.4rem 0 0.2rem;">Reto de pausas conscientes</h4>
+            <p class="small text-muted">Completa 2 sesiones de respiración diafragmática de 3 minutos cada día.</p>
+            <div class="challenge-progress-bar">
+              <div class="challenge-progress-fill" id="challengeFill_respiracion" style="width: 70%;"></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="small text-muted" id="challengeText_respiracion">Día 5 de 7 completado</span>
+              <button class="btn ghost btn-sm btn-advance-challenge" data-challenge="respiracion">+1 Día</button>
+            </div>
+          </div>
+
+          <!-- Reto 3 -->
+          <div class="challenge-card">
+            <span class="badge badge-purple">📱 Desconexión</span>
+            <h4 style="font-size:1.05rem; font-weight:700; margin:0.4rem 0 0.2rem;">Reto de desconexión digital</h4>
+            <p class="small text-muted">Evita pantallas 30 minutos antes de dormir para favorecer tu descanso.</p>
+            <div class="challenge-progress-bar">
+              <div class="challenge-progress-fill" id="challengeFill_digital" style="width: 28%;"></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="small text-muted" id="challengeText_digital">Día 2 de 7 completado</span>
+              <button class="btn ghost btn-sm btn-advance-challenge" data-challenge="digital">+1 Día</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           15. NECESITO AYUDA & LÍNEAS OFICIALES EN NICARAGUA
+           ===================================================================== -->
+      <section class="wellness-section help-support-card" id="helpSupportSec" aria-labelledby="helpSupportTitle">
+        <h2 id="helpSupportTitle" style="font-size:1.4rem; font-weight:800; color:#ef4444; margin-bottom:0.4rem;">¿Necesitas hablar con alguien?</h2>
+        <p style="font-size:0.95rem; color:var(--ink-primary); line-height:1.5;">No tienes que afrontar una situación difícil completamente solo/a. El apoyo profesional y la escucha empática marcan la diferencia.</p>
+        
+        <div class="help-grid-contacts">
+          <div class="help-contact-box">
+            <strong>🚨 Línea Nacional de Emergencias</strong>
+            <code>118 / 102</code>
+            <p class="small text-muted">Atención de crisis, soporte y primeros auxilios — 24/7</p>
+          </div>
+          <div class="help-contact-box">
+            <strong>🏥 Cruz Roja Nicaragüense</strong>
+            <code>+505 2265-2081</code>
+            <p class="small text-muted">Atención psicosocial y orientación médica</p>
+          </div>
+          <div class="help-contact-box">
+            <strong>🌿 Orientación y Acompañamiento CreSer</strong>
+            <code>contacto@creser.org</code>
+            <p class="small text-muted">Terapia, talleres y canalización institucional</p>
+          </div>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.6); padding:0.9rem; border-radius:var(--radius-md); border:1px solid rgba(239,68,68,0.2); font-size:0.85rem; color:var(--ink-secondary);">
+          ⚠️ <strong>Aviso Importante:</strong> Este espacio digital ofrece orientación preventiva y herramientas de autocuidado. <strong>No sustituye la atención presencial de profesionales de salud mental ni los servicios de urgencia hospitalaria.</strong>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           PRIVACIDAD Y CONTROL DE DATOS
+           ===================================================================== -->
+      <section class="wellness-section text-center" style="padding:1.5rem 0;">
+        <p class="small text-muted" style="margin-bottom:0.6rem;">🔒 <strong>Tu privacidad importa:</strong> Tus reflexiones y registros emocionales son estrictamente privados y no se comparten con terceros.</p>
+        <button id="btnWellnessPrivacyInfo" class="btn ghost btn-sm">Conoce más sobre la privacidad de tus datos</button>
+      </section>
 
     </main>
 
-    <!-- =========================================================================
-         Pie de Página (Footer)
-         ========================================================================= -->
+    <!-- Pie de página unificado -->
     <footer class="footer">
       <div class="footer-inner">
         <div class="footer-links">
@@ -206,23 +737,142 @@
     </footer>
   </div>
 
-  <!-- Modal accesible para avisos legales -->
-  <div id="infoModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-dialog">
-      <div class="modal-header">
-        <h3 id="modalTitle" class="modal-title-text">Información</h3>
-        <button class="ghost" onclick="closeModal('infoModal')" aria-label="Cerrar modal">✕</button>
+  <!-- =========================================================================
+       MODALES INTERACTIVOS DE HERRAMIENTAS RÁPIDAS
+       ========================================================================= -->
+
+  <!-- Modal 1: Respiración 4-4-4 -->
+  <div class="wellness-tool-modal" id="modalTool_respiracion" role="dialog" aria-modal="true" aria-labelledby="modalRespTitle">
+    <div class="wellness-tool-dialog">
+      <button class="wellness-tool-close-btn" aria-label="Cerrar modal">✕</button>
+      <h3 id="modalRespTitle" style="font-size:1.3rem; font-weight:700;">🌬️ Pausa de Respiración 4-4-4</h3>
+      <p class="small text-muted">Sigue el círculo: inhala en 4s, sostén en 4s y exhala en 4s.</p>
+      <div class="modal-breath-circle" id="modalBreathCircle">4-4-4</div>
+      <p id="modalBreathPrompt" style="text-align:center; font-weight:600; min-height:24px; color:var(--primary); margin:0.75rem 0;">Iniciando ciclo...</p>
+      <div id="modalBreathCounter" style="text-align:center; font-size:0.85rem; color:var(--ink-muted);">36s restantes</div>
+      <div style="text-align:center; margin-top:1.5rem;">
+        <button class="primary" onclick="closeAllToolModals()">Finalizar Pausa</button>
       </div>
-      <div id="modalBody"></div>
-      <div class="modal-footer">
-        <button class="primary" onclick="closeModal('infoModal')">Entendido</button>
+    </div>
+  </div>
+
+  <!-- Modal 2: Grounding 5-4-3-2-1 -->
+  <div class="wellness-tool-modal" id="modalTool_grounding" role="dialog" aria-modal="true" aria-labelledby="modalGroundTitle">
+    <div class="wellness-tool-dialog">
+      <button class="wellness-tool-close-btn" aria-label="Cerrar modal">✕</button>
+      <h3 id="modalGroundTitle" style="font-size:1.3rem; font-weight:700;">🌿 Técnica de Grounding 5-4-3-2-1</h3>
+      <p class="small text-muted">Conecta tus sentidos con el espacio presente:</p>
+      <ul style="list-style:none; padding:0; margin:1.25rem 0; display:flex; flex-direction:column; gap:0.75rem;">
+        <li style="background:var(--surface-2); padding:0.75rem 1rem; border-radius:var(--radius-sm);">👀 <strong>5 cosas que puedes ver</strong> a tu alrededor</li>
+        <li style="background:var(--surface-2); padding:0.75rem 1rem; border-radius:var(--radius-sm);">✋ <strong>4 cosas que puedes tocar</strong> (tu ropa, la mesa, tus manos)</li>
+        <li style="background:var(--surface-2); padding:0.75rem 1rem; border-radius:var(--radius-sm);">👂 <strong>3 cosas que puedes escuchar</strong> en este instante</li>
+        <li style="background:var(--surface-2); padding:0.75rem 1rem; border-radius:var(--radius-sm);">👃 <strong>2 cosas que puedes oler</strong> olores del entorno</li>
+        <li style="background:var(--surface-2); padding:0.75rem 1rem; border-radius:var(--radius-sm);">👅 <strong>1 cosa que puedes saborear</strong> o un sorbo de agua</li>
+      </ul>
+      <div style="text-align:center;">
+        <button class="primary" onclick="closeAllToolModals()">Completado</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Relajación Muscular -->
+  <div class="wellness-tool-modal" id="modalTool_muscular" role="dialog" aria-modal="true" aria-labelledby="modalMuscTitle">
+    <div class="wellness-tool-dialog">
+      <button class="wellness-tool-close-btn" aria-label="Cerrar modal">✕</button>
+      <h3 id="modalMuscTitle" style="font-size:1.3rem; font-weight:700;">💆 Relajación Muscular Progresiva</h3>
+      <p class="small text-muted">Tensa suavemente durante 5 segundos y luego suelta con una exhalación profunda:</p>
+      <ol style="padding-left:1.25rem; margin:1rem 0; display:flex; flex-direction:column; gap:0.65rem; font-size:0.92rem; color:var(--ink-secondary);">
+        <li><strong>Hombros:</strong> Súbelos hacia las orejas, mantén la tensión 5s y déjalos caer.</li>
+        <li><strong>Manos:</strong> Aprieta los puños suavemente, siente la fuerza y suelta los dedos.</li>
+        <li><strong>Rostro y Mandíbula:</strong> Aprieta los labios suavemente y relaja la lengua.</li>
+        <li><strong>Pies y Piernas:</strong> Apoya los pies firmes en el suelo y afloja la postura.</li>
+      </ol>
+      <div style="text-align:center; margin-top:1rem;">
+        <button class="primary" onclick="closeAllToolModals()">Finalizar Sesión</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4: Descanso Visual -->
+  <div class="wellness-tool-modal" id="modalTool_visual" role="dialog" aria-modal="true" aria-labelledby="modalVisTitle">
+    <div class="wellness-tool-dialog">
+      <button class="wellness-tool-close-btn" aria-label="Cerrar modal">✕</button>
+      <h3 id="modalVisTitle" style="font-size:1.3rem; font-weight:700;">👁️ Descanso Visual 20-20-20</h3>
+      <p class="small text-muted">Mira hacia un punto lejano (al menos a 6 metros) durante 20 segundos para relajar tu enfoque.</p>
+      <div id="visualRestTimer" style="font-size:2.5rem; font-weight:800; color:var(--primary); text-align:center; margin:1.5rem 0;">00:20</div>
+      <div style="text-align:center;">
+        <button class="primary" onclick="closeAllToolModals()">Listo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 5: Escritura Emocional -->
+  <div class="wellness-tool-modal" id="modalTool_escritura" role="dialog" aria-modal="true" aria-labelledby="modalEscrTitle">
+    <div class="wellness-tool-dialog">
+      <button class="wellness-tool-close-btn" aria-label="Cerrar modal">✕</button>
+      <h3 id="modalEscrTitle" style="font-size:1.3rem; font-weight:700;">✍️ Escritura Emocional Libre</h3>
+      <p class="small text-muted">Escribe lo que sientes en este instante sin preocuparte por la ortografía ni la estructura:</p>
+      <textarea class="input" rows="5" placeholder="Hoy me siento..." style="margin:1rem 0;"></textarea>
+      <div style="text-align:center;">
+        <button class="primary" onclick="alert('Reflexión registrada en tu diario privado.'); closeAllToolModals();">Guardar en mi Diario</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 6: Concentración -->
+  <div class="wellness-tool-modal" id="modalTool_concentracion" role="dialog" aria-modal="true" aria-labelledby="modalConcTitle">
+    <div class="wellness-tool-dialog">
+      <button class="wellness-tool-close-btn" aria-label="Cerrar modal">✕</button>
+      <h3 id="modalConcTitle" style="font-size:1.3rem; font-weight:700;">🎯 Intervalo de Foco Mental</h3>
+      <p class="small text-muted">Dedica los próximos 3 minutos a una sola tarea sin distracciones:</p>
+      <div id="focusCountdown" style="font-size:2.5rem; font-weight:800; color:var(--primary); text-align:center; margin:1.5rem 0;">03:00</div>
+      <div style="text-align:center;">
+        <button class="primary" onclick="closeAllToolModals()">Finalizar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 7: Pausa Consciente -->
+  <div class="wellness-tool-modal" id="modalTool_pausa" role="dialog" aria-modal="true" aria-labelledby="modalPausaTitle">
+    <div class="wellness-tool-dialog">
+      <button class="wellness-tool-close-btn" aria-label="Cerrar modal">✕</button>
+      <h3 id="modalPausaTitle" style="font-size:1.3rem; font-weight:700;">🧘 Pausa Consciente & Escaneo Corporal</h3>
+      <p class="small text-muted">Cierra los ojos suavemente y observa tu postura:</p>
+      <p style="font-size:0.95rem; color:var(--ink-primary); line-height:1.6; margin:1rem 0;">
+        1. Siente el peso de tu cuerpo sobre la silla o el suelo.<br>
+        2. Nota la temperatura del aire entrando por tu nariz.<br>
+        3. Suelta cualquier tensión en tus párpados y cuello.<br>
+        4. Agradece a tu cuerpo por todo el esfuerzo del día.
+      </p>
+      <div style="text-align:center;">
+        <button class="primary" onclick="closeAllToolModals()">Concluir Pausa</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 8: Sonidos Ambientales -->
+  <div class="wellness-tool-modal" id="modalTool_sonidos" role="dialog" aria-modal="true" aria-labelledby="modalSonTitle">
+    <div class="wellness-tool-dialog">
+      <button class="wellness-tool-close-btn" aria-label="Cerrar modal">✕</button>
+      <h3 id="modalSonTitle" style="font-size:1.3rem; font-weight:700;">🎧 Sonidos Ambientales Relajantes</h3>
+      <p class="small text-muted">Elige una frecuencia de relajación:</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin:1.25rem 0;">
+        <a href="multimedia.html" class="btn secondary">🌧️ Lluvia Suave</a>
+        <a href="multimedia.html" class="btn secondary">🌲 Bosque & Pájaros</a>
+        <a href="multimedia.html" class="btn secondary">🌊 Olas del Mar</a>
+        <a href="multimedia.html" class="btn secondary">🌬️ Ruido Blanco</a>
+      </div>
+      <div style="text-align:center;">
+        <button class="primary" onclick="closeAllToolModals()">Cerrar</button>
       </div>
     </div>
   </div>
 
   <!-- Inclusión de la configuración y SDK de Google Firebase -->
   <script type="module" src="../assets/js/firebase-config.js?v=1.0"></script>
-  <!-- Script modular de la aplicación -->
+  <!-- Inclusión del script global de la aplicación -->
   <script src="../assets/js/app.js?v=3.2"></script>
+  <!-- Controlador modular específico de Bienestar -->
+  <script src="../assets/js/bienestar.js?v=1.0"></script>
 </body>
 </html>

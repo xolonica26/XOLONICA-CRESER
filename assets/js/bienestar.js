@@ -458,15 +458,470 @@ function initWellnessHabits() {
 }
 
 /* ==========================================================================
-   8. Biblioteca de Bienestar (Búsqueda y Filtros de 11 Categorías)
+   8. Biblioteca de Bienestar (Catálogo Completo y Lector Funcional)
    ========================================================================== */
 const WELLNESS_ARTICLES = [
-  { id: 1, title: "Técnicas de Organización ante Exámenes", cat: "academico", time: "5 min", desc: "Cómo priorizar temas de estudio sin caer en agotamiento cognitivo." },
-  { id: 2, title: "Límites Saludables y Desconexión Laboral", cat: "laboral", time: "6 min", desc: "Pautas prácticas para desconectarte del trabajo después de tu jornada." },
-  { id: 3, title: "Comunicación Asertiva y Escucha Familiar", cat: "familia", time: "7 min", desc: "Herramientas para resolver desacuerdos en el hogar con empatía." },
-  { id: 4, title: "Higiene del Sueño y Descanso Profundo", cat: "sueno", time: "4 min", desc: "Rutinas nocturnas basadas en evidencia para conciliar el sueño con calma." },
-  { id: 5, title: "Entendiendo y Nombrando la Ansiedad", cat: "ansiedad", time: "8 min", desc: "Comprender la función biológica de la alerta y cómo autorregularla." },
-  { id: 6, title: "El Poder de la Gratitud Diaria", cat: "emociones", time: "4 min", desc: "Pequeños ejercicios que reentrenan tu atención hacia lo constructivo." }
+  // 1. Estrés
+  {
+    id: "estres-1",
+    cat: "estres",
+    title: "El Ciclo Biológico del Estrés y Cómo Cerrarlo",
+    time: "5 min de lectura",
+    desc: "Aprende por qué el cuerpo se mantiene en alerta y cómo desactivar la sobrecarga fisiológica mediante micro-descargas.",
+    takeaway: "El estrés no solo se procesa mentalmente; tu cuerpo necesita señales físicas concretas (respiración profunda o movimiento) para entender que el peligro ha pasado.",
+    body: `
+      <h4>¿Por qué el estrés se acumula?</h4>
+      <p>Cuando percibes una alta exigencia, tu sistema nervioso simpático secreta cortisol y adrenalina. Si no realizas una actividad que 'cierre el ciclo', esa energía queda atrapada en forma de tensión muscular y fatiga.</p>
+      <h4>Pasos Prácticos para Cerrar el Ciclo:</h4>
+      <ol class="reader-steps-list">
+        <li><strong>Exhalación prolongada:</strong> Haz 3 respiraciones profundas donde la exhalación sea el doble de larga que la inhalación.</li>
+        <li><strong>Movimiento liberador:</strong> Camina 5 minutos, estira tus brazos o sacude suavemente las manos.</li>
+        <li><strong>Pausa sensorial:</strong> Bebe un vaso de agua fresca prestando atención a cada sorbo.</li>
+      </ol>
+    `,
+    suggestedTool: "respiracion",
+    suggestedToolName: "Probar Pausa de Respiración 4-4-4"
+  },
+  {
+    id: "estres-2",
+    cat: "estres",
+    title: "Manejo de Cargas Múltiples sin Agotamiento",
+    time: "6 min de lectura",
+    desc: "Estrategias de priorización cognitiva para ordenar tareas abrumadoras sin perder la calma.",
+    takeaway: "No tienes que resolver todo hoy. Dividir los problemas en micro-bloques reduce la reactividad del cerebro.",
+    body: `
+      <h4>La regla de los 3 focos diarios</h4>
+      <p>Al comenzar el día, selecciona únicamente 3 objetivos esenciales. Todo lo demás es secundario. Esto evita la parálisis por saturación mental.</p>
+      <h4>Pasos Prácticos:</h4>
+      <ol class="reader-steps-list">
+        <li>Anota todos tus pendientes en papel para vaciar la memoria de trabajo.</li>
+        <li>Elige una sola tarea y dedícale 15 minutos continuos sin revisar notificaciones.</li>
+        <li>Haz una pausa de 2 minutos antes de pasar a la siguiente tarea.</li>
+      </ol>
+    `,
+    suggestedTool: "concentracion",
+    suggestedToolName: "Probar Intervalo de Foco Mental"
+  },
+
+  // 2. Ansiedad
+  {
+    id: "ansiedad-1",
+    cat: "ansiedad",
+    title: "Entendiendo la Respuesta de Lucha o Huida",
+    time: "6 min de lectura",
+    desc: "Cómo funciona la amígdala cerebral y técnicas para recuperar la sensación de seguridad interior.",
+    takeaway: "La ansiedad es un mecanismo de protección descalibrado, no un defecto personal. Nombrarla ayuda a desactivar la amígdala.",
+    body: `
+      <h4>De la alarma a la calma</h4>
+      <p>Cuando sientes palpitaciones o agitación, tu cerebro cree que hay una amenaza inminente. El lenguaje y los sentidos son el puente más rápido para indicarle a tu sistema que estás a salvo.</p>
+      <h4>Pasos Prácticos:</h4>
+      <ol class="reader-steps-list">
+        <li>Di mentalmente: 'Estoy sintiendo activación, pero en este momento estoy en un espacio seguro'.</li>
+        <li>Siente la firmeza del suelo bajo tus pies (técnica de anclaje).</li>
+        <li>Realiza una secuencia de Grounding 5-4-3-2-1.</li>
+      </ol>
+    `,
+    suggestedTool: "grounding",
+    suggestedToolName: "Probar Grounding 5-4-3-2-1"
+  },
+  {
+    id: "ansiedad-2",
+    cat: "ansiedad",
+    title: "Cómo Gestionar Pensamientos Catastróficos",
+    time: "5 min de lectura",
+    desc: "Técnicas de reestructuración cognitiva para cuestionar escenarios hipotéticos exagerados.",
+    takeaway: "Tener un pensamiento no significa que sea un hecho real. Aprende a observarlo como una nube que pasa.",
+    body: `
+      <h4>El filtro del realismo</h4>
+      <p>Nuestra mente tiende a anticipar el peor escenario posible. Pregúntate: ¿Qué evidencia real tengo de esto? ¿Qué es lo más probable que suceda en realidad?</p>
+      <h4>Pasos Prácticos:</h4>
+      <ol class="reader-steps-list">
+        <li>Escribe el pensamiento que te inquieta en una hoja o en tu diario.</li>
+        <li>Escribe al lado una respuesta constructiva y compasiva.</li>
+        <li>Suelta la necesidad de controlar lo impredecible.</li>
+      </ol>
+    `,
+    suggestedTool: "escritura",
+    suggestedToolName: "Escribir en el Diario Emocional"
+  },
+
+  // 3. Emociones
+  {
+    id: "emociones-1",
+    cat: "emociones",
+    title: "Nombrar para Calmar: Alfabetización Emocional",
+    time: "4 min de lectura",
+    desc: "Diferenciar entre molestia, frustración, tristeza y cansancio permite canalizar mejor cada vivencia.",
+    takeaway: "Nombrar con precisión lo que sientes reduce en segundos la reactividad emocional en el cerebro.",
+    body: `
+      <h4>El poder del vocabulario emocional</h4>
+      <p>A menudo decimos 'estoy mal', pero hay una gran diferencia entre sentirse decepcionado, abrumado o simplemente fatigado físicamente. Al precisar la emoción, la solución se vuelve evidente.</p>
+      <h4>Pasos Prácticos:</h4>
+      <ol class="reader-steps-list">
+        <li>Consulta la rueda de emociones o el selector de bienestar.</li>
+        <li>Ubica la emoción y valida su derecho a existir: 'Es natural que me sienta así'.</li>
+        <li>Decide qué acción de autocuidado corresponde hoy.</li>
+      </ol>
+    `,
+    suggestedTool: "pausa",
+    suggestedToolName: "Hacer una Pausa Consciente"
+  },
+  {
+    id: "emociones-2",
+    cat: "emociones",
+    title: "El Poder Científico de la Gratitud Diaria",
+    time: "4 min de lectura",
+    desc: "Cómo el entrenamiento intencional en gratitud reconfigura los circuitos de recompensa y serenidad.",
+    takeaway: "La gratitud no niega las dificultades; expande tu campo de visión para reconocer también lo bueno.",
+    body: `
+      <h4>Neuroplasticidad y aprecio</h4>
+      <p>Anotar 3 cosas sencillas por las que estás agradecido cada día reentrena tu atención, disminuyendo la rumiación negativa y fortaleciendo tu resiliencia.</p>
+      <h4>Pasos Prácticos:</h4>
+      <ol class="reader-steps-list">
+        <li>Identifica un detalle pequeño de hoy (el sabor de una bebida, una conversación amable).</li>
+        <li>Dedica 30 segundos a sentir el bienestar de ese recuerdo.</li>
+        <li>Regístralo en tu diario de CreSer.</li>
+      </ol>
+    `,
+    suggestedTool: "escritura",
+    suggestedToolName: "Registrar Gratitud en mi Diario"
+  },
+
+  // 4. Sueño
+  {
+    id: "sueno-1",
+    cat: "sueno",
+    title: "Higiene del Sueño y Ritmos Circadianos",
+    time: "5 min de lectura",
+    desc: "Pautas basadas en evidencia para conciliar el descanso nocturno profundo y reparador.",
+    takeaway: "La calidad de tu sueño comienza con los hábitos que realizas en las últimas dos horas del día.",
+    body: `
+      <h4>La química de la noche</h4>
+      <p>La luz azul de los teléfonos y computadoras suprime la melatonina. Reducir la iluminación ambiental y la estimulación visual le avisa al cerebro que es hora de regenerarse.</p>
+      <h4>Pasos Prácticos:</h4>
+      <ol class="reader-steps-list">
+        <li>Activa el modo nocturno o apaga pantallas 30 minutos antes de acostarte.</li>
+        <li>Mantén tu habitación fresca, oscura y ventilada.</li>
+        <li>Escucha un sonido ambiental de lluvia o bosque para inducir relajación.</li>
+      </ol>
+    `,
+    suggestedTool: "sonidos",
+    suggestedToolName: "Reproducir Sonidos Ambientales"
+  },
+  {
+    id: "sueno-2",
+    cat: "sueno",
+    title: "¿Qué hacer si te despiertas a medianoche?",
+    time: "4 min de lectura",
+    desc: "Protocolo para no caer en la frustración cuando el insomnio interrumpe tu noche.",
+    takeaway: "No mires el reloj constantemente. Quedarte frustrado en la cama refuerza la asociación de estrés con el sueño.",
+    body: `
+      <h4>Rompiendo el bucle del insomnio</h4>
+      <p>Si pasan 20 minutos y no puedes dormir, levántate con luz tenue y realiza una actividad tranquila y no digital hasta que regrese la somnolencia.</p>
+      <h4>Pasos Prácticos:</h4>
+      <ol class="reader-steps-list">
+        <li>Evita mirar la hora para no activar cálculos de estrés ('solo me quedan 4 horas').</li>
+        <li>Lee unas páginas de un libro en papel o haz respiración diafragmática.</li>
+        <li>Vuelve a la cama solo cuando sientas pesadez en los párpados.</li>
+      </ol>
+    `,
+    suggestedTool: "respiracion",
+    suggestedToolName: "Iniciar Respiración Suave"
+  },
+
+  // 5. Relaciones
+  {
+    id: "relaciones-1",
+    cat: "relaciones",
+    title: "Asertividad y Límites sin Culpa",
+    time: "6 min de lectura",
+    desc: "Aprende a decir 'no' de manera respetuosa y firme protegiendo tu salud mental.",
+    takeaway: "Poner un límite no es un acto de egoísmo; es la condición indispensable para mantener relaciones sanas y honestas.",
+    body: `
+      <h4>El arte del límite empático</h4>
+      <p>Decir que sí a todo por complacer genera resentimiento silencioso. Un límite claro protege tu energía y enseña a los demás cómo tratarte.</p>
+      <h4>Pasos Prácticos:</h4>
+      <ol class="reader-steps-list">
+        <li>Usa la fórmula: 'Aprecio tu invitación/solicitud, pero en este momento no puedo comprometerme'.</li>
+        <li>No des explicaciones excesivas que abran debate sobre tu decisión.</li>
+        <li>Acepta que la incomodidad inicial es temporal.</li>
+      </ol>
+    `,
+    suggestedTool: "escritura",
+    suggestedToolName: "Reflexionar en el Diario"
+  },
+  {
+    id: "relaciones-2",
+    cat: "relaciones",
+    title: "Empatía Activa y Validación Emocional",
+    time: "5 min de lectura",
+    desc: "Cómo acompañar a un ser querido que atraviesa un momento difícil sin darle consejos no pedidos.",
+    takeaway: "A veces las personas no buscan soluciones inmediatas, sino sentirse escuchadas y comprendidas.",
+    body: `
+      <h4>La frase que calma</h4>
+      <p>Decir 'todo va a estar bien' puede invalidar la emoción del otro. En su lugar, prueba: 'Veo que esto es muy difícil para ti, estoy aquí contigo'.</p>
+      <h4>Pasos Prácticos:</h4>
+      <ol class="reader-steps-list">
+        <li>Escucha sin interrumpir ni pensar en qué responder de inmediato.</li>
+        <li>Haz preguntas abiertas: '¿Cómo te estás sintiendo con eso?'.</li>
+        <li>Ofrece apoyo concreto en lugar de consejos automáticos.</li>
+      </ol>
+    `,
+    suggestedTool: "pausa",
+    suggestedToolName: "Hacer una Pausa Consciente"
+  },
+
+  // 6. Hábitos
+  {
+    id: "habitos-1",
+    cat: "habitos",
+    title: "La Ciencia de los Microhábitos de 2 Minutos",
+    time: "5 min de lectura",
+    desc: "Cómo construir constancia sin depender de la motivación pasajera.",
+    takeaway: "Un hábito debe ser tan pequeño al inicio que sea imposible decir que no.",
+    body: `
+      <h4>La regla de los dos minutos</h4>
+      <p>Si quieres meditar, empieza por 1 minuto de respiración consciente. Si quieres leer, empieza por 1 página. La clave es la consistencia de la identidad, no la magnitud inicial.</p>
+      <h4>Pasos Prácticos:</h4>
+      <ol class="reader-steps-list">
+        <li>Ancla el nuevo hábito a uno ya existente (ej. 'después de lavarme los dientes, haré 3 respiraciones').</li>
+        <li>Marca tu cumplimiento en el checklist diario de CreSer.</li>
+        <li>Celebra cada pequeño logro.</li>
+      </ol>
+    `,
+    suggestedTool: "pausa",
+    suggestedToolName: "Probar Pausa Consciente"
+  },
+  {
+    id: "habitos-2",
+    cat: "habitos",
+    title: "Cómo Retomar tus Hábitos tras una Interrupción",
+    time: "4 min de lectura",
+    desc: "Estrategias de autocompasión para no abandonar tus metas cuando fallas un día.",
+    takeaway: "Fallar una vez es un accidente; fallar dos veces seguidas es el inicio de un nuevo patrón.",
+    body: `
+      <h4>La regla del 'nunca dos veces'</h4>
+      <p>La vida tiene imprevistos. Lo importante no es la perfección, sino la velocidad con la que retomas tu rutina con cariño y sin reproches.</p>
+      <h4>Pasos Prácticos:</h4>
+      <ol class="reader-steps-list">
+        <li>No te castigues ni juzgues por los días perdidos.</li>
+        <li>Retoma hoy con la versión más reducida del hábito.</li>
+        <li>Registra tu avance en tus retos de bienestar.</li>
+      </ol>
+    `,
+    suggestedTool: "grounding",
+    suggestedToolName: "Probar Anclaje Sensorial"
+  },
+
+  // 7. Concentración
+  {
+    id: "concentracion-1",
+    cat: "concentracion",
+    title: "Estado de Flujo y Eliminación de la Multitarea",
+    time: "6 min de lectura",
+    desc: "Cómo proteger tu atención en un mundo lleno de notificaciones e interrupciones constantes.",
+    takeaway: "La multitarea es una ilusión cognitiva: el cerebro no hace dos cosas a la vez, cambia de foco perdiendo hasta el 40% de energía.",
+    body: `
+      <h4>Monotarea y bloques de tiempo</h4>
+      <p>Dedicar 25 minutos continuos a una sola actividad te permite entrar en estado de flujo, donde el trabajo rinde más y genera menor fatiga mental.</p>
+      <h4>Pasos Prácticos:</h4>
+      <ol class="reader-steps-list">
+        <li>Pon tu teléfono en modo 'No molestar' y fuera de tu campo visual.</li>
+        <li>Activa el temporizador de foco mental de CreSer.</li>
+        <li>Trabaja hasta que suene la campana y toma un descanso obligatorio.</li>
+      </ol>
+    `,
+    suggestedTool: "concentracion",
+    suggestedToolName: "Iniciar Foco de 3 Minutos"
+  },
+  {
+    id: "concentracion-2",
+    cat: "concentracion",
+    title: "Descanso Visual y Alivio de la Fatiga de Pantallas",
+    time: "3 min de lectura",
+    desc: "La regla 20-20-20 explicada por oftalmólogos y neurocientíficos.",
+    takeaway: "Mirar fijamente pantallas reseca la córnea y mantiene activo el sistema de alerta. La vista lejana relaja el cerebro.",
+    body: `
+      <h4>La regla 20-20-20</h4>
+      <p>Cada 20 minutos de trabajo frente a un monitor, mira a una distancia de 20 pies (6 metros) durante 20 segundos. Tus ojos y tu nivel de energía te lo agradecerán.</p>
+      <h4>Pasos Prácticos:</h4>
+      <ol class="reader-steps-list">
+        <li>Levanta la vista hacia una ventana o pasillo lejano.</li>
+        <li>Parpadea suavemente varias veces.</li>
+        <li>Inicia el temporizador de descanso visual en CreSer.</li>
+      </ol>
+    `,
+    suggestedTool: "visual",
+    suggestedToolName: "Iniciar Descanso Visual 20-20-20"
+  },
+
+  // 8. Autocuidado
+  {
+    id: "autocuidado-1",
+    cat: "autocuidado",
+    title: "Autocompasión Frente a la Autoexigencia Desmedida",
+    time: "5 min de lectura",
+    desc: "Aprende a hablarte a ti mismo como le hablarías a un buen amigo en momentos de error.",
+    takeaway: "Tratarte con dureza no aumenta tu rendimiento; solo eleva el cortisol y la frustración.",
+    body: `
+      <h4>El diálogo interno consciente</h4>
+      <p>La autocompasión consta de tres pilares: bondad hacia uno mismo, reconocimiento de la humanidad compartida y atención plena (mindfulness).</p>
+      <h4>Pasos Prácticos:</h4>
+      <ol class="reader-steps-list">
+        <li>Cuando notes un pensamiento autocrítico, haz una pausa.</li>
+        <li>Pregúntate: '¿Le diría esto a alguien a quien quiero?'.</li>
+        <li>Escribe una frase de apoyo en tu diario de bienestar.</li>
+      </ol>
+    `,
+    suggestedTool: "escritura",
+    suggestedToolName: "Escribir en el Diario"
+  },
+  {
+    id: "autocuidado-2",
+    cat: "autocuidado",
+    title: "Los 7 Tipos de Descanso que Necesita el Ser Humano",
+    time: "7 min de lectura",
+    desc: "El descanso no es solo dormir: físico, mental, sensorial, creativo, emocional, social y espiritual.",
+    takeaway: "Si duermes 8 horas y te levantas agotado/a, quizás te falta descanso sensorial, mental o emocional.",
+    body: `
+      <h4>Identificando tu déficit de descanso</h4>
+      <p>El descanso sensorial requiere silencio y oscuridad; el descanso creativo requiere conectar con la naturaleza o el arte; el descanso emocional requiere ser auténtico sin fingir fortaleza.</p>
+      <h4>Pasos Prácticos:</h4>
+      <ol class="reader-steps-list">
+        <li>Evalúa qué tipo de sobrecarga tuviste hoy.</li>
+        <li>Elige una micro-pausa acorde a esa necesidad.</li>
+        <li>Registra tu nivel de energía en el panel de bienestar.</li>
+      </ol>
+    `,
+    suggestedTool: "pausa",
+    suggestedToolName: "Realizar Pausa Consciente"
+  },
+
+  // 9. Familia
+  {
+    id: "familia-1",
+    cat: "familia",
+    title: "Conversaciones Difíciles sin Dañar los Vínculos",
+    time: "6 min de lectura",
+    desc: "Estructura de comunicación no violenta para dialogar en familia sobre temas sensibles.",
+    takeaway: "Habla desde tus sentimientos y necesidades, no desde el juicio hacia las intenciones de los demás.",
+    body: `
+      <h4>Los 4 pasos de la comunicación empática</h4>
+      <p>1. Observación objetiva de los hechos. 2. Expresar cómo te sientes. 3. Identificar tu necesidad insatisfecha. 4. Formular una petición concreta y negociable.</p>
+      <h4>Pasos Prácticos:</h4>
+      <ol class="reader-steps-list">
+        <li>Elige un momento de calma, nunca en medio de una discusión acalorada.</li>
+        <li>Usa frases con 'Yo siento...' en lugar de 'Tú siempre...'.</li>
+        <li>Escucha activamente el punto de vista de la otra persona.</li>
+      </ol>
+    `,
+    suggestedTool: "muscular",
+    suggestedToolName: "Relajar la Tensión Corporal"
+  },
+  {
+    id: "familia-2",
+    cat: "familia",
+    title: "Uso Saludable de la Tecnología en el Hogar",
+    time: "5 min de lectura",
+    desc: "Pautas para establecer momentos libres de pantallas y fortalecer la presencia compartida.",
+    takeaway: "La presencia física sin atención compartida genera desconexión emocional en el entorno familiar.",
+    body: `
+      <h4>Zonas y horarios libres de dispositivos</h4>
+      <p>Designar la mesa del comedor y la última hora de la noche como espacios sin pantallas estimula el diálogo y mejora la convivencia en el hogar.</p>
+      <h4>Pasos Prácticos:</h4>
+      <ol class="reader-steps-list">
+        <li>Acuerden reglas claras y compartidas para todos los miembros.</li>
+        <li>Fomenten juegos de mesa, charlas o caminatas juntos.</li>
+        <li>Completa el reto de desconexión digital de 7 días.</li>
+      </ol>
+    `,
+    suggestedTool: "pausa",
+    suggestedToolName: "Pausa Consciente"
+  },
+
+  // 10. Académico
+  {
+    id: "academico-1",
+    cat: "academico",
+    title: "Técnicas de Organización ante Exámenes y Evaluaciones",
+    time: "5 min de lectura",
+    desc: "Cómo priorizar temas de estudio mediante repaso espaciado sin caer en agotamiento cognitivo.",
+    takeaway: "Estudiar 30 minutos al día durante una semana es mucho más efectivo que 6 horas seguidas la noche anterior.",
+    body: `
+      <h4>Repaso activo y espaciado</h4>
+      <p>Tu cerebro consolida la información durante el sueño. Explicar el tema con tus propias palabras genera conexiones neuronales duraderas y reduce la ansiedad previa al examen.</p>
+      <h4>Pasos Prácticos:</h4>
+      <ol class="reader-steps-list">
+        <li>Haz mapas conceptuales y resúmenes con tus propios términos.</li>
+        <li>Haz pausas de respiración cada 45 minutos de estudio.</li>
+        <li>Duerme al menos 7 horas antes del día de la prueba.</li>
+      </ol>
+    `,
+    suggestedTool: "concentracion",
+    suggestedToolName: "Iniciar Foco de Concentración"
+  },
+  {
+    id: "academico-2",
+    cat: "academico",
+    title: "Superando el Síndrome del Impostor en los Estudios",
+    time: "6 min de lectura",
+    desc: "Aprende a reconocer tus méritos legítimos y a no compararte destructivamente con otros.",
+    takeaway: "Tener dudas es parte del proceso de aprendizaje, no una prueba de incapacidad.",
+    body: `
+      <h4>El valor del progreso personal</h4>
+      <p>Cada estudiante tiene un ritmo único de maduración académica. Comparar tu detrás de escena con el resultado visible de los demás distorsiona tu autoimagen.</p>
+      <h4>Pasos Prácticos:</h4>
+      <ol class="reader-steps-list">
+        <li>Lleva una lista de temas que antes no entendías y hoy dominas.</li>
+        <li>Pide ayuda a docentes o compañeros sin sentir vergüenza.</li>
+        <li>Registra tus logros semanales en el diario de CreSer.</li>
+      </ol>
+    `,
+    suggestedTool: "escritura",
+    suggestedToolName: "Registrar Logros en mi Diario"
+  },
+
+  // 11. Laboral
+  {
+    id: "laboral-1",
+    cat: "laboral",
+    title: "Prevención del Agotamiento Laboral (Burnout)",
+    time: "6 min de lectura",
+    desc: "Cómo identificar los síntomas tempranos de desgaste y establecer barreras de protección.",
+    takeaway: "El agotamiento crónico no se cura con un fin de semana; requiere reajustar los límites diarios.",
+    body: `
+      <h4>Las señales de alarma</h4>
+      <p>Cinismo, fatiga constante y sensación de ineficacia son las tres señales del burnout. Reconocerlas a tiempo te permite pedir apoyo y redistribuir cargas antes del colapso.</p>
+      <h4>Pasos Prácticos:</h4>
+      <ol class="reader-steps-list">
+        <li>Identifica las tareas que drenan excesiva energía sin aportar valor.</li>
+        <li>Comunica tus límites de carga con tu equipo de forma profesional.</li>
+        <li>Realiza pausas activas cada 2 horas durante la jornada.</li>
+      </ol>
+    `,
+    suggestedTool: "muscular",
+    suggestedToolName: "Relajación Muscular Progresiva"
+  },
+  {
+    id: "laboral-2",
+    cat: "laboral",
+    title: "Desconexión Digital Efectiva tras la Jornada",
+    time: "5 min de lectura",
+    desc: "Rituales de transición para dejar el trabajo en el trabajo y disfrutar tu vida personal.",
+    takeaway: "Tu cerebro necesita un ritual de cierre claro para desconectar el modo de producción.",
+    body: `
+      <h4>El ritual de cierre de jornada</h4>
+      <p>Cierra todas las pestañas de trabajo, anota en 2 minutos lo primero que harás mañana y sal de tu espacio de trabajo. Esto envía una señal clara de cierre mental.</p>
+      <h4>Pasos Prácticos:</h4>
+      <ol class="reader-steps-list">
+        <li>Desactiva las notificaciones de correo y mensajería laboral al finalizar tu horario.</li>
+        <li>Cámbiate de ropa o sal a dar una caminata breve de transición.</li>
+        <li>Conecta con una actividad placentera o un paisaje sonoro de CreSer.</li>
+      </ol>
+    `,
+    suggestedTool: "sonidos",
+    suggestedToolName: "Escuchar Sonidos de la Naturaleza"
+  }
 ];
 
 function initWellnessLibrary() {
@@ -486,7 +941,7 @@ function initWellnessLibrary() {
     });
 
     if (filtered.length === 0) {
-      container.innerHTML = '<p class="small text-muted">No se encontraron artículos con ese filtro.</p>';
+      container.innerHTML = '<p class="small text-muted" style="grid-column: 1/-1; padding: 1.5rem 0;">No se encontraron artículos con ese filtro en la Biblioteca.</p>';
       return;
     }
 
@@ -494,10 +949,10 @@ function initWellnessLibrary() {
       <div class="library-resource-card">
         <div>
           <span class="badge badge-purple" style="font-size:0.75rem; text-transform:uppercase; margin-bottom:0.5rem; display:inline-block;">${item.cat} • ${item.time}</span>
-          <h4 style="font-size:1.02rem; font-weight:700; margin-bottom:0.4rem; color:var(--ink-primary);">${escapeHtml(item.title)}</h4>
-          <p class="small text-muted" style="line-height:1.45; margin-bottom:1rem;">${escapeHtml(item.desc)}</p>
+          <h4 style="font-size:1.02rem; font-weight:700; margin-bottom:0.4rem; color:var(--ink-primary); line-height:1.35;">${escapeHtml(item.title)}</h4>
+          <p class="small text-muted" style="line-height:1.45; margin-bottom:1.1rem;">${escapeHtml(item.desc)}</p>
         </div>
-        <button onclick="readArticleModal('${item.id}')" class="btn ghost btn-sm">Leer Guía ↗</button>
+        <button onclick="readArticleModal('${item.id}')" class="btn ghost btn-sm" style="width:100%; text-align:center;">Leer Guía Completa ↗</button>
       </div>
     `).join('');
   }
@@ -519,9 +974,37 @@ function initWellnessLibrary() {
   });
 
   window.readArticleModal = function(id) {
-    const art = WELLNESS_ARTICLES.find(a => a.id == id);
-    if (art) {
-      alert(`📖 ${art.title}\n\n${art.desc}\n\n[Contenido educativo completo disponible en la Biblioteca de CreSer]`);
+    const art = WELLNESS_ARTICLES.find(a => a.id === id);
+    const readerModal = document.getElementById('modalArticleReader');
+    const readerContent = document.getElementById('readerArticleContent');
+
+    if (art && readerModal && readerContent) {
+      readerContent.innerHTML = `
+        <span class="reader-header-badge">📚 Categoría: ${escapeHtml(art.cat.toUpperCase())}</span>
+        <h2 class="reader-title">${escapeHtml(art.title)}</h2>
+        <span class="reader-time">⏱️ ${escapeHtml(art.time)} • Guía de Autocuidado CreSer</span>
+        
+        <div class="reader-takeaway-box">
+          💡 <strong>Idea Clave:</strong> ${escapeHtml(art.takeaway)}
+        </div>
+
+        <div class="reader-body">
+          ${art.body}
+        </div>
+
+        <div class="reader-tool-link-box">
+          <div>
+            <strong style="display:block; font-size:0.92rem; color:var(--ink-primary); margin-bottom:0.2rem;">Herramienta Práctica Sugerida:</strong>
+            <span class="small text-muted">Aplica lo aprendido inmediatamente con una micro-pausa:</span>
+          </div>
+          <button class="primary btn-sm" onclick="closeAllToolModals(); openToolModal('${art.suggestedTool}');">
+            ${escapeHtml(art.suggestedToolName)} ↗
+          </button>
+        </div>
+      `;
+
+      closeAllToolModals();
+      readerModal.classList.add('open');
     }
   };
 

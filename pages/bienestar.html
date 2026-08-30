@@ -11,9 +11,9 @@
   <!-- Descripción de la página para accesibilidad y SEO -->
   <meta name="description" content="Centro Integral de Bienestar Emocional de CreSer: acompañamiento adaptativo, herramientas prácticas, seguimiento de hábitos y recursos de autocuidado."/>
   <!-- Enlace relativo a los estilos globales principales -->
-  <link rel="stylesheet" href="../assets/css/main.css?v=3.2">
+  <link rel="stylesheet" href="../assets/css/main.css?v=4.0">
   <!-- Hoja de estilos modular dedicada exclusivamente a Bienestar -->
-  <link rel="stylesheet" href="../assets/css/bienestar.css?v=1.0">
+  <link rel="stylesheet" href="../assets/css/bienestar.css?v=4.1">
 </head>
 <body>
 
@@ -868,11 +868,21 @@
     </div>
   </div>
 
+  <!-- Modal Lector Completo de Artículos de la Biblioteca -->
+  <div class="wellness-tool-modal" id="modalArticleReader" role="dialog" aria-modal="true" aria-labelledby="readerArticleTitle">
+    <div class="wellness-tool-dialog reader-dialog">
+      <button class="wellness-tool-close-btn" aria-label="Cerrar artículo" onclick="closeAllToolModals()">✕</button>
+      <div id="readerArticleContent">
+        <!-- Contenido dinámico del artículo inyectado por bienestar.js -->
+      </div>
+    </div>
+  </div>
+
   <!-- Inclusión de la configuración y SDK de Google Firebase -->
-  <script type="module" src="../assets/js/firebase-config.js?v=1.0"></script>
+  <script type="module" src="../assets/js/firebase-config.js?v=4.0"></script>
   <!-- Inclusión del script global de la aplicación -->
-  <script src="../assets/js/app.js?v=3.2"></script>
+  <script src="../assets/js/app.js?v=4.0"></script>
   <!-- Controlador modular específico de Bienestar -->
-  <script src="../assets/js/bienestar.js?v=1.0"></script>
+  <script src="../assets/js/bienestar.js?v=4.1"></script>
 </body>
 </html>

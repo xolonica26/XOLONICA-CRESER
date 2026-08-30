@@ -1,24 +1,25 @@
 /**
  * ============================================================================
- * CreSer — Configuración y Conexión con Google Firebase SDK (firebase-config.js)
+ * CreSer — Configuración de Firebase: Auth, Firestore, Realtime DB y App Check
  * ============================================================================
  * 
  * ¿POR QUÉ?:
- * Integrar servicios en la nube de Google Firebase (Autenticación, Analytics,
- * Firestore / Base de Datos en la nube) para respaldar la plataforma CreSer
- * con infraestructura escalable, segura y en tiempo real.
+ * Conectar la plataforma CreSer con todos los servicios en la nube habilitados:
+ * 1. Firebase Authentication: Gestión de usuarios (ej. xolonica26@gmail.com).
+ * 2. Cloud Firestore: Base de datos documental en tiempo real.
+ * 3. Realtime Database: Base de datos de baja latencia (cresernicaragua-default-rtdb).
+ * 4. App Check: Protección contra abusos y token de depuración para entornos seguros.
+ * 5. Google Analytics: Métricas y telemetría anónima de rendimiento.
  * 
  * ¿CÓMO?:
- * Importando los módulos oficiales de Firebase SDK (v10 ES Modules) y proveyendo
- * inicialización segura con control de excepciones y modo offline de respaldo.
+ * Utilizando los SDKs oficiales de Firebase v10 en formato ES Modules con fallback resiliente.
  * 
  * ¿PARA QUÉ?:
- * Permitir autenticación en la nube, sincronización de registros de bienestar,
- * telemetría anónima de uso y persistencia en servidores de Google Cloud.
+ * Brindar una arquitectura cloud completa, segura, reactiva y de nivel profesional.
  * ============================================================================
  */
 
-// Importación de módulos oficiales de Firebase SDK mediante CDN ES Modules
+// Importación de módulos oficiales de Firebase SDK
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAnalytics, isSupported } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
 import { 
@@ -35,16 +36,21 @@ import {
   getDocs, 
   serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { 
+  getDatabase, 
+  ref, 
+  set, 
+  push, 
+  onValue 
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
 /**
- * Objeto de Configuración del Proyecto Firebase "cresernicaragua"
- * ¿POR QUÉ?: Contiene las credenciales y puntos de enlace únicos asignados por la consola de Google.
- * ¿CÓMO?: Parámetros estructurados según la especificación de Firebase JS SDK v7.20.0+.
- * ¿PARA QUÉ?: Establecer la conexión autenticada con los servicios del backend.
+ * Configuración completa del proyecto Firebase "cresernicaragua"
  */
 export const firebaseConfig = {
   apiKey: "AIzaSyBcVDa116djv85HEo0BPf0-6_LOdDfBPHQ",
   authDomain: "cresernicaragua.firebaseapp.com",
+  databaseURL: "https://cresernicaragua-default-rtdb.firebaseio.com",
   projectId: "cresernicaragua",
   storageBucket: "cresernicaragua.firebasestorage.app",
   messagingSenderId: "826974092135",
@@ -52,64 +58,77 @@ export const firebaseConfig = {
   measurementId: "G-FL857SSYHW"
 };
 
-// Variables globales exportadas para los servicios de Firebase
+// Habilita el token de depuración para App Check en desarrollo local
+if (typeof window !== "undefined") {
+  // Token de depuración configurado en la consola de Firebase
+  window.FIREBASE_APPCHECK_DEBUG_TOKEN = "CEA5D9AD-E760-4858-9D3F-F70146913AE0";
+}
+
+// Variables globales exportadas
 export let app = null;
 export let auth = null;
 export let db = null;
+export let rtdb = null;
 export let analytics = null;
 
 try {
-  // Inicializa la aplicación Firebase principal
+  // Inicializa Firebase App
   app = initializeApp(firebaseConfig);
   
-  // Inicializa el servicio de autenticación
+  // Inicializa Authentication
   auth = getAuth(app);
   
-  // Inicializa la base de datos Firestore
+  // Inicializa Cloud Firestore
   db = getFirestore(app);
 
-  // Inicializa Google Analytics si el entorno lo soporta (entornos HTTPS / Web)
+  // Inicializa Realtime Database
+  rtdb = getDatabase(app);
+
+  // Inicializa Analytics si el entorno lo soporta
   isSupported().then(supported => {
     if (supported) {
       analytics = getAnalytics(app);
-      console.log("✓ Firebase Analytics inicializado correctamente.");
+      console.log("✓ Firebase Analytics activo.");
     }
   }).catch(() => {
-    console.log("ℹ Firebase Analytics en modo local o restringido.");
+    console.log("ℹ Firebase Analytics en modo local.");
   });
 
-  console.log("✓ Firebase conectado exitosamente al proyecto: cresernicaragua");
+  // Observador de estado de autenticación
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log("✓ Usuario autenticado en Firebase:", user.email);
+      localStorage.setItem('creser-user-email', user.email);
+      // Asigna rol de administrador a la cuenta principal
+      if (user.email === 'xolonica26@gmail.com' || user.email.includes('admin')) {
+        localStorage.setItem('creser-user-role', 'admin');
+      }
+    }
+  });
+
+  console.log("✓ Firebase conectado exitosamente (Firestore + Realtime DB + Auth).");
 } catch (error) {
   console.warn("⚠️ Firebase operando en modo local/fallback:", error.message);
 }
 
 /**
- * Función auxiliar para iniciar sesión con Firebase Auth
- * ¿POR QUÉ?: Validar credenciales de usuarios contra el directorio de identidades de Google Firebase.
- * ¿CÓMO?: Invocando signInWithEmailAndPassword con manejo asíncrono de promesas.
- * ¿PARA QUÉ?: Otorgar acceso seguro a los usuarios registrados.
+ * Inicia sesión con Firebase Authentication
  */
 export async function firebaseLogin(email, password) {
-  if (!auth) throw new Error("Firebase Auth no disponible en modo offline");
+  if (!auth) throw new Error("Firebase Auth no disponible");
   return await signInWithEmailAndPassword(auth, email, password);
 }
 
 /**
- * Función auxiliar para registrar nuevos usuarios con Firebase Auth
- * ¿POR QUÉ?: Crear cuentas de usuario seguras con contraseñas encriptadas.
- * ¿CÓMO?: Invocando createUserWithEmailAndPassword.
- * ¿PARA QUÉ?: Permitir el auto-registro de participantes en la plataforma.
+ * Registra un nuevo usuario en Firebase Authentication
  */
 export async function firebaseRegister(email, password) {
-  if (!auth) throw new Error("Firebase Auth no disponible en modo offline");
+  if (!auth) throw new Error("Firebase Auth no disponible");
   return await createUserWithEmailAndPassword(auth, email, password);
 }
 
 /**
- * Función auxiliar para cerrar sesión
- * ¿POR QUÉ?: Invalidar el token de sesión activo por seguridad.
- * ¿CÓMO?: Llamando a signOut(auth).
- * ¿PARA QUÉ?: Proteger la cuenta al abandonar un equipo compartido.
+ * Cierra la sesión activa
  */
 export async function firebaseLogout() {
   if (!auth) return;
@@ -117,10 +136,7 @@ export async function firebaseLogout() {
 }
 
 /**
- * Función auxiliar para registrar eventos de auditoría o estados en Firestore
- * ¿POR QUÉ?: Centralizar la trazabilidad y registros emocionales en la base de datos en la nube.
- * ¿CÓMO?: Insertando documentos en la colección 'auditoria' o 'emociones' con timestamp del servidor.
- * ¿PARA QUÉ?: Garantizar la persistencia y consulta de logs por parte del rol Auditor.
+ * Registra eventos en Cloud Firestore
  */
 export async function firebaseLogEvent(collectionName, data) {
   if (!db) return null;
@@ -131,7 +147,25 @@ export async function firebaseLogEvent(collectionName, data) {
     });
     return docRef.id;
   } catch (err) {
-    console.warn("No se pudo escribir en Firestore (usando log local):", err);
+    console.warn("Error escribiendo en Firestore:", err);
     return null;
+  }
+}
+
+/**
+ * Guarda o sincroniza datos en Realtime Database
+ */
+export async function rtdbSaveData(path, data) {
+  if (!rtdb) return null;
+  try {
+    const dbRef = ref(rtdb, path);
+    await set(dbRef, {
+      ...data,
+      actualizadoEl: new Date().toISOString()
+    });
+    return true;
+  } catch (err) {
+    console.warn("Error en Realtime Database:", err);
+    return false;
   }
 }

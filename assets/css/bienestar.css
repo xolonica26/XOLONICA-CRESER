@@ -34,6 +34,28 @@
   color: var(--ink-primary);
   margin-bottom: 0.6rem;
   letter-spacing: -0.02em;
+  line-height: 1.35;
+}
+
+/* Personalised greeting (two-line hero layout) */
+.hero-greeting-line {
+  display: block;
+  transition: opacity 0.35s ease;
+}
+
+.hero-greeting-line .hero-user-name {
+  background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-question-line {
+  display: block;
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--ink-secondary);
+  margin-top: 0.15rem;
 }
 
 .wellness-hero-sub {

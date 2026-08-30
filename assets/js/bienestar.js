@@ -18,6 +18,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initHeroGreeting();
   initAdaptiveWellness();
   initNeedsSelector();
   initQuickToolModals();
@@ -29,6 +30,58 @@ document.addEventListener('DOMContentLoaded', () => {
   initWellnessChallenges();
   initHelpAndPrivacyModals();
 });
+
+/* ==========================================================================
+   0. Saludo Contextual Personalizado (Hero)
+   ========================================================================== */
+
+/**
+ * Detecta si el usuario ha iniciado sesión (via localStorage) y personaliza
+ * el saludo del Hero con su nombre y un saludo apropiado según la hora del día.
+ * Si no hay sesión activa, mantiene el saludo genérico.
+ */
+function initHeroGreeting() {
+  const greetingEl = document.getElementById('heroGreetingLine');
+  if (!greetingEl) return;
+
+  function applyGreeting() {
+    const storedName = localStorage.getItem('creser-user-name');
+    const storedEmail = localStorage.getItem('creser-user-email');
+
+    if (!storedName && !storedEmail) {
+      // No hay sesión → saludo genérico
+      greetingEl.innerHTML = 'Hola 👋';
+      return;
+    }
+
+    // Extraer el primer nombre del usuario (capitalizado)
+    const rawName = storedName || (storedEmail ? storedEmail.split('@')[0] : '');
+    const firstName = rawName.split(/[\s_.-]+/)[0];
+    const displayName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+
+    // Saludo contextual según la hora del día
+    const hour = new Date().getHours();
+    let timeGreeting;
+    if (hour >= 5 && hour < 12) {
+      timeGreeting = 'Buenos días';
+    } else if (hour >= 12 && hour < 19) {
+      timeGreeting = 'Buenas tardes';
+    } else {
+      timeGreeting = 'Buenas noches';
+    }
+
+    greetingEl.innerHTML = `${timeGreeting}, <span class="hero-user-name">${displayName}</span> 👋`;
+  }
+
+  applyGreeting();
+
+  // Escuchar cambios de sesión desde otras pestañas (login/logout en login.html)
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'creser-user-name' || e.key === 'creser-user-email') {
+      applyGreeting();
+    }
+  });
+}
 
 /* ==========================================================================
    1. Motor Adaptativo de Estado Emocional & Factores de Influencia

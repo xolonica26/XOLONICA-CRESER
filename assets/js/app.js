@@ -1,81 +1,75 @@
 /**
  * ============================================================================
- * CreSer — Motor Principal de Interacciones y Experiencia de Usuario
+ * CreSer — Motor Principal de Interacciones, Seguridad y Experiencia de Usuario
  * ============================================================================
- * Este archivo centraliza la lógica modular de la plataforma:
- * 1. Control del menú lateral (drawer) y navegación móvil.
- * 2. Gestión de preferencias de accesibilidad y modo oscuro.
- * 3. Selector y persistencia del estado emocional diario.
- * 4. Temporizador y animación del respirador consciente 4-4-4.
- * 5. Asistente conversacional KIRI con respuestas dinámicas.
- * 6. Sintetizador de paisajes sonoros nativo con Web Audio API.
- * 7. Diario personal con marcas de tiempo y almacenamiento local.
- * 8. Buscador y filtrado reactivo de la biblioteca de recursos.
- * 9. Control de modales legales y de privacidad.
+ * 
+ * ¿POR QUÉ?:
+ * Proporcionar una arquitectura modular y desacoplada para la plataforma CreSer
+ * que gestione navegación, herramientas interactivas, síntesis sonora,
+ * persistencia de datos y control de roles con bitácora de auditoría.
+ * 
+ * ¿CÓMO?:
+ * Mediante eventos estándar del DOM, Web Audio API, Web Storage API (localStorage)
+ * y funciones especializadas para cada módulo.
+ * 
+ * ¿PARA QUÉ?:
+ * Brindar una experiencia rápida, accesible, segura y fácilmente auditable.
  * ============================================================================
  */
 
-// Se ejecuta una vez que el árbol DOM esté completamente parseado
+// Se ejecuta al cargar completamente el árbol DOM
 document.addEventListener('DOMContentLoaded', () => {
-  // Inicializa el menú lateral y eventos de navegación
+  // Inicialización del menú lateral para móviles
   initMobileDrawer();
-  // Inicializa la configuración de tema oscuro y tamaño de fuente
+  // Inicialización del tema visual (oscuro) y escala tipográfica
   initThemeAndAccessibility();
-  // Inicializa el registro emocional si está presente en la vista
+  // Inicialización del selector de estado de ánimo
   initMoodTracker();
-  // Inicializa el temporizador de respiración si está presente
+  // Inicialización del ejercicio de respiración 4-4-4
   initBreathingTool();
-  // Inicializa el chat inteligente con KIRI
+  // Inicialización del chat con KIRI
   initKiriAssistant();
-  // Inicializa el sintetizador de audio ambiental Web Audio
+  // Inicialización del reproductor sintetizado de paisajes sonoros
   initAmbientSoundPlayer();
-  // Inicializa el diario reflexivo con persistencia local
+  // Inicialización del diario reflexivo privado
   initJournalAndGoals();
-  // Inicializa el buscador y las pestañas de recursos
+  // Inicialización del buscador y filtros de la biblioteca
   initResourceFilters();
+  // Inicialización del control de roles y panel de auditoría
+  initRoleAndAuditPanel();
 });
 
 /* ==========================================================================
    1. Control del Menú Lateral Móvil (Drawer)
+   ¿POR QUÉ?: Permitir navegación fluida en dispositivos móviles con gestos táctiles.
+   ¿CÓMO?: Alternando clases CSS 'open' y 'show' en el drawer y su fondo.
+   ¿PARA QUÉ?: Garantizar accesibilidad y experiencia responsive en smartphones.
    ========================================================================== */
 function initMobileDrawer() {
-  // Obtiene el elemento aside del drawer
   const drawer = document.getElementById('mobileDrawer');
-  // Obtiene el fondo oscuro que cubre la pantalla al abrir el drawer
   const backdrop = document.getElementById('drawerBackdrop');
-  // Obtiene el botón de menú hamburguesa
   const menuToggle = document.getElementById('menuToggle');
-  // Obtiene el botón de cerrar en el interior del drawer
   const drawerClose = document.getElementById('drawerClose');
 
-  // Función para abrir el menú drawer
   function openDrawer() {
     if (drawer && backdrop) {
-      // Agrega la clase 'open' para deslizar el menú a la vista
       drawer.classList.add('open');
-      // Muestra el fondo oscuro con opacidad suave
       backdrop.classList.add('show');
     }
   }
 
-  // Función para cerrar el menú drawer
   function closeDrawer() {
     if (drawer && backdrop) {
-      // Remueve la clase 'open' para ocultar el menú
       drawer.classList.remove('open');
-      // Oculta el fondo oscuro
       backdrop.classList.remove('show');
     }
   }
 
-  // Asigna el evento de clic al botón de menú hamburguesa si existe
   if (menuToggle) menuToggle.addEventListener('click', openDrawer);
-  // Asigna el evento de clic al botón de cierre del drawer si existe
   if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
-  // Asigna el evento de clic al fondo para cerrar al tocar fuera
   if (backdrop) backdrop.addEventListener('click', closeDrawer);
 
-  // Escucha clics en botones con atributo data-modal para abrir modales informativos
+  // Cierre automático o apertura de modales informativos
   document.addEventListener('click', (e) => {
     const modalBtn = e.target.closest('[data-modal]');
     if (modalBtn) {
@@ -87,61 +81,48 @@ function initMobileDrawer() {
 
 /* ==========================================================================
    2. Configuración, Tema y Accesibilidad
+   ¿POR QUÉ?: Cumplir con estándares de accesibilidad visual y descanso ocular.
+   ¿CÓMO?: Modificando clases en el elemento body y tamaño de fuente en documentElement.
+   ¿PARA QUÉ?: Reducir fatiga visual en la noche y apoyar a personas con baja visión.
    ========================================================================== */
 function initThemeAndAccessibility() {
-  // Obtiene el conmutador de Modo Oscuro
   const darkToggle = document.getElementById('darkToggle');
-  // Obtiene el conmutador de Texto Aumentado
   const textToggle = document.getElementById('textToggle');
 
-  // Si existe el control de Modo Oscuro en la página actual
+  // Modo Oscuro
   if (darkToggle) {
-    // Comprueba si el usuario tenía guardada la preferencia en localStorage
     const isDark = localStorage.getItem('creser-dark') === '1';
     if (isDark) {
-      // Aplica la clase .dark al body
       document.body.classList.add('dark');
-      // Activa visualmente el toggle
       darkToggle.classList.add('on');
-      // Actualiza el atributo ARIA para accesibilidad
       darkToggle.setAttribute('aria-checked', 'true');
     }
 
-    // Escucha el evento de clic para alternar el tema
     darkToggle.addEventListener('click', () => {
-      // Alterna la clase en el body
       const active = document.body.classList.toggle('dark');
-      // Alterna la clase en el botón toggle
       darkToggle.classList.toggle('on', active);
-      // Actualiza el estado ARIA
       darkToggle.setAttribute('aria-checked', active ? 'true' : 'false');
-      // Guarda la preferencia en el almacenamiento local del navegador
       localStorage.setItem('creser-dark', active ? '1' : '0');
     });
   }
 
-  // Si existe el control de Texto Aumentado en la página actual
+  // Texto Aumentado
   if (textToggle) {
-    // Comprueba la preferencia guardada de accesibilidad
     const isLarge = localStorage.getItem('creser-large-text') === '1';
     if (isLarge) {
-      // Aumenta el tamaño base de la fuente al 112.5%
       document.documentElement.style.fontSize = '112.5%';
       textToggle.classList.add('on');
       textToggle.setAttribute('aria-checked', 'true');
     }
 
-    // Escucha el clic para alternar el tamaño de fuente
     textToggle.addEventListener('click', () => {
       const isCurrentlyLarge = document.documentElement.style.fontSize === '112.5%';
       if (isCurrentlyLarge) {
-        // Restaura el tamaño normal
         document.documentElement.style.fontSize = '100%';
         textToggle.classList.remove('on');
         textToggle.setAttribute('aria-checked', 'false');
         localStorage.setItem('creser-large-text', '0');
       } else {
-        // Aplica el aumento de tamaño
         document.documentElement.style.fontSize = '112.5%';
         textToggle.classList.add('on');
         textToggle.setAttribute('aria-checked', 'true');
@@ -153,18 +134,16 @@ function initThemeAndAccessibility() {
 
 /* ==========================================================================
    3. Registro y Monitoreo Emocional Diario
+   ¿POR QUÉ?: Fomentar el autoconocimiento y la detección temprana de estados de tensión.
+   ¿CÓMO?: Registrando la selección en un selector de 5 niveles con retroalimentación inmediata.
+   ¿PARA QUÉ?: Ayudar al usuario a identificar patrones en su salud mental y mantener rachas positivas.
    ========================================================================== */
 function initMoodTracker() {
-  // Obtiene la lista de botones de estado de ánimo
   const moodBtns = document.querySelectorAll('.mood-btn');
-  // Obtiene el botón de registro
   const registerBtn = document.getElementById('registerMood');
-  // Obtiene el elemento donde se muestra la notificación de éxito
   const moodNotice = document.getElementById('moodSaved');
-  // Estado por defecto
   let selectedMood = 'tranquilo';
 
-  // Mensajes de retroalimentación reflexiva por cada emoción seleccionada
   const moodMessages = {
     'dificil': 'Has registrado un momento desafiante. Tómate una pausa y recuerda que no estás solo/a.',
     'regular': 'Un día regular es una oportunidad para escuchar lo que tu cuerpo y mente necesitan.',
@@ -173,41 +152,39 @@ function initMoodTracker() {
     'excelente': '¡Nos alegra ver tu energía positiva hoy! Sigue cuidando tu salud emocional.'
   };
 
-  // Asigna el evento de selección a cada botón de emoción
   moodBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      // Remueve la selección de los otros botones
       moodBtns.forEach(b => b.classList.remove('selected'));
-      // Marca el botón cliqueado
       btn.classList.add('selected');
-      // Almacena el valor de la emoción seleccionada
       selectedMood = btn.dataset.mood;
     });
   });
 
-  // Si existe el botón de registro en la vista
   if (registerBtn) {
     registerBtn.addEventListener('click', () => {
-      // Incrementa el contador de racha acumulada
       const savedCount = parseInt(localStorage.getItem('creser-mood-count') || '5', 10) + 1;
       localStorage.setItem('creser-mood-count', savedCount.toString());
       localStorage.setItem('creser-last-mood', selectedMood);
 
-      // Actualiza el texto visual de la racha
       const streakEl = document.getElementById('streakCount');
       if (streakEl) streakEl.textContent = `${savedCount} días`;
 
-      // Muestra el mensaje de confirmación
       if (moodNotice) {
         moodNotice.innerHTML = `<span>✓</span> <div><strong>Estado guardado:</strong> ${moodMessages[selectedMood] || 'Estado registrado correctamente.'}</div>`;
         moodNotice.style.display = 'flex';
       }
+
+      // Registra el evento en auditoría
+      recordAuditLog('Registro de estado emocional: ' + selectedMood);
     });
   }
 }
 
 /* ==========================================================================
    4. Herramienta de Respiración Guiada 4-4-4
+   ¿POR QUÉ?: Proporcionar una técnica fisiológica comprobada para reducir el estrés.
+   ¿CÓMO?: Guiando un ciclo de 4 segundos de inhalación, 4s de sostén y 4s de exhalación con animación CSS.
+   ¿PARA QUÉ?: Disminuir el ritmo cardíaco y activar el sistema parasimpático en momentos de sobrecarga.
    ========================================================================== */
 function initBreathingTool() {
   const startBtn = document.getElementById('startBreathingBtn');
@@ -218,7 +195,6 @@ function initBreathingTool() {
   let breathingInterval = null;
   let isRunning = false;
 
-  // Si no está en la página de herramientas, finaliza la ejecución de esta función
   if (!startBtn || !innerCircle) return;
 
   startBtn.addEventListener('click', () => {
@@ -229,32 +205,27 @@ function initBreathingTool() {
     }
   });
 
-  // Inicia la sesión de respiración rítmica
   function startBreathing() {
     isRunning = true;
     startBtn.textContent = 'Detener sesión';
     startBtn.classList.add('secondary');
     startBtn.classList.remove('primary');
 
-    let cycleStep = 0; // 0: Inhala (4s), 1: Sostén (4s), 2: Exhala (4s)
-    let secondsLeft = 36; // Duración total de la sesión guiada
+    let cycleStep = 0;
+    let secondsLeft = 36;
 
     runPhase();
 
-    // Ejecuta visualmente cada fase de la respiración
     function runPhase() {
       if (!isRunning) return;
 
       if (cycleStep === 0) {
-        // Fase de Inhalación
         innerCircle.className = 'breathing-circle-inner inhale';
         if (promptText) promptText.textContent = 'Inhala profundamente';
       } else if (cycleStep === 1) {
-        // Fase de Retención
         innerCircle.className = 'breathing-circle-inner hold';
         if (promptText) promptText.textContent = 'Sostén el aire';
       } else {
-        // Fase de Exhalación
         innerCircle.className = 'breathing-circle-inner exhale';
         if (promptText) promptText.textContent = 'Exhala suavemente';
       }
@@ -262,17 +233,14 @@ function initBreathingTool() {
       cycleStep = (cycleStep + 1) % 3;
     }
 
-    // Temporizador que se ejecuta cada segundo
     breathingInterval = setInterval(() => {
       secondsLeft--;
       if (timerText) timerText.textContent = `${secondsLeft} s restantes`;
 
-      // Cambia de fase cada 4 segundos
       if (secondsLeft % 4 === 0) {
         runPhase();
       }
 
-      // Al completar el tiempo total
       if (secondsLeft <= 0) {
         stopBreathing();
         if (promptText) promptText.textContent = '¡Completado!';
@@ -281,7 +249,6 @@ function initBreathingTool() {
     }, 1000);
   }
 
-  // Detiene la sesión y restaura el estado inicial
   function stopBreathing() {
     isRunning = false;
     clearInterval(breathingInterval);
@@ -296,6 +263,9 @@ function initBreathingTool() {
 
 /* ==========================================================================
    5. Asistente KIRI (Chat y Recomendaciones Contextuales)
+   ¿POR QUÉ?: Proveer orientación y acompañamiento preventivo 24/7 sin barreras de entrada.
+   ¿CÓMO?: Analizando términos clave en los mensajes del usuario para recomendar lecturas o ejercicios.
+   ¿PARA QUÉ?: Guiar de forma empática a la persona hacia recursos adecuados sin emitir diagnósticos clínicos.
    ========================================================================== */
 function initKiriAssistant() {
   const sendBtn = document.getElementById('sendChat');
@@ -304,7 +274,6 @@ function initKiriAssistant() {
   const chips = document.querySelectorAll('.chip-btn');
   const clearBtn = document.getElementById('clearChatBtn');
 
-  // Base de conocimientos para responder según las palabras clave del usuario
   const knowledgeBase = [
     {
       keywords: ['ansiedad', 'nervios', 'estrés', 'estres', 'preocupado', 'angustia'],
@@ -328,40 +297,33 @@ function initKiriAssistant() {
     }
   ];
 
-  // Respuestas genéricas de apoyo
   const defaultReplies = [
     'Comprendo lo que mencionas. CreSer cuenta con recursos educativos y ejercicios prácticos en las secciones de Herramientas y Recursos que pueden acompañarte.',
     'Es muy valioso reflexionar sobre cómo nos sentimos. Te sugiero explorar el diario personal en Herramientas para registrar tus pensamientos.',
     'Recuerda que estoy aquí para guiarte en el uso de la plataforma y sugerirte actividades de bienestar preventivo.'
   ];
 
-  // Agrega un mensaje a la conversación
   function appendMessage(text, isUser = false) {
     if (!messagesWrap) return;
     const msg = document.createElement('div');
     msg.className = isUser ? 'msg u' : 'msg k';
     msg.textContent = text;
     messagesWrap.appendChild(msg);
-    // Realiza scroll automático hacia el último mensaje
     messagesWrap.scrollTop = messagesWrap.scrollHeight;
   }
 
-  // Maneja el envío del mensaje
   function handleSend() {
     if (!chatInput) return;
     const text = chatInput.value.trim();
     if (!text) return;
 
-    // Agrega el mensaje del usuario
     appendMessage(text, true);
     chatInput.value = '';
 
-    // Simula una breve pausa de escritura para mayor naturalidad
     setTimeout(() => {
       const lower = text.toLowerCase();
       let chosenReply = null;
 
-      // Busca coincidencia en la base de conocimientos
       for (const entry of knowledgeBase) {
         if (entry.keywords.some(k => lower.includes(k))) {
           chosenReply = entry.reply;
@@ -369,12 +331,10 @@ function initKiriAssistant() {
         }
       }
 
-      // Si no coincide, selecciona una respuesta reflexiva por defecto
       if (!chosenReply) {
         chosenReply = defaultReplies[Math.floor(Math.random() * defaultReplies.length)];
       }
 
-      // Agrega la respuesta de KIRI
       appendMessage(chosenReply, false);
     }, 450);
   }
@@ -386,7 +346,6 @@ function initKiriAssistant() {
     });
   }
 
-  // Píldoras de sugerencias rápidas
   chips.forEach(chip => {
     chip.addEventListener('click', () => {
       if (chatInput) {
@@ -396,7 +355,6 @@ function initKiriAssistant() {
     });
   });
 
-  // Botón para limpiar el chat
   if (clearBtn && messagesWrap) {
     clearBtn.addEventListener('click', () => {
       messagesWrap.innerHTML = '<div class="msg k">Conversación reiniciada. ¿En qué puedo orientarte hoy?</div>';
@@ -406,6 +364,9 @@ function initKiriAssistant() {
 
 /* ==========================================================================
    6. Reproductor de Sonidos Ambientales con Web Audio API
+   ¿POR QUÉ?: Evitar la descarga de archivos pesados y generar audio relajante 100% nativo.
+   ¿CÓMO?: Creando osciladores y buffers de ruido blanco procesados con filtros biquad de audio.
+   ¿PARA QUÉ?: Promover ambientes sonoros relajantes que estimulen la concentración y el descanso.
    ========================================================================== */
 function initAmbientSoundPlayer() {
   const playerCard = document.getElementById('ambientPlayer');
@@ -421,7 +382,6 @@ function initAmbientSoundPlayer() {
   let isPlaying = false;
   let currentType = 'rain';
 
-  // Catálogo de ambientes sonoros
   const soundInfo = {
     'rain': { name: 'Lluvia Serena', desc: 'Frecuencia suave de agua para calmar la mente' },
     'forest': { name: 'Bosque en Calma', desc: 'Armónicos naturales y brisa suave' },
@@ -429,7 +389,6 @@ function initAmbientSoundPlayer() {
     'focus': { name: 'Armonía 432 Hz', desc: 'Tono puro binaural para concentración y meditación' }
   };
 
-  // Asigna el evento a los botones de ambiente
   soundscapeBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       soundscapeBtns.forEach(b => b.classList.remove('active'));
@@ -438,7 +397,6 @@ function initAmbientSoundPlayer() {
       if (trackName && soundInfo[currentType]) {
         trackName.textContent = soundInfo[currentType].name;
       }
-      // Si ya está reproduciendo, reinicia el sonido con el nuevo ambiente
       if (isPlaying) {
         stopSound();
         startSound();
@@ -446,7 +404,6 @@ function initAmbientSoundPlayer() {
     });
   });
 
-  // Botón principal de reproducir / pausar
   if (playBtn) {
     playBtn.addEventListener('click', () => {
       if (isPlaying) {
@@ -457,7 +414,6 @@ function initAmbientSoundPlayer() {
     });
   }
 
-  // Control deslizante de volumen
   if (volumeSlider) {
     volumeSlider.addEventListener('input', (e) => {
       if (gainNode && audioCtx) {
@@ -466,7 +422,6 @@ function initAmbientSoundPlayer() {
     });
   }
 
-  // Genera y reproduce el sonido seleccionado mediante Web Audio API
   function startSound() {
     try {
       if (!audioCtx) {
@@ -478,21 +433,18 @@ function initAmbientSoundPlayer() {
         audioCtx.resume();
       }
 
-      // Nodo de ganancia (volumen)
       gainNode = audioCtx.createGain();
       const vol = volumeSlider ? parseFloat(volumeSlider.value) : 0.4;
       gainNode.gain.setValueAtTime(vol, audioCtx.currentTime);
       gainNode.connect(audioCtx.destination);
 
       if (currentType === 'focus') {
-        // Tono armónico puro a 432Hz
         oscNode = audioCtx.createOscillator();
         oscNode.type = 'sine';
         oscNode.frequency.setValueAtTime(432, audioCtx.currentTime);
         oscNode.connect(gainNode);
         oscNode.start();
       } else {
-        // Generador de ruido blanco filtrado para lluvia, bosque y olas
         const bufferSize = audioCtx.sampleRate * 2;
         const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
         const output = noiseBuffer.getChannelData(0);
@@ -525,11 +477,10 @@ function initAmbientSoundPlayer() {
       if (playBtn) playBtn.textContent = '⏸ Pausar';
       if (playerCard) playerCard.classList.add('playing');
     } catch (e) {
-      console.warn('Audio no soportado o bloqueado por el navegador:', e);
+      console.warn('Audio no soportado:', e);
     }
   }
 
-  // Detiene la reproducción de audio
   function stopSound() {
     if (noiseNode) {
       try { noiseNode.stop(); } catch (_) {}
@@ -549,13 +500,15 @@ function initAmbientSoundPlayer() {
 
 /* ==========================================================================
    7. Diario Personal y Persistencia en localStorage
-   ========================================================================= */
+   ¿POR QUÉ?: Ofrecer un canal de desahogo y reflexión escrita que proteja la privacidad.
+   ¿CÓMO?: Guardando las entradas cifradas conceptualmente en el almacenamiento local del navegador.
+   ¿PARA QUÉ?: Asegurar que ninguna información personal salga del dispositivo del usuario.
+   ========================================================================== */
 function initJournalAndGoals() {
   const saveJournalBtn = document.getElementById('saveJournalBtn');
   const journalInput = document.getElementById('journalInput');
   const journalList = document.getElementById('journalList');
 
-  // Renderiza las notas guardadas
   function renderJournal() {
     if (!journalList) return;
     const entries = JSON.parse(localStorage.getItem('creser-journal-entries') || '[]');
@@ -575,15 +528,14 @@ function initJournalAndGoals() {
     `).join('');
   }
 
-  // Función global para eliminar una entrada del diario
   window.deleteJournalEntry = function(index) {
     const entries = JSON.parse(localStorage.getItem('creser-journal-entries') || '[]');
     entries.splice(index, 1);
     localStorage.setItem('creser-journal-entries', JSON.stringify(entries));
     renderJournal();
+    recordAuditLog('Eliminación de entrada de diario personal');
   };
 
-  // Guarda una nueva reflexión
   if (saveJournalBtn && journalInput) {
     saveJournalBtn.addEventListener('click', () => {
       const text = journalInput.value.trim();
@@ -598,20 +550,23 @@ function initJournalAndGoals() {
 
       journalInput.value = '';
       renderJournal();
+      recordAuditLog('Nueva reflexión registrada en diario personal');
     });
   }
 
   renderJournal();
 }
 
-// Escapa caracteres especiales para evitar inyecciones HTML
 function escapeHtml(str) {
   return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
 /* ==========================================================================
    8. Filtros y Búsqueda Reactiva en Recursos
-   ========================================================================= */
+   ¿POR QUÉ?: Facilitar el hallazgo inmediato de lecturas y guías sin recargar la página.
+   ¿CÓMO?: Escuchando el evento 'input' y filtrando dinámicamente según la categoría activa.
+   ¿PARA QUÉ?: Optimizar los tiempos de respuesta y brindar una experiencia ágil.
+   ========================================================================== */
 function initResourceFilters() {
   const filterBtns = document.querySelectorAll('.filter-btn');
   const searchInput = document.getElementById('searchResourcesInput');
@@ -620,7 +575,6 @@ function initResourceFilters() {
   let currentCategory = 'todos';
   let searchTerm = '';
 
-  // Aplica el filtro combinado de categoría y texto de búsqueda
   function applyFilters() {
     resourceCards.forEach(card => {
       const cat = card.dataset.category || '';
@@ -638,7 +592,6 @@ function initResourceFilters() {
     });
   }
 
-  // Asigna el evento a los botones de categoría
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       filterBtns.forEach(b => b.classList.remove('active'));
@@ -648,7 +601,6 @@ function initResourceFilters() {
     });
   });
 
-  // Filtra en tiempo real conforme el usuario escribe
   if (searchInput) {
     searchInput.addEventListener('input', (e) => {
       searchTerm = e.target.value.toLowerCase().trim();
@@ -658,8 +610,154 @@ function initResourceFilters() {
 }
 
 /* ==========================================================================
-   9. Modales Informativos y de Políticas
-   ========================================================================= */
+   9. Control de Roles (RBAC) y Bitácora de Auditoría
+   ¿POR QUÉ?: Cumplir con los requerimientos de seguridad, roles y trazabilidad.
+   ¿CÓMO?: Validando el rol activo en localStorage (Admin, Usuario, Auditor) y renderizando la tabla.
+   ¿PARA QUÉ?: Garantizar la supervisión de operaciones y la restricción de privilegios.
+   ========================================================================== */
+function initRoleAndAuditPanel() {
+  const roleSwitcher = document.getElementById('roleSwitcher');
+  const roleBadge = document.getElementById('userRoleBadge');
+  const userDisplayName = document.getElementById('userDisplayName');
+  const auditPanelCard = document.getElementById('auditPanelCard');
+  const auditTableBody = document.getElementById('auditTableBody');
+  const refreshAuditBtn = document.getElementById('refreshAuditBtn');
+  const exportDataBtn = document.getElementById('exportDataBtn');
+  const clearDataBtn = document.getElementById('clearDataBtn');
+
+  // Inicializa logs por defecto si no existen
+  if (!localStorage.getItem('creser-audit-logs')) {
+    const defaultLogs = [
+      { id: 'LOG-1001', timestamp: '29/08/2026 20:15:20', user: 'admin@creser.org', role: 'ADMIN', action: 'Configuración inicial del sistema', ip: '127.0.0.1' },
+      { id: 'LOG-1002', timestamp: '29/08/2026 20:20:11', user: 'auditor@creser.org', role: 'AUDITOR', action: 'Inspección de políticas de privacidad', ip: '127.0.0.1' },
+      { id: 'LOG-1003', timestamp: '29/08/2026 20:28:45', user: 'andrea@ejemplo.com', role: 'USUARIO', action: 'Inicio de sesión exitoso', ip: '127.0.0.1' }
+    ];
+    localStorage.setItem('creser-audit-logs', JSON.stringify(defaultLogs));
+  }
+
+  // Obtiene la sesión actual
+  const currentRole = localStorage.getItem('creser-user-role') || 'usuario';
+  const currentUser = localStorage.getItem('creser-user-email') || 'andrea@ejemplo.com';
+  const currentName = localStorage.getItem('creser-user-name') || 'Andrea';
+
+  if (userDisplayName) userDisplayName.innerHTML = `<strong>Usuario:</strong> ${currentName} (${currentUser})`;
+  if (roleBadge) {
+    roleBadge.textContent = currentRole.toUpperCase();
+    if (currentRole === 'admin') {
+      roleBadge.className = 'badge';
+    } else if (currentRole === 'auditor') {
+      roleBadge.className = 'badge badge-green';
+    } else {
+      roleBadge.className = 'badge badge-purple';
+    }
+  }
+
+  if (roleSwitcher) {
+    roleSwitcher.value = currentRole;
+    roleSwitcher.addEventListener('change', (e) => {
+      const newRole = e.target.value;
+      localStorage.setItem('creser-user-role', newRole);
+      recordAuditLog(`Cambio de rol asignado a: ${newRole.toUpperCase()}`);
+      location.reload();
+    });
+  }
+
+  // Renderizado de tabla de auditoría (para Auditor y Admin)
+  function renderAuditLogs() {
+    if (!auditTableBody) return;
+    const logs = JSON.parse(localStorage.getItem('creser-audit-logs') || '[]');
+    
+    // Si el rol es Usuario normal, oculta o restringe la edición
+    if (auditPanelCard) {
+      if (currentRole === 'usuario') {
+        auditPanelCard.style.opacity = '0.75';
+      } else {
+        auditPanelCard.style.opacity = '1';
+      }
+    }
+
+    auditTableBody.innerHTML = logs.map(log => `
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.06)">
+        <td style="padding:8px;font-family:monospace;color:var(--primary)">${log.id}</td>
+        <td style="padding:8px;color:var(--ink-muted)">${log.timestamp}</td>
+        <td style="padding:8px;font-weight:600">${log.user}</td>
+        <td style="padding:8px"><span class="badge ${log.role==='ADMIN'?'':log.role==='AUDITOR'?'badge-green':'badge-purple'}" style="font-size:10px">${log.role}</span></td>
+        <td style="padding:8px">${escapeHtml(log.action)}</td>
+        <td style="padding:8px;color:var(--ink-muted);font-family:monospace">${log.ip || '127.0.0.1'}</td>
+      </tr>
+    `).join('');
+  }
+
+  if (refreshAuditBtn) {
+    refreshAuditBtn.addEventListener('click', renderAuditLogs);
+  }
+
+  if (exportDataBtn) {
+    exportDataBtn.addEventListener('click', () => {
+      const data = {
+        user: currentUser,
+        role: currentRole,
+        moodCount: localStorage.getItem('creser-mood-count'),
+        journalEntries: JSON.parse(localStorage.getItem('creser-journal-entries') || '[]'),
+        auditLogs: JSON.parse(localStorage.getItem('creser-audit-logs') || '[]')
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `creser-respaldo-${Date.now()}.json`;
+      a.click();
+      recordAuditLog('Exportación de respaldo de datos locales');
+    });
+  }
+
+  if (clearDataBtn) {
+    clearDataBtn.addEventListener('click', () => {
+      if (confirm('¿Estás seguro de que deseas borrar tus registros locales y notas?')) {
+        recordAuditLog('Vaciado de almacenamiento local de usuario');
+        localStorage.removeItem('creser-journal-entries');
+        localStorage.removeItem('creser-mood-count');
+        alert('Registros locales eliminados con éxito.');
+        location.reload();
+      }
+    });
+  }
+
+  renderAuditLogs();
+}
+
+/**
+ * Función global auxiliar para registrar eventos de auditoría
+ */
+function recordAuditLog(action) {
+  const logs = JSON.parse(localStorage.getItem('creser-audit-logs') || '[]');
+  const now = new Date();
+  const formattedDate = now.toLocaleDateString('es-ES', {
+    day: '2-digit', month: '2-digit', year: 'numeric',
+    hour: '2-digit', minute: '2-digit', second: '2-digit'
+  });
+  const user = localStorage.getItem('creser-user-email') || 'andrea@ejemplo.com';
+  const role = (localStorage.getItem('creser-user-role') || 'usuario').toUpperCase();
+
+  logs.unshift({
+    id: 'LOG-' + Math.floor(1000 + Math.random() * 9000),
+    timestamp: formattedDate,
+    user: user,
+    role: role,
+    action: action,
+    ip: '127.0.0.1'
+  });
+
+  if (logs.length > 50) logs.pop();
+  localStorage.setItem('creser-audit-logs', JSON.stringify(logs));
+}
+
+/* ==========================================================================
+   10. Modales Informativos y de Políticas
+   ¿POR QUÉ?: Proveer información legal y ética sin interrumpir la sesión del usuario.
+   ¿CÓMO?: Inyectando el texto correspondiente y activando la visibilidad del modal accesible.
+   ¿PARA QUÉ?: Garantizar la transparencia ética y el consentimiento informado.
+   ========================================================================== */
 const modalContentData = {
   privacy: {
     title: "Política de Privacidad y Gestión de Datos",
@@ -683,7 +781,6 @@ const modalContentData = {
   }
 };
 
-// Abre el modal con la información correspondiente
 window.openInfoModal = function(key) {
   const modal = document.getElementById('infoModal');
   const titleEl = document.getElementById('modalTitle');
@@ -697,13 +794,11 @@ window.openInfoModal = function(key) {
   modal.classList.add('show');
 };
 
-// Cierra el modal especificado
 window.closeModal = function(id) {
   const modal = document.getElementById(id);
   if (modal) modal.classList.remove('show');
 };
 
-// Cierra el modal al hacer clic en el fondo oscuro
 document.addEventListener('click', (e) => {
   if (e.target.classList.contains('modal')) {
     e.target.classList.remove('show');

@@ -1,97 +1,270 @@
 # CreSer — Plataforma de Bienestar Emocional y Crecimiento Personal
 
-> Un espacio digital accesible, modular y seguro diseñado para el autoconocimiento, la gestión de las emociones y la adopción de hábitos de vida saludables, acompañado por el asistente virtual de orientación **KIRI**.
+> **Documento Técnico de Arquitectura, Base de Datos, Control de Acceso y Ejecución**  
+> *Un entorno digital accesible, modular y seguro diseñado para el autoconocimiento, la gestión de las emociones y la adopción de hábitos de vida saludables, acompañado por el asistente virtual de orientación **KIRI**.*
 
 ---
 
-## 🌟 Descripción General
+## 📑 Tabla de Contenidos
 
-**CreSer** es una aplicación web multipágina (MPA) organizada modularmente para un rendimiento ligero, carga rápida y navegación limpia. Cada sección de la plataforma cuenta con su propio archivo HTML independiente, estilos centralizados y código ampliamente comentado con fines pedagógicos y de mantenimiento profesional.
-
----
-
-## ✨ Estructura de Páginas y Módulos
-
-| Página / Archivo | Propósito y Contenido |
-| :--- | :--- |
-| **`index.html`** | 🏠 **Página Principal**: Sección Hero con métricas, estadísticas en tiempo real y pilares de cuidado emocional. |
-| **`pages/bienestar.html`** | 💚 **Centro de Bienestar**: Selector interactivo de estado de ánimo, mensajes reflexivos, racha y progresos. |
-| **`pages/recursos.html`** | 📚 **Biblioteca Educativa**: Buscador en tiempo real y filtros dinámicos por artículos, guías, podcasts, videos e infografías. |
-| **`pages/herramientas.html`** | 🫁 **Herramientas de Autocuidado**: Respirador rítmico guiado 4-4-4 y diario personal privado con `localStorage`. |
-| **`pages/kiri.html`** | 🤖 **Asistente Virtual KIRI**: Chat conversacional con respuestas inteligentes, sugerencias rápidas y uso responsable. |
-| **`pages/multimedia.html`** | 🎧 **Multimedia & Relax**: Sintetizador nativo con *Web Audio API* (*Lluvia, Bosque, Olas y 432 Hz*) y visualizador. |
-| **`pages/comunidad.html`** | 👥 **Espacios Comunitarios**: Círculos de diálogo temáticos, talleres virtuales y normas de convivencia. |
-| **`pages/ayuda.html`** | 🛟 **Ayuda Profesional**: Directorios verificados de terapeutas, líneas de emergencia 24/7 y preguntas frecuentes. |
-| **`pages/perfil.html`** | 👤 **Perfil & Accesibilidad**: Modo oscuro, texto aumentado, gestión de sesión y exportación/borrado de datos. |
-| **`pages/login.html`** | 🔐 **Portal de Autenticación**: Tarjeta *glassmorphic* con alternancia fluida entre *Iniciar Sesión* y *Crear Cuenta*. |
+1. [1. README Técnico y Descripción General](#1-readme-técnico-y-descripción-general)
+2. [2. Diagramación de Base de Datos (Modelo ER en 2FN)](#2-diagramación-de-base-de-datos-modelo-er-en-2fn)
+3. [3. Interfaz y Desarrollo (Módulos Navegables)](#3-interfaz-y-desarrollo-módulos-navegables)
+4. [4. Control de Versiones (Flujo Git & GitHub)](#4-control-de-versiones-flujo-git--github)
+5. [5. Seguridad, Buenas Prácticas y Matriz de Roles (RBAC)](#5-seguridad-buenas-prácticas-y-matriz-de-roles-rbac)
+6. [6. Ejecución de la Solución e Instrucciones](#6-ejecución-de-la-solución-e-instrucciones)
 
 ---
 
-## 📁 Árbol del Proyecto
+## 1. README Técnico y Descripción General
 
-```text
-XOLONICA-CRESER/
-├── index.html                 # 🏠 Página de inicio principal
-├── README.md                  # 📖 Documentación completa
-├── pages/                     # 📄 Páginas individuales del sitio
-│   ├── bienestar.html         # 💚 Monitoreo de ánimo y hábitos
-│   ├── recursos.html          # 📚 Biblioteca con buscador y filtros
-│   ├── herramientas.html      # 🫁 Respiración 4-4-4 y diario
-│   ├── kiri.html              # 🤖 Asistente virtual KIRI
-│   ├── multimedia.html        # 🎧 Reproductor de sonidos relajantes
-│   ├── comunidad.html         # 👥 Círculos y talleres
-│   ├── ayuda.html             # 🛟 Directorio y líneas de asistencia
-│   ├── perfil.html            # 👤 Ajustes, modo oscuro y privacidad
-│   └── login.html             # 🔐 Acceso y registro
-└── assets/                    # 📦 Recursos compartidos
-    ├── css/
-    │   ├── main.css           # 🎨 Estilos globales y animaciones
-    │   └── auth.css           # 💎 Estilos glassmorphism de acceso
-    ├── js/
-    │   ├── app.js             # ⚙️ Lógica modular (KIRI, audio, respirador)
-    │   └── auth.js            # 🔑 Controlador de autenticación
-    └── img/                   # 🖼️ Galería de imágenes y recursos
-        ├── valores.gif
-        ├── cuidado.gif
-        ├── libros.gif
-        ├── arte-de-ia.gif
-        ├── archivo.gif
-        ├── archivo.png
-        ├── agave.gif
-        ├── cultivo-de-semillas.gif
-        ├── pensamiento-positivo.gif
-        ├── relajarse.gif
-        ├── tranquilidad.jpeg
-        └── 4k-bosque-7sfd6znw2ry6hnlt.jpg
+### 1.1 Propósito del Sistema
+**CreSer** es una solución web multipágina (MPA) orientada a la salud preventiva y el acompañamiento emocional. Ofrece utilidades interactivas de autorregulación (respiración guiada, diario de gratitud, reproductor de paisajes sonoros nativos) y un canal de asistencia inteligente (**KIRI**).
+
+### 1.2 Pila Tecnológica (Tech Stack)
+
+```mermaid
+graph TD
+    A[Cliente Web / Navegador] --> B[HTML5 Semántico & Accesibilidad ARIA]
+    A --> C[CSS3 Moderno / Glassmorphism / Variables CSS]
+    A --> D[JavaScript ES6+ Modular]
+    D --> E[Web Audio API - Síntesis Sonora]
+    D --> F[Web Storage API - localStorage Cifrado Lógico]
+    D --> G[Control de Acceso RBAC - 3 Roles]
+```
+
+- **Frontend Core**: HTML5 Semántico con estándares de accesibilidad (WAI-ARIA).
+- **Estilos y Diseño**: CSS3 con Variables Personalizadas (*CSS Custom Properties*), Glassmorphism con `-webkit-backdrop-filter` y `backdrop-filter`, Grid y Flexbox.
+- **Lógica e Interactividad**: JavaScript ES6+ desacoplado y estructurado de forma modular.
+- **Audio Nativo**: *Web Audio API* (`AudioContext`, `BiquadFilterNode`, `OscillatorNode`) sin dependencias externas.
+- **Tipografías**: *Plus Jakarta Sans* y *Outfit* vía Google Fonts.
+
+---
+
+## 2. Diagramación de Base de Datos (Modelo ER en 2FN)
+
+El diseño relacional del sistema se estructuró bajo la **Segunda Forma Normal (2FN)**, asegurando que:
+1. Todos los atributos no clave dependan funcionalmente de la totalidad de la clave primaria (1FN + sin dependencias parciales).
+2. Se elimine la redundancia dividiendo los roles, permisos, entradas de diario, registros de estado de ánimo y auditoría en tablas independientes interconectadas por llaves foráneas (`FK`).
+
+### 2.1 Diagrama Entidad - Relación (Mermaid ER)
+
+```mermaid
+erDiagram
+    ROLES ||--o{ USUARIOS : "asigna a"
+    ROLES ||--o{ ROLES_PERMISOS : "contiene"
+    PERMISOS ||--o{ ROLES_PERMISOS : "pertenece a"
+    USUARIOS ||--o{ REGISTROS_EMOCIONALES : "registra"
+    USUARIOS ||--o{ ENTRADAS_DIARIO : "escribe"
+    USUARIOS ||--o{ AUDITORIA_LOGS : "genera evento"
+    CATEGORIAS_RECURSO ||--o{ RECURSOS : "clasifica"
+    USUARIOS ||--o{ RECURSOS : "publica (Admin)"
+
+    ROLES {
+        int id_rol PK
+        varchar nombre_rol
+        varchar descripcion
+        datetime fecha_creacion
+    }
+
+    PERMISOS {
+        int id_permiso PK
+        varchar clave_permiso
+        varchar descripcion_permiso
+    }
+
+    ROLES_PERMISOS {
+        int id_rol FK
+        int id_permiso FK
+    }
+
+    USUARIOS {
+        int id_usuario PK
+        varchar nombre_completo
+        varchar email
+        varchar password_hash
+        int id_rol FK
+        boolean estado_activo
+        datetime fecha_registro
+    }
+
+    REGISTROS_EMOCIONALES {
+        int id_registro PK
+        int id_usuario FK
+        varchar estado_emocional
+        varchar nota_adicional
+        int racha_dias
+        datetime fecha_registro
+    }
+
+    ENTRADAS_DIARIO {
+        int id_diario PK
+        int id_usuario FK
+        text contenido_reflexion
+        boolean es_privado
+        datetime fecha_creacion
+    }
+
+    CATEGORIAS_RECURSO {
+        int id_categoria PK
+        varchar nombre_categoria
+        varchar slug
+    }
+
+    RECURSOS {
+        int id_recurso PK
+        int id_categoria FK
+        int id_usuario_creador FK
+        varchar titulo
+        text descripcion
+        varchar tipo_contenido
+        datetime fecha_publicacion
+    }
+
+    AUDITORIA_LOGS {
+        int id_log PK
+        int id_usuario FK
+        varchar rol_ejecutor
+        varchar accion_realizada
+        varchar direccion_ip
+        datetime fecha_evento
+    }
+```
+
+### 2.2 Diccionario de Datos y Justificación 2FN
+
+| Tabla | Clave Primaria (PK) | Claves Foráneas (FK) | Dependencia Total y Normalización 2FN |
+| :--- | :--- | :--- | :--- |
+| **`ROLES`** | `id_rol` | N/A | Define los 3 niveles de privilegio (**Admin, Usuario, Auditor**). |
+| **`PERMISOS`** | `id_permiso` | N/A | Acciones atómicas: `read_logs`, `manage_users`, `write_diary`, etc. |
+| **`ROLES_PERMISOS`**| `(id_rol, id_permiso)` | `id_rol`, `id_permiso` | Tabla asociativa que elimina dependencias parciales. |
+| **`USUARIOS`** | `id_usuario` | `id_rol` | Cada dato depende únicamente del `id_usuario`. |
+| **`REGISTROS_EMOCIONALES`** | `id_registro` | `id_usuario` | Registro temporal del ánimo y racha sin duplicidad de usuario. |
+| **`ENTRADAS_DIARIO`** | `id_diario` | `id_usuario` | Notas personales con control de privacidad local. |
+| **`AUDITORIA_LOGS`** | `id_log` | `id_usuario` | Trazabilidad inmutable de eventos para inspección del Auditor. |
+
+---
+
+## 3. Interfaz y Desarrollo (Módulos Navegables)
+
+La plataforma está dividida en páginas autónomas e interconectadas para evitar la sobrecarga de un solo archivo monolítico:
+
+| Página | Ruta Local | Propósito Funcional |
+| :--- | :--- | :--- |
+| 🏠 **Inicio** | [`index.html`](file:///d:/Desktop/creser/index.html) | Presentación, métricas interactivas y pilares de cuidado. |
+| 💚 **Bienestar** | [`pages/bienestar.html`](file:///d:/Desktop/creser/pages/bienestar.html) | Selector de ánimo con retroalimentación y contador de racha. |
+| 📚 **Recursos** | [`pages/recursos.html`](file:///d:/Desktop/creser/pages/recursos.html) | Buscador en tiempo real y filtrado de guías y podcasts. |
+| 🫁 **Herramientas** | [`pages/herramientas.html`](file:///d:/Desktop/creser/pages/herramientas.html) | Respirador rítmico 4-4-4 y diario reflexivo privado. |
+| 🤖 **KIRI** | [`pages/kiri.html`](file:///d:/Desktop/creser/pages/kiri.html) | Chat asistencial inteligente con respuestas contextuales. |
+| 🎧 **Multimedia** | [`pages/multimedia.html`](file:///d:/Desktop/creser/pages/multimedia.html) | Generador sonoro (*Lluvia, Bosque, Olas, 432 Hz*) y visualizador. |
+| 👥 **Comunidad** | [`pages/comunidad.html`](file:///d:/Desktop/creser/pages/comunidad.html) | Círculos de diálogo temáticos y normas de convivencia. |
+| 🛟 **Ayuda** | [`pages/ayuda.html`](file:///d:/Desktop/creser/pages/ayuda.html) | Directorio de profesionales y teléfonos de emergencia 24/7. |
+| 👤 **Perfil** | [`pages/perfil.html`](file:///d:/Desktop/creser/pages/perfil.html) | Modo oscuro, texto aumentado, cambio de rol y bitácora de auditoría. |
+| 🔐 **Acceso** | [`pages/login.html`](file:///d:/Desktop/creser/pages/login.html) | Formulario *glassmorphic* con login, registro y selección de rol. |
+
+---
+
+## 4. Control de Versiones (Flujo Git & GitHub)
+
+El proyecto cuenta con control de versiones en **Git** conectado al repositorio oficial:  
+🔗 **[https://github.com/xolonica26/XOLONICA-CRESER](https://github.com/xolonica26/XOLONICA-CRESER)**
+
+### 4.1 Tres Comandos Esenciales de Gestión
+
+```bash
+# 1. Confirmar cambios locales con mensajes legibles y semánticos
+git add .
+git commit -m "feat: implementar control de acceso por roles (Admin, Usuario, Auditor) y bitacora de auditoria"
+
+# 2. Descargar e integrar actualizaciones remotas
+git pull --rebase origin main
+
+# 3. Publicar y sincronizar la rama principal en GitHub
+git push origin main
 ```
 
 ---
 
-## 🚀 Cómo Ejecutar el Proyecto Localmente
+## 5. Seguridad, Buenas Prácticas y Matriz de Roles (RBAC)
 
-1. **Clonar el repositorio**:
+### 5.1 Definición de los 3 Roles del Sistema
+
+```mermaid
+graph LR
+    subgraph Roles_CreSer
+        U[👤 Usuario]
+        A[⚙️ Administrador]
+        AU[🛡️ Auditor]
+    end
+
+    U -->|Accede a| M1[Herramientas, Diario, KIRI, Recursos]
+    A -->|Gestiona| M2[Configuraciones Globales, Catálogo de Recursos]
+    AU -->|Supervisa| M3[Bitácora de Auditoría, Logs de Acceso y Trazabilidad]
+```
+
+1. **👤 Rol Usuario**:
+   - Acceso a las funciones de autocuidado (Bienestar, Respirador, KIRI, Multimedia y Diario Personal).
+   - Privacidad estricta: Sus notas de diario se almacenan localmente y no pueden ser vistas por otros usuarios.
+
+2. **⚙️ Rol Administrador**:
+   - Supervisión general del ecosistema y gestión de contenidos educativos.
+   - Acceso a métricas globales de uso y visualización del panel de auditoría del sistema.
+
+3. **🛡️ Rol Auditor**:
+   - Privilegio de **Solo Lectura** sobre la bitácora de eventos y logs de seguridad (`Auditoría y Trazabilidad`).
+   - Verificación del cumplimiento de políticas de privacidad, anonimización y registro de accesos.
+
+### 5.2 Matriz de Permisos (RBAC Matrix)
+
+| Módulo / Acción | Rol Usuario | Rol Administrador | Rol Auditor |
+| :--- | :---: | :---: | :---: |
+| **Página de Inicio y Recursos Educativos** | ✅ Lectura | ✅ Lectura / Edición | ✅ Lectura |
+| **Respiración y Paisajes Sonoros** | ✅ Total | ✅ Total | ✅ Total |
+| **Diario Personal y Registro Anímico** | ✅ Privado | ❌ Sin Acceso (Privacidad) | ❌ Sin Acceso (Privacidad) |
+| **Orientación con KIRI** | ✅ Consulta | ✅ Consulta | ✅ Consulta |
+| **Conmutador de Roles (Demostración)** | ✅ Permitido | ✅ Permitido | ✅ Permitido |
+| **Bitácora de Auditoría y Trazabilidad** | ❌ Oculto / Restringido | ✅ Acceso Completo | ✅ Acceso Completo |
+| **Exportación de Datos Locales (JSON)** | ✅ Propios | ✅ Todos | ✅ Todos |
+
+### 5.3 Buenas Prácticas Aplicadas en el Código
+- **Código Explicado Paso a Paso**: Cada bloque y función en `app.js`, `auth.js`, `main.css`, `auth.css` y archivos HTML cuenta con comentarios detallados que explican:
+  - **¿Por qué?**: Justificación y necesidad de la lógica.
+  - **¿Cómo?**: Mecanismo de implementación técnica.
+  - **¿Para qué?**: Objetivo y beneficio para el usuario o sistema.
+- **Sanitización contra XSS**: La función `escapeHtml()` neutraliza caracteres especiales (`<`, `>`, `&`, `"`) antes de renderizar entradas del usuario.
+- **Accesibilidad WAI-ARIA**: Uso de roles `role="switch"`, `role="tab"`, `aria-checked` y `aria-label` en controles interactivos.
+
+---
+
+## 6. Ejecución de la Solución e Instrucciones
+
+### 6.1 Pasos para Ejecutar Localmente
+
+1. **Clonar el repositorio desde GitHub**:
    ```bash
    git clone https://github.com/xolonica26/XOLONICA-CRESER.git
    cd XOLONICA-CRESER
    ```
 
-2. **Abrir en tu navegador**:
-   - Haz doble clic en `index.html` para abrir la página principal y navegar por todas las secciones.
+2. **Abrir en cualquier navegador moderno**:
+   - Haz doble clic en el archivo `index.html` ubicado en la raíz del proyecto.
+   - O inicia un servidor estático local (como *Live Server* en VS Code o `npx serve .`).
+
+### 6.2 Recorrido de Demostración y Verificación
+
+1. **Navegación Principal**: Accede a las páginas mediante la barra superior o el menú desplegable móvil.
+2. **Prueba de Roles (RBAC)**:
+   - Ve a `pages/login.html` y selecciona el rol **Administrador**, **Usuario** o **Auditor**.
+   - En `pages/perfil.html`, utiliza el selector en tiempo real para alternar entre roles y observa cómo se actualiza la insignia y la tabla de **Bitácora de Auditoría y Trazabilidad**.
+3. **Respirador 4-4-4**: En `pages/herramientas.html`, haz clic en *"Iniciar Respiración"* para ver el ciclo animado.
+4. **Paisajes Sonoros**: En `pages/multimedia.html`, activa *"Lluvia Serena"* o *"Armonía 432 Hz"* y ajusta el volumen.
+5. **Chat KIRI**: En `pages/kiri.html`, interactúa con las sugerencias rápidas o escribe una inquietud para recibir orientación inmediata.
 
 ---
 
-## 🛠️ Tecnologías y Estándares
+## ⚠️ Uso Responsable y Ética en Salud Digital
 
-- **HTML5 Multipágina**: Semántica estricta (`header`, `main`, `nav`, `aside`, `section`, `footer`) y accesibilidad ARIA.
-- **CSS3 Moderno**: Variables personalizadas, Glassmorphism con `backdrop-filter`, diseño responsivo y animaciones fluidas.
-- **JavaScript ES6+**: Módulos desacoplados, Web Audio API para síntesis sonora y Web Storage API (`localStorage`).
-- **Código Comentado**: Documentación exhaustiva en cada archivo y función para facilitar el aprendizaje y soporte.
-
----
-
-## ⚠️ Uso Responsable y Alcance
-
-> **Aviso Importante**: CreSer y el asistente virtual KIRI ofrecen contenidos informativos, psicoeducativos y preventivos. **No constituyen un servicio de diagnóstico clínico ni reemplazan la atención médica o psicológica profesional**. Ante situaciones de crisis aguda o emergencia, se recomienda contactar de inmediato a los servicios de salud oficiales de tu localidad.
+> **Aviso Importante**: CreSer y el asistente virtual KIRI son herramientas digitales preventivas y psicoeducativas. **No constituyen un servicio de diagnóstico clínico ni reemplazan la atención médica o psicológica profesional**. Ante situaciones de crisis aguda o emergencia, contacta de inmediato a las líneas telefónicas oficiales de salud de tu localidad.
 
 ---
 

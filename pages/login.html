@@ -1,66 +1,75 @@
 <!DOCTYPE html>
-<!-- Declaración de documento HTML5 estándar -->
+<!-- 
+  ¿POR QUÉ?: Define el estándar moderno HTML5 para garantizar compatibilidad entre navegadores web.
+  ¿CÓMO?: Declarando la directiva doctype y el idioma español ('es') para accesibilidad y lectores de pantalla.
+  ¿PARA QUÉ?: Para estructurar la interfaz de autenticación con altos estándares de calidad.
+-->
 <html lang="es">
 <head>
-  <!-- Codificación universal de caracteres UTF-8 -->
+  <!-- ¿POR QUÉ?: Codificación universal para admitir acentos, caracteres especiales y emojis sin errores. -->
   <meta charset="utf-8">
-  <!-- Configuración de escala responsiva -->
+  <!-- ¿CÓMO?: Utilizando la etiqueta viewport para escalado dinámico. -->
+  <!-- ¿PARA QUÉ?: Garantizar visualización responsiva óptima en celulares, tablets y escritorios. -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Título de la página de Acceso -->
-  <title>CreSer — Acceso y Registro | Espacio de Cuidado</title>
-  <!-- Descripción -->
-  <meta name="description" content="Inicia sesión o crea tu cuenta en CreSer para acceder a tus recursos de bienestar y herramientas de crecimiento personal.">
-  <!-- Hoja de estilos del módulo de autenticación con estética glassmorphic -->
-  <link rel="stylesheet" href="../assets/css/auth.css?v=3.2">
+  
+  <!-- ¿POR QUÉ?: Identifica la pestaña del navegador y mejora el SEO. -->
+  <title>CreSer — Acceso, Registro y Control de Roles</title>
+  
+  <!-- ¿POR QUÉ?: Proporciona un resumen a los motores de búsqueda y tecnologías de asistencia. -->
+  <meta name="description" content="Inicia sesión o regístrate en CreSer con control de acceso basado en roles: Administrador, Usuario y Auditor.">
+  
+  <!-- ¿POR QUÉ?: Carga la hoja de estilos glassmorphic para este módulo. -->
+  <link rel="stylesheet" href="../assets/css/auth.css?v=3.3">
 </head>
 <body>
 
   <!-- =========================================================================
        Encabezado de la Pantalla de Acceso
+       ¿POR QUÉ?: Proporciona navegación de retorno y coherencia visual con la marca.
        ========================================================================= -->
   <header class="login-header">
     <!-- Logotipo y enlace de retorno al inicio -->
-    <a href="../index.html" class="brand-link">
+    <a href="../index.html" class="brand-link" title="Volver a la página de inicio">
       <span class="c1">Cre</span><span class="c3">Ser</span>
     </a>
     
     <!-- Navegación superior derecha -->
-    <nav class="nav-links">
+    <nav class="nav-links" aria-label="Navegación de autenticación">
       <a href="../index.html" class="nav-back-link">← Volver al Inicio</a>
-      <button class="btnlogin" id="headerAuthBtn">Acceder</button>
+      <button class="btnlogin" id="headerAuthBtn" aria-label="Abrir formulario de autenticación">Acceder</button>
     </nav>
   </header>
 
   <!-- =========================================================================
-       Contenido Central de Autenticación
+       Contenido Central: Presentación y Formulario con Control de Roles (RBAC)
        ========================================================================= -->
   <main class="login-main-container">
     
-    <!-- Columna Izquierda: Presentación y Beneficios -->
+    <!-- Columna Izquierda: Presentación y Explicación de Seguridad -->
     <div class="hero-presentation">
-      <span class="badge-pill">Espacio de Cuidado Emocional</span>
+      <span class="badge-pill">Espacio de Cuidado Emocional & Seguridad</span>
       <h1 class="hero-title">Tu espacio de calma y crecimiento personal</h1>
-      <p class="hero-subtitle">Accede a tus registros de bienestar, guías preventivas y al acompañamiento continuo de KIRI.</p>
+      <p class="hero-subtitle">Acceso seguro con diferenciación de roles y permisos para salvaguardar la privacidad de tus datos.</p>
       
-      <!-- Lista destacada de pilares de confianza -->
+      <!-- Lista descriptiva de roles y seguridad -->
       <div class="features-list">
         <div class="feature-item">
-          <span class="feature-icon">🔒</span>
-          <span>Privacidad garantizada y control total de tus datos.</span>
+          <span class="feature-icon">👤</span>
+          <span><strong>Rol Usuario:</strong> Acceso a herramientas de bienestar, KIRI, respirador y diario personal.</span>
         </div>
         <div class="feature-item">
-          <span class="feature-icon">🤖</span>
-          <span>Orientación interactiva con el asistente KIRI.</span>
+          <span class="feature-icon">⚙️</span>
+          <span><strong>Rol Administrador:</strong> Gestión de biblioteca, supervisión del sistema y métricas globales.</span>
         </div>
         <div class="feature-item">
-          <span class="feature-icon">🌿</span>
-          <span>Herramientas prácticas de respiración y autorregulación.</span>
+          <span class="feature-icon">🛡️</span>
+          <span><strong>Rol Auditor:</strong> Consulta y trazabilidad de registros de auditoría y registros del sistema.</span>
         </div>
       </div>
     </div>
 
     <!-- =========================================================================
-         Columna Derecha: Tarjeta Glassmorphism de Autenticación
+         Columna Derecha: Tarjeta Glassmorphic de Autenticación
          ========================================================================= -->
     <div class="auth-card-wrapper">
       <div class="Creserform active-btn">
@@ -68,48 +77,62 @@
         <button class="icon-close" id="closeFormBtn" title="Cerrar formulario" aria-label="Cerrar formulario">✕</button>
 
         <!-- Selector de Pestañas (Tabs) entre Iniciar Sesión y Registro -->
-        <div class="auth-tabs">
-          <button class="tab-btn active" id="tabLogin">Iniciar Sesión</button>
-          <button class="tab-btn" id="tabRegister">Crear Cuenta</button>
+        <div class="auth-tabs" role="tablist">
+          <button class="tab-btn active" id="tabLogin" role="tab" aria-selected="true">Iniciar Sesión</button>
+          <button class="tab-btn" id="tabRegister" role="tab" aria-selected="false">Crear Cuenta</button>
         </div>
 
-        <!-- Formulario: Iniciar Sesión -->
+        <!-- =====================================================================
+             Formulario 1: Iniciar Sesión (con Selector de Rol)
+             ===================================================================== -->
         <div class="form-box login">
           <h2>Bienvenido de vuelta</h2>
-          <p class="form-desc">Ingresa tus credenciales para continuar</p>
+          <p class="form-desc">Ingresa tus credenciales y selecciona tu rol</p>
           
           <form id="formLogin" action="../index.html" method="GET">
             <!-- Campo de correo electrónico -->
             <div class="input-box">
               <span class="input-icon">✉️</span>
-              <input type="email" id="loginEmail" required placeholder=" " value="andrea@ejemplo.com">
+              <input type="email" id="loginEmail" required placeholder=" " value="andrea@ejemplo.com" aria-label="Correo electrónico">
               <label for="loginEmail">Correo Electrónico</label>
             </div>
 
             <!-- Campo de contraseña -->
             <div class="input-box">
               <span class="input-icon">🔒</span>
-              <input type="password" id="loginPass" required placeholder=" " value="••••••••">
+              <input type="password" id="loginPass" required placeholder=" " value="••••••••" aria-label="Contraseña">
               <label for="loginPass">Contraseña</label>
             </div>
 
-            <!-- Opciones de recordar sesión y recuperación de clave -->
+            <!-- Selector de Rol para autenticación -->
+            <div class="input-box select-box">
+              <span class="input-icon">🏷️</span>
+              <select id="loginRole" aria-label="Seleccionar Rol de Acceso" style="width:100%;height:100%;background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.2);border-radius:14px;color:#fff;padding:0 35px 0 14px;font-size:0.92rem;outline:none;">
+                <option value="usuario" selected style="background:#0f172a;color:#fff">Rol: Usuario (Bienestar & Diario)</option>
+                <option value="admin" style="background:#0f172a;color:#fff">Rol: Administrador (Gestión Total)</option>
+                <option value="auditor" style="background:#0f172a;color:#fff">Rol: Auditor (Trazabilidad & Logs)</option>
+              </select>
+            </div>
+
+            <!-- Opciones de recordar sesión y olvido de clave -->
             <div class="remember-forgot">
               <label><input type="checkbox" checked> Recordarme</label>
-              <a href="#" onclick="alert('En un entorno productivo se enviará un enlace de recuperación a tu correo.')">¿Olvidaste tu contraseña?</a>
+              <a href="#" onclick="alert('En un entorno productivo se enviará un enlace seguro de recuperación.')">¿Olvidaste tu contraseña?</a>
             </div>
 
             <!-- Botón de acción principal -->
             <button type="submit" class="submit-btn">Ingresar a CreSer</button>
 
-            <!-- Enlace alternativo para cambiar de pestaña -->
+            <!-- Enlace para alternar a registro -->
             <div class="switch-prompt">
               <p>¿Aún no tienes cuenta? <a href="#" class="register-link">Regístrate aquí</a></p>
             </div>
           </form>
         </div>
 
-        <!-- Formulario: Registro de Cuenta -->
+        <!-- =====================================================================
+             Formulario 2: Registro de Cuenta Nueva
+             ===================================================================== -->
         <div class="form-box register">
           <h2>Crea tu cuenta</h2>
           <p class="form-desc">Comienza tu camino de bienestar hoy mismo</p>
@@ -118,33 +141,43 @@
             <!-- Campo de nombre completo -->
             <div class="input-box">
               <span class="input-icon">👤</span>
-              <input type="text" id="regName" required placeholder=" ">
+              <input type="text" id="regName" required placeholder=" " aria-label="Nombre completo">
               <label for="regName">Nombre Completo</label>
             </div>
 
-            <!-- Campo de correo -->
+            <!-- Campo de correo electrónico -->
             <div class="input-box">
               <span class="input-icon">✉️</span>
-              <input type="email" id="regEmail" required placeholder=" ">
+              <input type="email" id="regEmail" required placeholder=" " aria-label="Correo electrónico">
               <label for="regEmail">Correo Electrónico</label>
             </div>
 
             <!-- Campo de contraseña -->
             <div class="input-box">
               <span class="input-icon">🔒</span>
-              <input type="password" id="regPass" required placeholder=" ">
+              <input type="password" id="regPass" required placeholder=" " aria-label="Contraseña">
               <label for="regPass">Contraseña</label>
             </div>
 
-            <!-- Consentimiento informado de términos y privacidad -->
+            <!-- Selector de rol al registrarse -->
+            <div class="input-box select-box">
+              <span class="input-icon">🏷️</span>
+              <select id="regRole" aria-label="Rol Solicitado" style="width:100%;height:100%;background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.2);border-radius:14px;color:#fff;padding:0 35px 0 14px;font-size:0.92rem;outline:none;">
+                <option value="usuario" selected style="background:#0f172a;color:#fff">Rol: Usuario</option>
+                <option value="admin" style="background:#0f172a;color:#fff">Rol: Administrador</option>
+                <option value="auditor" style="background:#0f172a;color:#fff">Rol: Auditor</option>
+              </select>
+            </div>
+
+            <!-- Casilla de aceptación de políticas -->
             <div class="remember-forgot terms-box">
-              <label><input type="checkbox" required checked> Acepto la <a href="#" onclick="alert('Política de Privacidad demostrativa: Sus datos no son enviados a servidores externos.')">Política de Privacidad</a> y Términos.</label>
+              <label><input type="checkbox" required checked> Acepto los <a href="#" onclick="alert('Política de Privacidad y Términos: Datos procesados localmente bajo estándares de seguridad.')">Términos y Privacidad</a>.</label>
             </div>
 
             <!-- Botón de registro -->
             <button type="submit" class="submit-btn">Crear Cuenta</button>
 
-            <!-- Enlace alternativo para volver a login -->
+            <!-- Enlace para regresar a login -->
             <div class="switch-prompt">
               <p>¿Ya tienes una cuenta? <a href="#" class="login-link">Inicia sesión</a></p>
             </div>
@@ -155,7 +188,7 @@
     </div>
   </main>
 
-  <!-- Script con la lógica de control del formulario de acceso -->
-  <script src="../assets/js/auth.js?v=3.2"></script>
+  <!-- Script modular de autenticación -->
+  <script src="../assets/js/auth.js?v=3.3"></script>
 </body>
 </html>

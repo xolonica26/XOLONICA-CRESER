@@ -1,86 +1,98 @@
 /**
  * ============================================================================
- * CreSer — Lógica de Interacción del Módulo de Acceso y Registro (auth.js)
+ * CreSer — Módulo de Control de Acceso y Gestión de Roles (auth.js)
  * ============================================================================
- * Este archivo gestiona la interacción del formulario glassmorphic:
- * 1. Alternancia dinámica entre las pestañas "Iniciar Sesión" y "Crear Cuenta".
- * 2. Cierre y apertura interactiva de la tarjeta de autenticación.
- * 3. Captura y almacenamiento demostrativo del usuario en localStorage.
+ * 
+ * ¿POR QUÉ?:
+ * Proporcionar una capa de autenticación y control de acceso basado en roles
+ * (RBAC - Role-Based Access Control) con 3 roles formales:
+ * 1. Administrador: Gestión de plataforma, supervisión y configuración.
+ * 2. Usuario: Acceso estándar a bienestar, KIRI, respirador y diario.
+ * 3. Auditor: Lectura de trazabilidad, eventos de seguridad y bitácoras.
+ * 
+ * ¿CÓMO?:
+ * Escuchando eventos del DOM, manipulando clases CSS para alternancia fluida de
+ * pestañas, registrando eventos de auditoría y persistiendo la sesión en localStorage.
+ * 
+ * ¿PARA QUÉ?:
+ * Garantizar trazabilidad, buenas prácticas de desarrollo y control de privilegios.
  * ============================================================================
  */
 
-// Se ejecuta al cargar el contenido del DOM
 document.addEventListener('DOMContentLoaded', () => {
-  // Referencia al contenedor principal del formulario
+  // Referencias a los elementos del formulario en el DOM
   const creserForm = document.querySelector('.Creserform');
-  // Enlace dentro del formulario para cambiar a registro
   const registerLink = document.querySelector('.register-link');
-  // Enlace dentro del formulario para cambiar a inicio de sesión
   const loginLink = document.querySelector('.login-link');
-  // Botón de pestaña "Iniciar Sesión"
   const tabLogin = document.getElementById('tabLogin');
-  // Botón de pestaña "Crear Cuenta"
   const tabRegister = document.getElementById('tabRegister');
-  // Botón en la cabecera superior para reabrir el formulario
   const btnHeaderAuth = document.getElementById('headerAuthBtn');
-  // Botón con ícono '✕' para cerrar la tarjeta de acceso
   const closeBtn = document.getElementById('closeFormBtn');
 
-  // Función para activar la vista de Registro
+  /**
+   * Muestra el formulario de registro y oculta el de inicio de sesión.
+   * ¿POR QUÉ?: Para permitir al usuario crear una cuenta nueva en la misma interfaz sin recargas.
+   * ¿CÓMO?: Alternando la clase 'active' en el contenedor y actualizando los estilos de las pestañas.
+   * ¿PARA QUÉ?: Ofrecer una experiencia de usuario fluida y sin fricciones.
+   */
   function showRegister() {
-    if (creserForm) {
-      // Agrega la clase 'active' que muestra la caja de registro y oculta la de login
-      creserForm.classList.add('active');
+    if (creserForm) creserForm.classList.add('active');
+    if (tabRegister) {
+      tabRegister.classList.add('active');
+      tabRegister.setAttribute('aria-selected', 'true');
     }
-    // Marca la pestaña de registro como activa
-    if (tabRegister) tabRegister.classList.add('active');
-    // Desmarca la pestaña de inicio de sesión
-    if (tabLogin) tabLogin.classList.remove('active');
+    if (tabLogin) {
+      tabLogin.classList.remove('active');
+      tabLogin.setAttribute('aria-selected', 'false');
+    }
   }
 
-  // Función para activar la vista de Inicio de Sesión
+  /**
+   * Muestra el formulario de login y oculta el de registro.
+   * ¿POR QUÉ?: Para permitir al usuario ingresar con credenciales existentes.
+   * ¿CÓMO?: Removiendo la clase 'active' y ajustando los atributos ARIA correspondientes.
+   * ¿PARA QUÉ?: Mantener consistencia visual y accesibilidad.
+   */
   function showLogin() {
-    if (creserForm) {
-      // Remueve la clase 'active' para volver a la vista de login
-      creserForm.classList.remove('active');
+    if (creserForm) creserForm.classList.remove('active');
+    if (tabLogin) {
+      tabLogin.classList.add('active');
+      tabLogin.setAttribute('aria-selected', 'true');
     }
-    // Marca la pestaña de login como activa
-    if (tabLogin) tabLogin.classList.add('active');
-    // Desmarca la pestaña de registro
-    if (tabRegister) tabRegister.classList.remove('active');
+    if (tabRegister) {
+      tabRegister.classList.remove('active');
+      tabRegister.setAttribute('aria-selected', 'false');
+    }
   }
 
-  // Asigna el evento al enlace de registro
+  // Event listeners para la alternancia de pestañas
   if (registerLink) {
     registerLink.addEventListener('click', (e) => {
-      e.preventDefault(); // Evita navegación por defecto
+      e.preventDefault();
       showRegister();
     });
   }
 
-  // Asigna el evento al enlace de inicio de sesión
   if (loginLink) {
     loginLink.addEventListener('click', (e) => {
-      e.preventDefault(); // Evita navegación por defecto
+      e.preventDefault();
       showLogin();
     });
   }
 
-  // Asigna el evento a la pestaña de registro
   if (tabRegister) {
     tabRegister.addEventListener('click', () => {
       showRegister();
     });
   }
 
-  // Asigna el evento a la pestaña de login
   if (tabLogin) {
     tabLogin.addEventListener('click', () => {
       showLogin();
     });
   }
 
-  // Botón de cabecera para abrir el formulario
+  // Botón superior para reabrir el formulario en caso de haberlo cerrado
   if (btnHeaderAuth) {
     btnHeaderAuth.addEventListener('click', () => {
       if (creserForm) {
@@ -91,41 +103,78 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Botón de cierre '✕'
+  // Botón '✕' para ocultar temporalmente la tarjeta de login
   if (closeBtn) {
     closeBtn.addEventListener('click', () => {
-      if (creserForm) {
-        creserForm.style.display = 'none';
-      }
-      if (btnHeaderAuth) {
-        btnHeaderAuth.classList.remove('hidden');
-      }
+      if (creserForm) creserForm.style.display = 'none';
+      if (btnHeaderAuth) btnHeaderAuth.classList.remove('hidden');
     });
   }
 
-  // Validación y captura demostrativa de datos al enviar los formularios
+  /* =========================================================================
+     Gestión de Formularios, Roles y Auditoría de Seguridad
+     ========================================================================= */
   const formLogin = document.getElementById('formLogin');
   const formRegister = document.getElementById('formRegister');
 
-  // Al enviar el formulario de login
+  /**
+   * Registra un evento en la bitácora de auditoría del sistema.
+   * ¿POR QUÉ?: Para cumplir con el requerimiento de trazabilidad y seguridad para el rol Auditor.
+   * ¿CÓMO?: Guardando objetos estructurados con timestamp, usuario, rol y acción en localStorage.
+   * ¿PARA QUÉ?: Permitir al Auditor inspeccionar accesos y cambios en el sistema.
+   */
+  function logAuditEvent(user, role, action) {
+    const logs = JSON.parse(localStorage.getItem('creser-audit-logs') || '[]');
+    const now = new Date();
+    const formattedDate = now.toLocaleDateString('es-ES', {
+      day: '2-digit', month: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit', second: '2-digit'
+    });
+
+    logs.unshift({
+      id: 'LOG-' + Math.floor(1000 + Math.random() * 9000),
+      timestamp: formattedDate,
+      user: user || 'Anónimo',
+      role: role.toUpperCase(),
+      action: action,
+      ip: '127.0.0.1 (Local)'
+    });
+
+    // Mantiene un máximo de 50 registros recientes
+    if (logs.length > 50) logs.pop();
+    localStorage.setItem('creser-audit-logs', JSON.stringify(logs));
+  }
+
+  // Procesamiento del Inicio de Sesión
   if (formLogin) {
     formLogin.addEventListener('submit', () => {
-      const email = document.getElementById('loginEmail')?.value;
-      if (email) {
-        // Almacena el correo para personalizar la sesión local
-        localStorage.setItem('creser-user-email', email);
-      }
+      const email = document.getElementById('loginEmail')?.value || 'andrea@ejemplo.com';
+      const role = document.getElementById('loginRole')?.value || 'usuario';
+      
+      // Persiste la sesión activa con su rol asignado
+      localStorage.setItem('creser-user-email', email);
+      localStorage.setItem('creser-user-role', role);
+      localStorage.setItem('creser-user-name', email.split('@')[0]);
+
+      // Registra el evento de auditoría
+      logAuditEvent(email, role, 'Inicio de sesión exitoso');
     });
   }
 
-  // Al enviar el formulario de registro
+  // Procesamiento del Registro de Cuenta
   if (formRegister) {
     formRegister.addEventListener('submit', () => {
-      const name = document.getElementById('regName')?.value;
-      if (name) {
-        // Almacena el nombre para personalizar la bienvenida
-        localStorage.setItem('creser-user-name', name);
-      }
+      const name = document.getElementById('regName')?.value || 'Nuevo Usuario';
+      const email = document.getElementById('regEmail')?.value || 'usuario@ejemplo.com';
+      const role = document.getElementById('regRole')?.value || 'usuario';
+
+      // Persiste el nuevo usuario
+      localStorage.setItem('creser-user-name', name);
+      localStorage.setItem('creser-user-email', email);
+      localStorage.setItem('creser-user-role', role);
+
+      // Registra el evento de auditoría
+      logAuditEvent(email, role, `Registro de cuenta con rol ${role}`);
     });
   }
 });

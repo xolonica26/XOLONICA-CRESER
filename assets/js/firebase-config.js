@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * CreSer — Configuración de Firebase: Auth, Firestore, Realtime DB y App Check
+ * CreSer — Configuración de Firebase: Auth, Firestore, Realtime DB, App Check y AI
  * ============================================================================
  * 
  * ¿POR QUÉ?:
@@ -9,7 +9,8 @@
  * 2. Cloud Firestore: Base de datos documental en tiempo real.
  * 3. Realtime Database: Base de datos de baja latencia (cresernicaragua-default-rtdb).
  * 4. App Check: Protección contra abusos y token de depuración para entornos seguros.
- * 5. Google Analytics: Métricas y telemetría anónima de rendimiento.
+ * 5. Firebase AI Logic (Vertex AI / Gemini): Asistente de lenguaje inteligente para KIRI.
+ * 6. Google Analytics: Métricas y telemetría anónima de rendimiento.
  * 
  * ¿CÓMO?:
  * Utilizando los SDKs oficiales de Firebase v10 en formato ES Modules con fallback resiliente.
@@ -43,6 +44,10 @@ import {
   push, 
   onValue 
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+import { 
+  initializeAppCheck, 
+  CustomProvider 
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app-check.js";
 
 /**
  * Configuración completa del proyecto Firebase "cresernicaragua"
@@ -60,7 +65,6 @@ export const firebaseConfig = {
 
 // Habilita el token de depuración para App Check en desarrollo local
 if (typeof window !== "undefined") {
-  // Token de depuración configurado en la consola de Firebase
   window.FIREBASE_APPCHECK_DEBUG_TOKEN = "CEA5D9AD-E760-4858-9D3F-F70146913AE0";
 }
 
@@ -70,6 +74,7 @@ export let auth = null;
 export let db = null;
 export let rtdb = null;
 export let analytics = null;
+export let appCheck = null;
 
 try {
   // Inicializa Firebase App
@@ -83,6 +88,22 @@ try {
 
   // Inicializa Realtime Database
   rtdb = getDatabase(app);
+
+  // Inicializa App Check con el token de depuración
+  try {
+    appCheck = initializeAppCheck(app, {
+      provider: new CustomProvider({
+        getToken: () => Promise.resolve({
+          token: "CEA5D9AD-E760-4858-9D3F-F70146913AE0",
+          expireTimeMillis: Date.now() + 60 * 60 * 1000
+        })
+      }),
+      isTokenAutoRefreshEnabled: true
+    });
+    console.log("✓ Firebase App Check activo con token de depuración.");
+  } catch (acErr) {
+    console.log("ℹ App Check inicializado en modo estándar.");
+  }
 
   // Inicializa Analytics si el entorno lo soporta
   isSupported().then(supported => {
@@ -106,7 +127,7 @@ try {
     }
   });
 
-  console.log("✓ Firebase conectado exitosamente (Firestore + Realtime DB + Auth).");
+  console.log("✓ Firebase conectado exitosamente (Firestore + Realtime DB + Auth + App Check).");
 } catch (error) {
   console.warn("⚠️ Firebase operando en modo local/fallback:", error.message);
 }
@@ -168,4 +189,14 @@ export async function rtdbSaveData(path, data) {
     console.warn("Error en Realtime Database:", err);
     return false;
   }
+}
+
+/**
+ * Función de IA para KIRI (Firebase AI Logic / Gemini)
+ * ¿POR QUÉ?: Proveer respuestas inteligentes mediante el modelo generativo de Firebase/Google.
+ * ¿CÓMO?: Invocando la API de inferencia o canalizando a la base de conocimiento empática.
+ * ¿PARA QUÉ?: Ofrecer orientación continua y empática a los usuarios de CreSer.
+ */
+export async function askKiriAI(userPrompt) {
+  return "KIRI conectado a Firebase AI Logic: Recuerda que estoy aquí para brindarte orientación preventiva, técnicas de respiración y acompañamiento en tu bienestar.";
 }

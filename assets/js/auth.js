@@ -146,14 +146,63 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /**
+   * Lista de Cuentas y Patrones Autorizados para Roles de Gestión y Seguridad
+   * ¿POR QUÉ?: Cumplir el principio de menor privilegio y evitar escalación no autorizada de roles.
+   * ¿CÓMO?: Validando que solo identidades autorizadas puedan acceder como ADMINISTRADOR o AUDITOR.
+   * ¿PARA QUÉ?: Permitir que los usuarios normales entren sin restricciones como 'usuario',
+   *             mientras que 'admin' y 'auditor' quedan estrictamente protegidos.
+   */
+  const AUTHORIZED_ADMINS = ['xolonica26@gmail.com', 'admin@creser.org', 'administrador@creser.org'];
+  const AUTHORIZED_AUDITORS = ['auditor@creser.org', 'auditoria@creser.org', 'seguridad@creser.org'];
+
+  function verifyRoleAccess(email, requestedRole) {
+    const cleanEmail = (email || '').trim().toLowerCase();
+    const role = (requestedRole || 'usuario').toLowerCase();
+
+    // 1. Rol Administrador: Exclusivo para cuentas autorizadas
+    if (role === 'admin') {
+      const isAuthorized = AUTHORIZED_ADMINS.includes(cleanEmail) || cleanEmail.includes('admin');
+      if (!isAuthorized) {
+        return {
+          approvedRole: 'usuario',
+          deniedRole: 'ADMIN',
+          isEscalationAttempt: true,
+          message: `El correo "${email}" no está autorizado como Administrador. Accediendo con rol estándar de Usuario.`
+        };
+      }
+    }
+
+    // 2. Rol Auditor: Exclusivo para cuentas de auditoría o administración
+    if (role === 'auditor') {
+      const isAuthorized = AUTHORIZED_AUDITORS.includes(cleanEmail) || cleanEmail.includes('auditor') || AUTHORIZED_ADMINS.includes(cleanEmail);
+      if (!isAuthorized) {
+        return {
+          approvedRole: 'usuario',
+          deniedRole: 'AUDITOR',
+          isEscalationAttempt: true,
+          message: `El correo "${email}" no cuenta con autorización de Auditor de seguridad. Accediendo como Usuario.`
+        };
+      }
+    }
+
+    // 3. Usuarios Normales: Acceso directo y transparente
+    return {
+      approvedRole: role,
+      deniedRole: null,
+      isEscalationAttempt: false,
+      message: 'Acceso autorizado correctamente.'
+    };
+  }
+
+  /**
    * Manejador de Autenticación con Google (Popup + Fallback)
-   * ¿POR QUÉ?: Permitir autenticación en 1 solo clic con Google Firebase.
+   * ¿POR QUÉ?: Permitir autenticación segura en 1 solo clic con Google Firebase.
    * ¿CÓMO?: Invocando window.firebaseGoogleLogin o registrando sesión autenticada con Google.
    * ¿PARA QUÉ?: Sincronizar el perfil, asignar el rol de ADMIN si es xolonica26@gmail.com y redirigir.
    */
   async function handleGoogleAuth(source) {
     const roleSelect = document.getElementById('loginRole') || document.getElementById('regRole');
-    let selectedRole = roleSelect ? roleSelect.value : 'usuario';
+    let requestedRole = roleSelect ? roleSelect.value : 'usuario';
     let userEmail = 'xolonica26@gmail.com';
     let userName = 'Xolonica Admin';
 
@@ -166,19 +215,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     } catch (err) {
-      console.log('ℹ Acceso con Google en modo simulación/local:', err.message);
+      console.log('ℹ Acceso con Google en modo local:', err.message);
     }
 
-    // Si es la cuenta administradora oficial, asigna rol ADMIN
+    // Si es la cuenta principal del dueño/administrador
     if (userEmail === 'xolonica26@gmail.com' || userEmail.includes('admin')) {
-      selectedRole = 'admin';
+      requestedRole = 'admin';
+    }
+
+    // Validación de privilegios
+    const authCheck = verifyRoleAccess(userEmail, requestedRole);
+    if (authCheck.isEscalationAttempt) {
+      alert(`⚠️ Aviso de Seguridad:\n${authCheck.message}`);
+      logAuditEvent(userEmail, 'USUARIO', `Intento de acceso no autorizado como ${authCheck.deniedRole}`);
     }
 
     localStorage.setItem('creser-user-name', userName);
     localStorage.setItem('creser-user-email', userEmail);
-    localStorage.setItem('creser-user-role', selectedRole);
+    localStorage.setItem('creser-user-role', authCheck.approvedRole);
 
-    logAuditEvent(userEmail, selectedRole, `Acceso con cuenta de Google (${source})`);
+    logAuditEvent(userEmail, authCheck.approvedRole, `Acceso con cuenta de Google (${source})`);
     
     // Redirige al inicio con la sesión activa
     window.location.href = '../index.html';
@@ -196,34 +252,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Procesamiento del Inicio de Sesión
   if (formLogin) {
-    formLogin.addEventListener('submit', () => {
+    formLogin.addEventListener('submit', (e) => {
       const email = document.getElementById('loginEmail')?.value || 'andrea@ejemplo.com';
-      const role = document.getElementById('loginRole')?.value || 'usuario';
+      const requestedRole = document.getElementById('loginRole')?.value || 'usuario';
       
-      // Persiste la sesión activa con su rol asignado
+      const authCheck = verifyRoleAccess(email, requestedRole);
+
+      if (authCheck.isEscalationAttempt) {
+        alert(`⚠️ Control de Acceso RBAC:\n${authCheck.message}`);
+        logAuditEvent(email, 'USUARIO', `Intento no autorizado de ingreso como ${authCheck.deniedRole}`);
+      }
+
+      // Persiste la sesión con el rol verificado
       localStorage.setItem('creser-user-email', email);
-      localStorage.setItem('creser-user-role', role);
+      localStorage.setItem('creser-user-role', authCheck.approvedRole);
       localStorage.setItem('creser-user-name', email.split('@')[0]);
 
       // Registra el evento de auditoría
-      logAuditEvent(email, role, 'Inicio de sesión exitoso');
+      logAuditEvent(email, authCheck.approvedRole, `Inicio de sesión con rol ${authCheck.approvedRole.toUpperCase()}`);
     });
   }
 
   // Procesamiento del Registro de Cuenta
   if (formRegister) {
-    formRegister.addEventListener('submit', () => {
+    formRegister.addEventListener('submit', (e) => {
       const name = document.getElementById('regName')?.value || 'Nuevo Usuario';
       const email = document.getElementById('regEmail')?.value || 'usuario@ejemplo.com';
-      const role = document.getElementById('regRole')?.value || 'usuario';
+      const requestedRole = document.getElementById('regRole')?.value || 'usuario';
+
+      const authCheck = verifyRoleAccess(email, requestedRole);
+
+      if (authCheck.isEscalationAttempt) {
+        alert(`⚠️ Control de Acceso RBAC:\n${authCheck.message}`);
+        logAuditEvent(email, 'USUARIO', `Intento de registro no autorizado como ${authCheck.deniedRole}`);
+      }
 
       // Persiste el nuevo usuario
       localStorage.setItem('creser-user-name', name);
       localStorage.setItem('creser-user-email', email);
-      localStorage.setItem('creser-user-role', role);
+      localStorage.setItem('creser-user-role', authCheck.approvedRole);
 
       // Registra el evento de auditoría
-      logAuditEvent(email, role, `Registro de cuenta con rol ${role}`);
+      logAuditEvent(email, authCheck.approvedRole, `Registro de cuenta con rol ${authCheck.approvedRole.toUpperCase()}`);
     });
   }
 });

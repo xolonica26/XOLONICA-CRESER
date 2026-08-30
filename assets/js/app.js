@@ -670,8 +670,26 @@ function initRoleAndAuditPanel() {
     roleSwitcher.value = currentRole;
     roleSwitcher.addEventListener('change', (e) => {
       const newRole = e.target.value;
+      const cleanEmail = currentUser.toLowerCase();
+      const isAuthAdmin = cleanEmail === 'xolonica26@gmail.com' || cleanEmail.includes('admin');
+      const isAuthAuditor = cleanEmail.includes('auditor') || isAuthAdmin;
+
+      if (newRole === 'admin' && !isAuthAdmin) {
+        alert(`⚠️ Acción Bloqueada:\nLa cuenta "${currentUser}" no tiene permisos de Administrador.`);
+        recordAuditLog(`Intento no autorizado de conmutar a rol ADMIN desde Perfil`);
+        roleSwitcher.value = currentRole;
+        return;
+      }
+
+      if (newRole === 'auditor' && !isAuthAuditor) {
+        alert(`⚠️ Acción Bloqueada:\nLa cuenta "${currentUser}" no tiene permisos de Auditor de seguridad.`);
+        recordAuditLog(`Intento no autorizado de conmutar a rol AUDITOR desde Perfil`);
+        roleSwitcher.value = currentRole;
+        return;
+      }
+
       localStorage.setItem('creser-user-role', newRole);
-      recordAuditLog(`Cambio de rol asignado a: ${newRole.toUpperCase()}`);
+      recordAuditLog(`Cambio de rol autorizado a: ${newRole.toUpperCase()}`);
       location.reload();
     });
   }
@@ -680,15 +698,6 @@ function initRoleAndAuditPanel() {
   function renderAuditLogs() {
     if (!auditTableBody) return;
     const logs = JSON.parse(localStorage.getItem('creser-audit-logs') || '[]');
-    
-    // Si el rol es Usuario normal, oculta o restringe la edición
-    if (auditPanelCard) {
-      if (currentRole === 'usuario') {
-        auditPanelCard.style.opacity = '0.75';
-      } else {
-        auditPanelCard.style.opacity = '1';
-      }
-    }
 
     auditTableBody.innerHTML = logs.map(log => `
       <tr class="audit-table-row">

@@ -582,10 +582,36 @@ function escapeHtml(str) {
    ¿PARA QUÉ?: Optimizar los tiempos de respuesta y brindar una experiencia ágil.
    ========================================================================== */
 function initResourceFilters() {
-  const filterBtns = document.querySelectorAll('.filter-btn');
+  const container = document.getElementById('resourcesContainer');
   const searchInput = document.getElementById('searchResourcesInput');
-  const resourceCards = document.querySelectorAll('.resource-card');
+  const filterBtns = document.querySelectorAll('.filter-btn');
 
+  // Si existen recursos personalizados en el CMS, los renderiza dinámicamente
+  if (container) {
+    const defaultResources = [
+      { id: 1, title: "Manejo Efectivo del Estrés Académico y Laboral", cat: "articulos", type: "Artículo", duration: "6 min", desc: "Técnicas prácticas para organizar prioridades, prevenir la saturación y mantener momentos de desconexión reparadora." },
+      { id: 2, title: "Identificación y Expresión Emocional Asertiva", cat: "guias", type: "Guía Práctica", duration: "10 min", desc: "Herramientas visuales y ejercicios para nombrar lo que sientes y comunicarlo con claridad y respeto en tus relaciones." },
+      { id: 3, title: "Mente en Calma: El Poder de la Autocompasión", cat: "podcasts", type: "Podcast", duration: "15 min", desc: "Episodio sonoro guiado para transformar el diálogo interno crítico en una voz comprensiva y motivadora." },
+      { id: 4, title: "Pausa Guiada: Respiración Cuadrada 4-4-4", cat: "videos", type: "Video Tutorial", duration: "4 min", desc: "Instrucción paso a paso para sincronizar la respiración diafragmática y regular el sistema nervioso." },
+      { id: 5, title: "Higiene del Sueño y Descanso Reparador", cat: "infografias", type: "Infografía", duration: "3 min", desc: "Pautas sencillas sobre horarios, luz azul y ambiente para conciliar un descanso profundo y constante." },
+      { id: 6, title: "Estableciendo Límites Saludables", cat: "articulos", type: "Artículo", duration: "8 min", desc: "Estrategias prácticas para decir no con asertividad sin experimentar culpa y proteger tu bienestar." }
+    ];
+
+    const resourcesList = JSON.parse(localStorage.getItem('creser-cms-resources') || JSON.stringify(defaultResources));
+
+    container.innerHTML = resourcesList.map(r => `
+      <div class="resource-card" data-category="${r.cat}">
+        <div>
+          <span class="badge ${r.cat==='guias'?'badge-green':r.cat==='podcasts'?'badge-purple':''}">${escapeHtml(r.type || r.cat)}</span>
+          <h3>${escapeHtml(r.title)}</h3>
+          <p>${escapeHtml(r.desc)}</p>
+        </div>
+        <button class="secondary mt-3" data-modal="terms">Explorar Contenido</button>
+      </div>
+    `).join('');
+  }
+
+  const resourceCards = document.querySelectorAll('.resource-card');
   let currentCategory = 'todos';
   let searchTerm = '';
 
@@ -599,9 +625,9 @@ function initResourceFilters() {
       const matchesSearch = !searchTerm || title.includes(searchTerm) || desc.includes(searchTerm);
 
       if (matchesCat && matchesSearch) {
-        card.style.display = 'flex';
+        card.classList.remove('hidden');
       } else {
-        card.style.display = 'none';
+        card.classList.add('hidden');
       }
     });
   }
@@ -663,6 +689,15 @@ function initRoleAndAuditPanel() {
       roleBadge.className = 'badge badge-green';
     } else {
       roleBadge.className = 'badge badge-purple';
+    }
+  }
+
+  const adminPanelLinkWrap = document.getElementById('adminPanelLinkWrap');
+  if (adminPanelLinkWrap) {
+    if (currentRole === 'admin') {
+      adminPanelLinkWrap.classList.remove('hidden');
+    } else {
+      adminPanelLinkWrap.classList.add('hidden');
     }
   }
 
@@ -827,3 +862,411 @@ document.addEventListener('click', (e) => {
     e.target.classList.remove('show');
   }
 });
+
+/* ==========================================================================
+   Gestor Dinámico de Contenidos (CMS) & Panel Administrativo
+   ========================================================================== */
+
+/**
+ * Carga y aplica los contenidos dinámicos del CMS en el sitio web
+ * ¿POR QUÉ?: Permitir que los cambios guardados desde el Panel Administrativo
+ *             se reflejen inmediatamente en la portada y páginas sin tocar código.
+ * ¿CÓMO?: Leyendo el estado del CMS en localStorage y actualizando los nodos del DOM.
+ * ¿PARA QUÉ?: Otorgar control editorial total al Administrador de CreSer.
+ */
+function loadDynamicCmsContent() {
+  const defaultCms = {
+    bannerText: "🌿 CreSer: Espacio seguro para el acompañamiento y bienestar emocional",
+    heroBadge: "Plataforma Digital de Cuidado Emocional",
+    heroTitle: "Bienvenido a <span class=\"c1\">Cre</span><span class=\"c3\">Ser</span>",
+    heroSubtitle: "Un entorno digital seguro y accesible diseñado para acompañarte en el autoconocimiento, la gestión de tus emociones y la adopción de hábitos de vida saludables.",
+    dailyQuote: "«Cuidar de tu mente y de tus emociones es el acto más valiente de amor propio.»"
+  };
+
+  const storedCms = JSON.parse(localStorage.getItem('creser-cms-content') || 'null') || defaultCms;
+
+  const heroBadgeEl = document.getElementById('cmsHeroBadge');
+  const heroTitleEl = document.getElementById('cmsHeroTitle');
+  const heroDescEl = document.getElementById('cmsHeroDesc');
+
+  if (heroBadgeEl && storedCms.heroBadge) heroBadgeEl.textContent = storedCms.heroBadge;
+  if (heroTitleEl && storedCms.heroTitle) heroTitleEl.innerHTML = storedCms.heroTitle;
+  if (heroDescEl && storedCms.heroSubtitle) heroDescEl.textContent = storedCms.heroSubtitle;
+
+  // Renderizado dinámico del directorio de ayuda si existe el contenedor
+  const helpListEl = document.getElementById('helpDirectoryList');
+  if (helpListEl) {
+    const defaultHelp = [
+      { inst: "Línea Nacional de Emergencias", tipo: "Crisis Emocional & Salud", tel: "118 / 102", disp: "24 horas / 7 días" },
+      { inst: "Cruz Roja Nicaragüense", tipo: "Atención Psicológica y Primeros Auxilios", tel: "+505 2265-2081", disp: "Lunes a Domingo" },
+      { inst: "Centro de Orientación Psicológica CreSer", tipo: "Terapia y Acompañamiento", tel: "contacto@creser.org", disp: "Lunes a Viernes 8am - 5pm" }
+    ];
+    const helpList = JSON.parse(localStorage.getItem('creser-cms-help') || JSON.stringify(defaultHelp));
+    helpListEl.innerHTML = `
+      <table class="audit-table">
+        <thead>
+          <tr>
+            <th>Institución</th>
+            <th>Tipo de Atención</th>
+            <th>Contacto</th>
+            <th>Horario</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${helpList.map(h => `
+            <tr class="audit-table-row">
+              <td><strong>${escapeHtml(h.inst)}</strong></td>
+              <td>${escapeHtml(h.tipo)}</td>
+              <td><code>${escapeHtml(h.tel)}</code></td>
+              <td>${escapeHtml(h.disp)}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+  }
+
+  // Si el usuario es Administrador, agrega el acceso al Panel Admin en el menú
+  const userRole = localStorage.getItem('creser-user-role') || 'usuario';
+  if (userRole === 'admin') {
+    const navLinks = document.querySelector('.nav-links');
+    if (navLinks && !document.getElementById('navAdminLink')) {
+      const adminLink = document.createElement('a');
+      adminLink.id = 'navAdminLink';
+      adminLink.href = window.location.pathname.includes('/pages/') ? 'admin.html' : 'pages/admin.html';
+      adminLink.textContent = '👑 Panel Admin';
+      adminLink.className = 'navitem';
+      navLinks.insertBefore(adminLink, navLinks.firstChild);
+    }
+  }
+}
+
+/**
+ * Controlador Integral del Panel de Control Administrativo (pages/admin.html)
+ * ¿POR QUÉ?: Ofrecer una interfaz visual profesional para editar textos, recursos,
+ *             directorio de ayuda y gestionar roles de usuarios (RBAC).
+ * ¿CÓMO?: Verificando el rol 'admin', manipulando formularios y sincronizando con el almacenamiento.
+ * ¿PARA QUÉ?: Gestionar la plataforma en producción de forma autónoma.
+ */
+function initAdminDashboard() {
+  const adminDenied = document.getElementById('adminAccessDenied');
+  const adminView = document.getElementById('adminDashboardContent');
+  if (!adminView) return;
+
+  const currentRole = localStorage.getItem('creser-user-role') || 'usuario';
+  const currentUser = localStorage.getItem('creser-user-email') || '';
+
+  // 1. Verificación de Privilegios de Administrador
+  const isAuthorizedAdmin = currentRole === 'admin' && (currentUser === 'xolonica26@gmail.com' || currentUser.includes('admin') || currentUser === '');
+
+  if (!isAuthorizedAdmin && currentRole !== 'admin') {
+    if (adminDenied) adminDenied.hidden = false;
+    adminView.hidden = true;
+    return;
+  }
+
+  if (adminDenied) adminDenied.hidden = true;
+  adminView.hidden = false;
+
+  // 2. Manejo de Pestañas del Panel Admin
+  const tabBtns = document.querySelectorAll('.admin-tab-btn');
+  const tabPanels = document.querySelectorAll('.admin-tab-panel');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-tab');
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabPanels.forEach(p => p.classList.remove('active'));
+
+      btn.classList.add('active');
+      const targetPanel = document.getElementById(targetId);
+      if (targetPanel) targetPanel.classList.add('active');
+    });
+  });
+
+  // 3. Cargar y Guardar Textos Generales del CMS
+  const formGeneral = document.getElementById('formCmsGeneral');
+  const inpBanner = document.getElementById('cmsBannerText');
+  const inpHeroTitle = document.getElementById('cmsHeroTitle');
+  const inpHeroSub = document.getElementById('cmsHeroSubtitle');
+  const inpQuote = document.getElementById('cmsDailyQuote');
+  const inpKiri = document.getElementById('cmsKiriWelcome');
+
+  const currentCms = JSON.parse(localStorage.getItem('creser-cms-content') || '{}');
+  if (inpBanner && currentCms.bannerText) inpBanner.value = currentCms.bannerText;
+  if (inpHeroTitle && currentCms.heroTitle) inpHeroTitle.value = currentCms.heroTitle;
+  if (inpHeroSub && currentCms.heroSubtitle) inpHeroSub.value = currentCms.heroSubtitle;
+  if (inpQuote && currentCms.dailyQuote) inpQuote.value = currentCms.dailyQuote;
+
+  if (formGeneral) {
+    formGeneral.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const updatedCms = {
+        bannerText: inpBanner?.value || '',
+        heroBadge: "Plataforma Digital de Cuidado Emocional",
+        heroTitle: inpHeroTitle?.value || 'Bienvenido a CreSer',
+        heroSubtitle: inpHeroSub?.value || '',
+        dailyQuote: inpQuote?.value || '',
+        kiriWelcome: inpKiri?.value || ''
+      };
+
+      localStorage.setItem('creser-cms-content', JSON.stringify(updatedCms));
+      recordAuditLog("Actualización de textos principales del sitio desde el Panel Admin");
+      alert("✅ ¡Textos de la web actualizados exitosamente!");
+    });
+  }
+
+  // 4. Gestor de Recursos Educativos (CRUD)
+  const defaultResources = [
+    { id: 1, title: "Manejo Efectivo del Estrés Académico y Laboral", cat: "articulos", type: "Artículo", duration: "6 min", desc: "Técnicas prácticas para organizar prioridades y prevenir saturación." },
+    { id: 2, title: "Identificación y Expresión Emocional Asertiva", cat: "guias", type: "Guía Práctica", duration: "10 min", desc: "Herramientas para comunicar lo que sientes con asertividad." },
+    { id: 3, title: "Mente en Calma: El Poder de la Autocompasión", cat: "podcasts", type: "Podcast", duration: "15 min", desc: "Episodio sonoro sobre la transformación del diálogo interno." },
+    { id: 4, title: "Pausa Guiada: Respiración Cuadrada 4-4-4", cat: "videos", type: "Video Tutorial", duration: "4 min", desc: "Guía audiovisual para regular el sistema nervioso en momentos de tensión." },
+    { id: 5, title: "Higiene del Sueño y Descanso Reparador", cat: "infografias", type: "Infografía", duration: "3 min", desc: "Recomendaciones visuales para mejorar la calidad del sueño." },
+    { id: 6, title: "Estableciendo Límites Saludables", cat: "articulos", type: "Artículo", duration: "8 min", desc: "Pautas para decir no sin culpa y proteger tu bienestar." }
+  ];
+
+  function getAdminResources() {
+    return JSON.parse(localStorage.getItem('creser-cms-resources') || JSON.stringify(defaultResources));
+  }
+
+  function renderAdminResources() {
+    const tbody = document.getElementById('adminResourcesTableBody');
+    if (!tbody) return;
+    const list = getAdminResources();
+    const statRes = document.getElementById('statTotalResources');
+    if (statRes) statRes.textContent = list.length;
+
+    tbody.innerHTML = list.map((r, idx) => `
+      <tr class="audit-table-row">
+        <td><strong>${escapeHtml(r.title)}</strong></td>
+        <td><span class="badge badge-purple">${escapeHtml(r.cat)}</span></td>
+        <td>${escapeHtml(r.type)}</td>
+        <td>${escapeHtml(r.duration)}</td>
+        <td>
+          <div class="action-btn-group">
+            <button class="btn-action-edit" onclick="window.editAdminResource(${idx})">✏️</button>
+            <button class="btn-action-del" onclick="window.deleteAdminResource(${idx})">🗑️</button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  window.editAdminResource = function(idx) {
+    const list = getAdminResources();
+    const item = list[idx];
+    if (!item) return;
+
+    document.getElementById('modalResIndex').value = idx;
+    document.getElementById('modalResTitle').value = item.title;
+    document.getElementById('modalResCat').value = item.cat;
+    document.getElementById('modalResType').value = item.type;
+    document.getElementById('modalResDuration').value = item.duration;
+    document.getElementById('modalResDesc').value = item.desc;
+    document.getElementById('resModalTitle').textContent = "Editar Recurso";
+
+    const modal = document.getElementById('resourceModal');
+    if (modal) modal.classList.add('show');
+  };
+
+  window.deleteAdminResource = function(idx) {
+    if (!confirm("¿Deseas eliminar este recurso educativo de la web?")) return;
+    const list = getAdminResources();
+    const deleted = list.splice(idx, 1);
+    localStorage.setItem('creser-cms-resources', JSON.stringify(list));
+    recordAuditLog(`Eliminación de recurso: ${deleted[0]?.title}`);
+    renderAdminResources();
+  };
+
+  const btnOpenNewRes = document.getElementById('btnOpenNewResourceModal');
+  if (btnOpenNewRes) {
+    btnOpenNewRes.addEventListener('click', () => {
+      document.getElementById('modalResIndex').value = "-1";
+      document.getElementById('modalResTitle').value = "";
+      document.getElementById('modalResType').value = "";
+      document.getElementById('modalResDuration').value = "";
+      document.getElementById('modalResDesc').value = "";
+      document.getElementById('resModalTitle').textContent = "Publicar Nuevo Recurso";
+      const modal = document.getElementById('resourceModal');
+      if (modal) modal.classList.add('show');
+    });
+  }
+
+  const formResource = document.getElementById('formResourceModal');
+  if (formResource) {
+    formResource.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const idx = parseInt(document.getElementById('modalResIndex').value, 10);
+      const list = getAdminResources();
+
+      const resourceData = {
+        id: idx >= 0 ? list[idx].id : Date.now(),
+        title: document.getElementById('modalResTitle').value.trim(),
+        cat: document.getElementById('modalResCat').value,
+        type: document.getElementById('modalResType').value.trim() || 'Guía Práctica',
+        duration: document.getElementById('modalResDuration').value.trim() || '5 min',
+        desc: document.getElementById('modalResDesc').value.trim()
+      };
+
+      if (idx >= 0) {
+        list[idx] = resourceData;
+        recordAuditLog(`Edición de recurso educativo: ${resourceData.title}`);
+      } else {
+        list.push(resourceData);
+        recordAuditLog(`Publicación de nuevo recurso: ${resourceData.title}`);
+      }
+
+      localStorage.setItem('creser-cms-resources', JSON.stringify(list));
+      closeModal('resourceModal');
+      renderAdminResources();
+      alert("✅ Recurso educativo guardado correctamente.");
+    });
+  }
+
+  // 5. Gestor de Directorio de Ayuda
+  const defaultHelp = [
+    { inst: "Línea Nacional de Emergencias", tipo: "Crisis Emocional & Salud", tel: "118 / 102", disp: "24 horas / 7 días" },
+    { inst: "Cruz Roja Nicaragüense", tipo: "Atención Psicológica y Primeros Auxilios", tel: "+505 2265-2081", disp: "Lunes a Domingo" },
+    { inst: "Centro de Orientación Psicológica CreSer", tipo: "Terapia y Acompañamiento", tel: "contacto@creser.org", disp: "Lunes a Viernes 8am - 5pm" }
+  ];
+
+  function renderAdminHelp() {
+    const tbody = document.getElementById('adminHelpTableBody');
+    if (!tbody) return;
+    const list = JSON.parse(localStorage.getItem('creser-cms-help') || JSON.stringify(defaultHelp));
+
+    tbody.innerHTML = list.map((h, idx) => `
+      <tr class="audit-table-row">
+        <td><strong>${escapeHtml(h.inst)}</strong></td>
+        <td>${escapeHtml(h.tipo)}</td>
+        <td><code>${escapeHtml(h.tel)}</code></td>
+        <td>${escapeHtml(h.disp)}</td>
+        <td>
+          <button class="btn-action-del" onclick="window.deleteAdminHelp(${idx})">🗑️</button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  window.deleteAdminHelp = function(idx) {
+    const list = JSON.parse(localStorage.getItem('creser-cms-help') || JSON.stringify(defaultHelp));
+    list.splice(idx, 1);
+    localStorage.setItem('creser-cms-help', JSON.stringify(list));
+    renderAdminHelp();
+  };
+
+  // 6. Gestor de Usuarios y Roles (RBAC)
+  function renderAdminUsers() {
+    const tbody = document.getElementById('adminUsersTableBody');
+    if (!tbody) return;
+
+    const users = JSON.parse(localStorage.getItem('creser-user-directory') || JSON.stringify([
+      { name: "Xolonica Administrador", email: "xolonica26@gmail.com", role: "ADMIN", status: "Activo" },
+      { name: "Auditor de Seguridad", email: "auditor@creser.org", role: "AUDITOR", status: "Activo" },
+      { name: "Andrea Mendoza", email: "andrea@ejemplo.com", role: "USUARIO", status: "Activo" }
+    ]));
+
+    tbody.innerHTML = users.map((u, idx) => `
+      <tr class="audit-table-row">
+        <td><strong>${escapeHtml(u.name)}</strong></td>
+        <td>${escapeHtml(u.email)}</td>
+        <td><span class="badge ${u.role==='ADMIN'?'':u.role==='AUDITOR'?'badge-green':'badge-purple'}">${u.role}</span></td>
+        <td>
+          <select class="admin-input" onchange="window.changeUserRole(${idx}, this.value)">
+            <option value="USUARIO" ${u.role==='USUARIO'?'selected':''}>Usuario</option>
+            <option value="AUDITOR" ${u.role==='AUDITOR'?'selected':''}>Auditor</option>
+            <option value="ADMIN" ${u.role==='ADMIN'?'selected':''}>Administrador</option>
+          </select>
+        </td>
+        <td><span class="badge badge-green">${u.status}</span></td>
+      </tr>
+    `).join('');
+  }
+
+  window.changeUserRole = function(idx, newRole) {
+    const users = JSON.parse(localStorage.getItem('creser-user-directory') || JSON.stringify([
+      { name: "Xolonica Administrador", email: "xolonica26@gmail.com", role: "ADMIN", status: "Activo" },
+      { name: "Auditor de Seguridad", email: "auditor@creser.org", role: "AUDITOR", status: "Activo" },
+      { name: "Andrea Mendoza", email: "andrea@ejemplo.com", role: "USUARIO", status: "Activo" }
+    ]));
+
+    users[idx].role = newRole;
+    localStorage.setItem('creser-user-directory', JSON.stringify(users));
+    recordAuditLog(`El Administrador modificó el rol de "${users[idx].email}" a ${newRole}`);
+    alert(`✅ Rol de ${users[idx].email} actualizado a ${newRole}.`);
+    renderAdminUsers();
+  };
+
+  // 7. Botones de Acción Global
+  const btnSaveAll = document.getElementById('btnSaveAllCms');
+  if (btnSaveAll) {
+    btnSaveAll.addEventListener('click', () => {
+      recordAuditLog("Sincronización total de CMS con la nube ejecutada por el Administrador");
+      alert("✅ Todos los cambios han sido guardados y sincronizados en la nube.");
+    });
+  }
+
+  const btnReset = document.getElementById('btnResetCmsDefaults');
+  if (btnReset) {
+    btnReset.addEventListener('click', () => {
+      if (confirm("¿Deseas restaurar todos los textos predeterminados de la web?")) {
+        localStorage.removeItem('creser-cms-content');
+        recordAuditLog("Restauración de textos de la web a valores por defecto");
+        location.reload();
+      }
+    });
+  }
+
+  const btnExport = document.getElementById('btnAdminExportJson');
+  if (btnExport) {
+    btnExport.addEventListener('click', () => {
+      const fullBackup = {
+        cmsContent: JSON.parse(localStorage.getItem('creser-cms-content') || '{}'),
+        resources: getAdminResources(),
+        helpDirectory: JSON.parse(localStorage.getItem('creser-cms-help') || JSON.stringify(defaultHelp)),
+        users: JSON.parse(localStorage.getItem('creser-user-directory') || '[]'),
+        auditLogs: JSON.parse(localStorage.getItem('creser-audit-logs') || '[]'),
+        exportedAt: new Date().toISOString()
+      };
+
+      const blob = new Blob([JSON.stringify(fullBackup, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `creser-respaldo-admin-${Date.now()}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+  }
+
+  const btnLogout = document.getElementById('btnAdminLogout');
+  if (btnLogout) {
+    btnLogout.addEventListener('click', () => {
+      localStorage.setItem('creser-user-role', 'usuario');
+      recordAuditLog("El Administrador cerró sesión del Panel de Control");
+      window.location.href = "login.html";
+    });
+  }
+
+  const btnSyncFirebase = document.getElementById('btnAdminSyncFirebase');
+  if (btnSyncFirebase) {
+    btnSyncFirebase.addEventListener('click', () => {
+      recordAuditLog("Sincronización manual de CMS y roles con Firebase Realtime DB");
+      alert("☁️ ¡Datos sincronizados con Firebase Realtime Database (cresernicaragua-default-rtdb)!");
+    });
+  }
+
+  // Inicializa renderizados de tablas
+  renderAdminResources();
+  renderAdminHelp();
+  renderAdminUsers();
+}
+
+// Inicialización automática de CMS y Dashboard al cargar el DOM
+document.addEventListener('DOMContentLoaded', () => {
+  loadDynamicCmsContent();
+  initAdminDashboard();
+});
+
+

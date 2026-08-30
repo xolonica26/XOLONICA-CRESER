@@ -98,9 +98,9 @@
       <!-- Cuadrícula con las 3 tarjetas de control -->
       <div class="grid-3">
         
-        <!-- Tarjeta 1: Mi Cuenta y Conmutador de Roles RBAC -->
+        <!-- Tarjeta 1: Mi Cuenta y Rol Asignado -->
         <div class="card">
-          <h3>👤 Sesión y Rol Actual</h3>
+          <h3>👤 Sesión y Rol Asignado</h3>
           <p class="user-session-info" id="userDisplayName"><strong>Usuario:</strong> Andrea</p>
           
           <div class="role-badge-row">
@@ -108,17 +108,12 @@
             <span class="badge badge-purple" id="userRoleBadge">USUARIO</span>
           </div>
 
-          <div class="role-switcher-group">
-            <label for="roleSwitcher" class="role-switcher-label">Cambiar Rol (Demostración):</label>
-            <select id="roleSwitcher" class="role-select-control">
-              <option value="usuario">Rol: Usuario (Bienestar & Diario)</option>
-              <option value="admin">Rol: Administrador (Gestión Total)</option>
-              <option value="auditor">Rol: Auditor (Trazabilidad & Logs)</option>
-            </select>
+          <div id="adminPanelLinkWrap" class="mt-3 hidden">
+            <a href="admin.html" class="primary btn-full-link">👑 Panel Administrativo (CMS)</a>
           </div>
 
           <div class="mt-3">
-            <a href="login.html" class="primary btn-full-link">Cambiar de Cuenta</a>
+            <a href="login.html" class="secondary btn-full-link">Cerrar Sesión / Cambiar Cuenta</a>
           </div>
         </div>
 

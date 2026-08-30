@@ -157,6 +157,7 @@ La plataforma está dividida en páginas autónomas e interconectadas para evita
 | Página | Ruta Local | Propósito Funcional |
 | :--- | :--- | :--- |
 | 🏠 **Inicio** | [`index.html`](file:///d:/Desktop/creser/index.html) | Presentación, métricas interactivas y pilares de cuidado. |
+| 👑 **Panel Admin** | [`pages/admin.html`](file:///d:/Desktop/creser/pages/admin.html) | **Panel Administrativo (CMS)**: Edición en tiempo real de textos de la web, CRUD de recursos, directorio de ayuda y asignación de roles sin tocar código. |
 | 💚 **Bienestar** | [`pages/bienestar.html`](file:///d:/Desktop/creser/pages/bienestar.html) | Selector de ánimo con retroalimentación y contador de racha. |
 | 📚 **Recursos** | [`pages/recursos.html`](file:///d:/Desktop/creser/pages/recursos.html) | Buscador en tiempo real y filtrado de guías y podcasts. |
 | 🫁 **Herramientas** | [`pages/herramientas.html`](file:///d:/Desktop/creser/pages/herramientas.html) | Respirador rítmico 4-4-4 y diario reflexivo privado. |
@@ -164,8 +165,8 @@ La plataforma está dividida en páginas autónomas e interconectadas para evita
 | 🎧 **Multimedia** | [`pages/multimedia.html`](file:///d:/Desktop/creser/pages/multimedia.html) | Generador sonoro (*Lluvia, Bosque, Olas, 432 Hz*) y visualizador. |
 | 👥 **Comunidad** | [`pages/comunidad.html`](file:///d:/Desktop/creser/pages/comunidad.html) | Círculos de diálogo temáticos y normas de convivencia. |
 | 🛟 **Ayuda** | [`pages/ayuda.html`](file:///d:/Desktop/creser/pages/ayuda.html) | Directorio de profesionales y teléfonos de emergencia 24/7. |
-| 👤 **Perfil** | [`pages/perfil.html`](file:///d:/Desktop/creser/pages/perfil.html) | Modo oscuro, texto aumentado, cambio de rol y bitácora de auditoría. |
-| 🔐 **Acceso** | [`pages/login.html`](file:///d:/Desktop/creser/pages/login.html) | Formulario *glassmorphic* con login, registro y selección de rol. |
+| 👤 **Perfil** | [`pages/perfil.html`](file:///d:/Desktop/creser/pages/perfil.html) | Modo oscuro, texto aumentado y bitácora de auditoría. |
+| 🔐 **Acceso** | [`pages/login.html`](file:///d:/Desktop/creser/pages/login.html) | Formulario de acceso y registro con Google y correo. |
 
 ---
 

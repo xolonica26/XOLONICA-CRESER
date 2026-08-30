@@ -119,16 +119,6 @@
               <label for="loginPass">Contraseña</label>
             </div>
 
-            <!-- Selector de Rol para autenticación -->
-            <div class="input-box select-box">
-              <span class="input-icon">🏷️</span>
-              <select id="loginRole" aria-label="Seleccionar Rol de Acceso" class="auth-role-select">
-                <option value="usuario" selected class="auth-role-option">Rol: Usuario (Bienestar & Diario)</option>
-                <option value="admin" class="auth-role-option">Rol: Administrador (Gestión Total)</option>
-                <option value="auditor" class="auth-role-option">Rol: Auditor (Trazabilidad & Logs)</option>
-              </select>
-            </div>
-
             <!-- Opciones de recordar sesión y olvido de clave -->
             <div class="remember-forgot">
               <label><input type="checkbox" checked> Recordarme</label>
@@ -146,7 +136,7 @@
         </div>
 
         <!-- =====================================================================
-             Formulario 2: Registro de Cuenta Nueva (con Google y Selector de Rol)
+             Formulario 2: Registro de Cuenta Nueva (con Google)
              ===================================================================== -->
         <div class="form-box register">
           <h2>Crea tu cuenta</h2>
@@ -187,16 +177,6 @@
               <span class="input-icon">🔒</span>
               <input type="password" id="regPass" required placeholder=" " aria-label="Contraseña">
               <label for="regPass">Contraseña</label>
-            </div>
-
-            <!-- Selector de rol al registrarse -->
-            <div class="input-box select-box">
-              <span class="input-icon">🏷️</span>
-              <select id="regRole" aria-label="Rol Solicitado" class="auth-role-select">
-                <option value="usuario" selected class="auth-role-option">Rol: Usuario</option>
-                <option value="admin" class="auth-role-option">Rol: Administrador</option>
-                <option value="auditor" class="auth-role-option">Rol: Auditor</option>
-              </select>
             </div>
 
             <!-- Casilla de aceptación de políticas -->

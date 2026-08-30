@@ -1,0 +1,359 @@
+/**
+ * ============================================================================
+ * CreSer — Hoja de Estilos del Dashboard Administrativo y CMS (admin.css)
+ * ============================================================================
+ * 
+ * ¿POR QUÉ?:
+ * Proporcionar una interfaz ejecutiva, clara y de alto contraste para la gestión
+ * de contenidos, control de roles de usuario, directorio de ayuda y auditoría.
+ * 
+ * ¿CÓMO?:
+ * Utilizando CSS moderno con variables HSL, Glassmorphism, tarjetas con bordes
+ * iluminados, tablas responsivas, badges de seguridad e indicadores de estado en vivo.
+ * 
+ * ¿PARA QUÉ?:
+ * Garantizar que los administradores y auditores cuenten con herramientas rápidas,
+ * visualmente impactantes y seguras para operar la plataforma.
+ * ============================================================================
+ */
+
+/* ==========================================================================
+   1. Contenedor Principal del Panel de Control
+   ========================================================================== */
+
+/* ¿POR QUÉ?: Enmarcar el panel administrativo con un ancho óptimo para tablas y formularios.
+   ¿CÓMO?: Ancho máximo de 1200px y espaciado generoso.
+   ¿PARA QUÉ?: Facilitar la visualización simultánea de métricas, filtros y tablas de datos. */
+.admin-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+/* ==========================================================================
+   2. Pantalla de Acceso Denegado (Seguridad de Roles)
+   ========================================================================== */
+
+/* ¿POR QUÉ?: Restringir de forma inequívoca el acceso a usuarios no autorizados.
+   ¿CÓMO?: Tarjeta centrada con icono de candado, bordes de advertencia y botón de redirección.
+   ¿PARA QUÉ?: Proteger los datos sensibles y el gestor de contenidos. */
+.admin-denied-box {
+  max-width: 580px;
+  margin: 4rem auto;
+  text-align: center;
+  background: var(--surface);
+  border: 1.5px solid rgba(239, 68, 68, 0.35);
+  border-radius: 26px;
+  padding: 3rem 2rem;
+  box-shadow: 0 15px 40px -10px rgba(239, 68, 68, 0.15);
+}
+
+.admin-denied-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+  animation: pulseLock 2s infinite ease-in-out;
+}
+
+@keyframes pulseLock {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+.admin-denied-title {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #dc2626;
+  margin-bottom: 0.5rem;
+}
+
+.admin-denied-desc {
+  font-size: 0.95rem;
+  color: var(--ink-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.75rem;
+}
+
+/* ==========================================================================
+   3. Encabezado Ejecutivo del Dashboard
+   ========================================================================== */
+
+.admin-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1.5px solid var(--line);
+}
+
+.admin-title-group h1 {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--ink-primary);
+  letter-spacing: -0.02em;
+  margin: 0 0 0.25rem 0;
+}
+
+.admin-title-group p {
+  font-size: 0.92rem;
+  color: var(--ink-secondary);
+  margin: 0;
+}
+
+.admin-role-switcher-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  padding: 0.5rem 1rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+.admin-role-select {
+  padding: 0.4rem 0.8rem;
+  border-radius: 10px;
+  border: 1.5px solid var(--line);
+  background: var(--surface-2);
+  color: var(--ink-primary);
+  font-weight: 700;
+  font-size: 0.86rem;
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   4. Métricas Rápidas del Sistema (KPI Cards)
+   ========================================================================== */
+
+.admin-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2.25rem;
+}
+
+.admin-metric-card {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: 20px;
+  padding: 1.4rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  transition: transform var(--trans-fast), border-color var(--trans-fast);
+}
+
+.admin-metric-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.admin-metric-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.admin-metric-num {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #2563eb;
+  line-height: 1.1;
+  margin-bottom: 0.15rem;
+}
+
+.admin-metric-lbl {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+
+/* ==========================================================================
+   5. Pestañas de Navegación del Dashboard (Tabs)
+   ========================================================================== */
+
+.admin-tabs-nav {
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 2px solid var(--line);
+  margin-bottom: 2rem;
+  padding-bottom: 0.5rem;
+}
+
+.admin-tabs-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.admin-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  color: var(--ink-secondary);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.admin-tab-btn:hover {
+  background: var(--surface-2);
+  color: var(--ink-primary);
+}
+
+.admin-tab-btn.active {
+  background: #2563eb;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+}
+
+.admin-tab-panel {
+  display: none;
+}
+
+.admin-tab-panel.active {
+  display: block;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   6. Tablas y Formularios del CMS
+   ========================================================================== */
+
+.admin-card {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.03);
+  margin-bottom: 2rem;
+}
+
+body.dark .admin-card {
+  background: rgba(30, 41, 59, 0.75);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.admin-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.admin-section-header h3 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--ink-primary);
+  margin: 0 0 0.2rem 0;
+}
+
+.admin-table-wrapper {
+  overflow-x: auto;
+  border-radius: 16px;
+  border: 1.5px solid var(--line);
+}
+
+.admin-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.88rem;
+}
+
+.admin-data-table th {
+  background: var(--surface-2);
+  padding: 0.9rem 1.1rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  border-bottom: 1.5px solid var(--line);
+  white-space: nowrap;
+}
+
+.admin-data-table td {
+  padding: 0.85rem 1.1rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-secondary);
+  vertical-align: middle;
+}
+
+.admin-data-table tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-data-table tr:hover td {
+  background: var(--surface-2);
+}
+
+/* Selector de roles en tabla */
+.table-role-select {
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.78rem;
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  color: var(--ink-primary);
+  cursor: pointer;
+}
+
+.table-role-select:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+/* Bitácora de Auditoría */
+.audit-badge-event {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: rgba(37, 99, 235, 0.1);
+  color: #2563eb;
+  border: 1px solid rgba(37, 99, 235, 0.2);
+}
+
+.audit-search-bar {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.audit-search-input {
+  flex-grow: 1;
+  padding: 0.75rem 1.1rem;
+  border-radius: 12px;
+  border: 1.5px solid var(--line);
+  background: var(--surface-2);
+  color: var(--ink-primary);
+  font-family: inherit;
+}

@@ -1,17 +1,21 @@
 <!doctype html>
-<!-- Declaración del tipo de documento HTML5 estándar -->
+<!-- 
+  ¿POR QUÉ?: Documento HTML5 para el Dashboard Administrativo y Gestor de Contenidos (CMS) de CreSer.
+  ¿CÓMO?: Semántica estricta, control de acceso basado en roles (RBAC), métricas en tiempo real y tablas responsivas.
+  ¿PARA QUÉ?: Permitir a los administradores gestionar usuarios, editar textos y supervisar la bitácora de auditoría.
+-->
 <html lang="es">
 <head>
   <!-- Codificación universal UTF-8 -->
   <meta charset="utf-8"/>
-  <!-- Configuración de escala responsiva -->
+  <!-- Viewport responsive -->
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <!-- Título de la página -->
-  <title>CreSer — Panel de Control Administrativo (CMS)</title>
-  <!-- Meta descripción -->
-  <meta name="description" content="Panel de administración y gestor de contenidos para la plataforma CreSer."/>
-  <!-- Hoja de estilos principal -->
-  <link rel="stylesheet" href="../assets/css/main.css?v=3.4">
+  <title>CreSer — Panel Administrativo & Centro de Control (CMS)</title>
+  <meta name="description" content="Dashboard administrativo institucional de CreSer: Control de roles, auditoría, gestor CMS y métricas."/>
+  
+  <!-- Hojas de estilos globales y dedicada de administración -->
+  <link rel="stylesheet" href="../assets/css/main.css?v=5.0">
+  <link rel="stylesheet" href="../assets/css/admin.css?v=1.0">
 </head>
 <body>
 
@@ -20,163 +24,254 @@
        ========================================================================= -->
   <header class="topbar">
     <div class="brand">
-      <div class="logo-circle" aria-hidden="true">🌱</div>
-      <div class="brand-text">
-        <span class="brand-title">CreSer</span>
-        <span class="brand-sub">Panel Administrativo (CMS)</span>
-      </div>
+      <span class="c1">Cre</span><span class="c3">Ser</span>
+      <span class="badge" style="margin-left:0.5rem;">CMS ADMIN</span>
     </div>
 
     <!-- Navegación y accesos rápidos -->
-    <nav class="nav-links" aria-label="Navegación del Administrador">
-      <a href="../index.html">Ver Sitio Web</a>
-      <a href="bienestar.html">Bienestar</a>
-      <a href="recursos.html">Recursos</a>
-      <a href="herramientas.html">Herramientas</a>
-      <a href="kiri.html">KIRI</a>
-      <a href="perfil.html">Mi Perfil</a>
+    <nav class="nav" aria-label="Navegación del Administrador">
+      <a href="../index.html" class="navitem">Ver Sitio Web</a>
+      <a href="bienestar.html" class="navitem">Bienestar</a>
+      <a href="recursos.html" class="navitem">Recursos</a>
+      <a href="perfil.html" class="navitem">Mi Perfil</a>
     </nav>
 
-    <!-- Indicador de Administrador -->
-    <div class="topbar-actions">
-      <span class="badge">ADMINISTRADOR</span>
-      <button class="ghost" id="btnAdminLogout" title="Cerrar sesión">Salir 🚪</button>
+    <!-- Indicador de Rol y Acciones -->
+    <div class="nav-actions">
+      <span class="role-badge admin" id="adminTopRoleBadge">👑 ADMIN</span>
+      <a href="perfil.html" class="btn ghost btn-sm">Salir</a>
     </div>
   </header>
 
   <!-- =========================================================================
-       Contenedor Principal del Panel de Control
+       Contenido Central: Panel de Control Administrativo
        ========================================================================= -->
-  <div class="app-layout">
-    <main class="page-container admin-container">
+  <div class="app">
+    <main class="admin-page-container">
 
-      <!-- Pantalla de Acceso Denegado (si no es administrador) -->
-      <section id="adminAccessDenied" class="card admin-denied-card" hidden>
-        <div class="denied-icon">🔒</div>
-        <h2>Acceso Restringido a Administradores</h2>
-        <p class="section-lead">Esta sección requiere credenciales con rol de <strong>ADMINISTRADOR</strong>.</p>
-        <p>Inicia sesión con una cuenta autorizada para gestionar los contenidos y usuarios de CreSer.</p>
-        <a href="login.html" class="btn primary">Ir al Portal de Acceso</a>
+      <!-- Pantalla de Acceso Denegado (si el rol no es admin ni auditor) -->
+      <section id="adminAccessDenied" class="admin-denied-box" style="display:none;">
+        <div class="admin-denied-icon">🔒</div>
+        <h2 class="admin-denied-title">Acceso Restringido a Administradores</h2>
+        <p class="admin-denied-desc">
+          Esta sección requiere credenciales con rol de <strong>ADMINISTRADOR</strong> o <strong>AUDITOR</strong>.
+          Tu cuenta actual no cuenta con los permisos necesarios para modificar contenidos o consultar la bitácora de seguridad.
+        </p>
+        <div style="display:flex; justify-content:center; gap:1rem;">
+          <a href="perfil.html" class="btn secondary">Volver a Mi Perfil</a>
+          <a href="login.html" class="btn primary">Iniciar Sesión como Admin</a>
+        </div>
       </section>
 
-      <!-- Panel de Control Completo para el Administrador -->
-      <section id="adminDashboardContent" class="admin-dashboard-view">
+      <!-- Panel de Control Principal — empieza oculto; admin.js lo muestra SOLO si el rol es ADMIN o AUDITOR -->
+      <!-- ¿POR QUÉ?: Evitar el 'flash of forbidden content' antes de que el JS evalúe el rol. -->
+      <!-- ¿CÓMO?: display:none en línea + el guard lo activa explícitamente al confirmar permisos. -->
+      <!-- ¿PARA QUÉ?: Garantizar que ningún usuario no autorizado vea ni un pixel del panel. -->
+      <section id="adminDashboardContent" style="display:none;">
 
-        <!-- Encabezado del Panel -->
-        <header class="page-header admin-header-row">
-          <div>
-            <span class="badge">SISTEMA DE GESTIÓN DE CONTENIDOS</span>
-            <h1 class="page-title">Panel de Control & Editor Web</h1>
-            <p class="page-subtitle">Modifica textos, recursos educativos, directorio de ayuda y roles en tiempo real sin tocar código.</p>
-          </div>
-          <div class="admin-top-actions">
-            <button class="btn primary" id="btnSaveAllCms">💾 Guardar Todo en la Nube</button>
-            <button class="btn ghost" id="btnResetCmsDefaults">🔄 Restaurar Textos</button>
-          </div>
-        </header>
+        <!-- Banner de aviso para el rol AUDITOR -->
+        <div id="auditorNoticeBanner" class="alert alert-warning" style="display:none; background:rgba(245,158,11,0.15); border:1.5px solid #f59e0b; color:#b45309; padding:0.9rem 1.25rem; border-radius:14px; margin-bottom:1.5rem; font-size:0.9rem;">
+          🛡️ <strong>Modo Auditoría Activo:</strong> Tu rol actual es <strong>AUDITOR</strong>. Tienes acceso completo de supervisión y consulta a la bitácora de seguridad, pero las funciones destructivas y de edición están deshabilitadas.
+        </div>
 
-        <!-- Métricas Rápidas del Sistema -->
-        <div class="metrics-grid">
-          <div class="metric-card">
-            <div class="metric-num" id="statTotalUsers">3</div>
-            <div class="metric-label">Usuarios Registrados</div>
+        <!-- Encabezado del Panel y Conmutador de Roles -->
+        <div class="admin-header-row">
+          <div class="admin-title-group">
+            <h1>Panel de Control & Editor Web</h1>
+            <p>Gestiona contenidos, usuarios, directorio de emergencia y trazabilidad de seguridad en tiempo real.</p>
           </div>
-          <div class="metric-card">
-            <div class="metric-num" id="statTotalResources">6</div>
-            <div class="metric-label">Recursos Publicados</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-num" id="statAuditEvents">24</div>
-            <div class="metric-label">Eventos Auditados</div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-num metric-green" id="statCloudStatus">Activo 100%</div>
-            <div class="metric-label">Google Firebase Cloud</div>
+
+          <!-- Indicador del rol activo (solo lectura, sin selector de roles en producción) -->
+          <!-- ¿POR QUÉ?: El conmutador de roles es un riesgo de seguridad en producción. -->
+          <!-- ¿CÓMO?: Se muestra solo el badge inmutable del rol leído desde localStorage. -->
+          <!-- ¿PARA QUÉ?: Impedir que cualquier usuario escale sus propios privilegios desde la UI. -->
+          <div class="admin-role-switcher-card">
+            <span style="font-size:0.84rem; font-weight:700; color:var(--ink-secondary);">Sesión activa como:</span>
+            <span class="role-badge admin" id="adminSessionRoleBadge">👑 ADMIN</span>
           </div>
         </div>
 
-        <!-- Pestañas de Navegación del Panel Administrativo -->
+        <!-- Métricas Rápidas del Sistema (KPI Cards) -->
+        <div class="admin-metrics-grid">
+          <div class="admin-metric-card">
+            <div class="admin-metric-icon">👥</div>
+            <div>
+              <div class="admin-metric-num" id="statTotalUsers">3</div>
+              <div class="admin-metric-lbl">Usuarios Registrados</div>
+            </div>
+          </div>
+
+          <div class="admin-metric-card">
+            <div class="admin-metric-icon">📚</div>
+            <div>
+              <div class="admin-metric-num" id="statTotalResources">6</div>
+              <div class="admin-metric-lbl">Recursos Publicados</div>
+            </div>
+          </div>
+
+          <div class="admin-metric-card">
+            <div class="admin-metric-icon">🛡️</div>
+            <div>
+              <div class="admin-metric-num" id="statAuditEvents">24</div>
+              <div class="admin-metric-lbl">Eventos Auditados</div>
+            </div>
+          </div>
+
+          <div class="admin-metric-card">
+            <div class="admin-metric-icon">☁️</div>
+            <div>
+              <div class="admin-metric-num" style="color:#059669;" id="statCloudStatus">Activo</div>
+              <div class="admin-metric-lbl">Google Firebase Cloud</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pestañas de Navegación del Dashboard -->
         <div class="admin-tabs-nav" role="tablist" aria-label="Secciones del Panel Administrativo">
-          <button class="admin-tab-btn active" role="tab" data-tab="tab-cms-general" aria-selected="true">✍️ Textos de la Web</button>
-          <button class="admin-tab-btn" role="tab" data-tab="tab-cms-recursos" aria-selected="false">📚 Gestor de Recursos</button>
-          <button class="admin-tab-btn" role="tab" data-tab="tab-cms-ayuda" aria-selected="false">🛟 Directorio de Ayuda</button>
-          <button class="admin-tab-btn" role="tab" data-tab="tab-cms-usuarios" aria-selected="false">👥 Usuarios y Roles</button>
-          <button class="admin-tab-btn" role="tab" data-tab="tab-cms-ajustes" aria-selected="false">⚙️ Ajustes & Respaldo</button>
+          <button class="admin-tab-btn active" role="tab" data-tab="tab-cms-usuarios" aria-selected="true">👥 Usuarios y Roles</button>
+          <button class="admin-tab-btn" role="tab" data-tab="tab-cms-auditoria" aria-selected="false">🛡️ Bitácora de Auditoría</button>
+          <button class="admin-tab-btn" role="tab" data-tab="tab-cms-general" aria-selected="false">✍️ Textos de la Web (CMS)</button>
+          <button class="admin-tab-btn" role="tab" data-tab="tab-cms-recursos" aria-selected="false">📚 Biblioteca de Recursos</button>
+          <button class="admin-tab-btn" role="tab" data-tab="tab-cms-ayuda" aria-selected="false">🛟 Directorio de Crisis</button>
         </div>
 
         <!-- =====================================================================
-             Pestaña 1: Editor de Textos y Contenidos de la Web (CMS General)
+             Pestaña 1: Gestión de Usuarios y Roles (RBAC)
              ===================================================================== -->
-        <div id="tab-cms-general" class="admin-tab-panel active">
-          <div class="card admin-form-card">
-            <h3>✏️ Editor de Textos de la Portada Principal (`index.html`)</h3>
-            <p class="card-desc">Personaliza los títulos, descripciones y mensajes visibles para todos los visitantes.</p>
+        <div id="tab-cms-usuarios" class="admin-tab-panel active">
+          <div class="admin-card">
+            <div class="admin-section-header">
+              <div>
+                <h3>👥 Control de Usuarios y Asignación de Roles</h3>
+                <p class="small text-muted">Asigna permisos de Administrador, Auditor o Usuario a las cuentas registradas.</p>
+              </div>
+            </div>
+
+            <div class="admin-table-wrapper">
+              <table class="admin-data-table">
+                <thead>
+                  <tr>
+                    <th>Nombre de Usuario</th>
+                    <th>Correo Electrónico</th>
+                    <th>Rol Asignado</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="adminUsersTableBody">
+                  <!-- Rellenado dinámicamente por admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- =====================================================================
+             Pestaña 2: Bitácora de Auditoría en Tiempo Real
+             ===================================================================== -->
+        <div id="tab-cms-auditoria" class="admin-tab-panel">
+          <div class="admin-card">
+            <div class="admin-section-header">
+              <div>
+                <h3>🛡️ Registro y Trazabilidad de Auditoría</h3>
+                <p class="small text-muted">Historial de accesos, cambios de rol y eventos de seguridad del sistema.</p>
+              </div>
+            </div>
+
+            <div class="audit-search-bar">
+              <input type="text" id="adminAuditSearch" class="audit-search-input" placeholder="🔍 Buscar por usuario, acción o fecha...">
+            </div>
+
+            <div class="admin-table-wrapper">
+              <table class="admin-data-table">
+                <thead>
+                  <tr>
+                    <th>ID Evento</th>
+                    <th>Fecha / Hora</th>
+                    <th>Usuario</th>
+                    <th>Rol</th>
+                    <th>Acción Registrada</th>
+                    <th>Origen IP</th>
+                  </tr>
+                </thead>
+                <tbody id="adminAuditTableBody">
+                  <!-- Rellenado dinámicamente por admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- =====================================================================
+             Pestaña 3: Editor CMS de Textos de la Web
+             ===================================================================== -->
+        <div id="tab-cms-general" class="admin-tab-panel">
+          <div class="admin-card">
+            <div class="admin-section-header">
+              <div>
+                <h3>✏️ Editor de Textos de la Portada Principal (`index.html`)</h3>
+                <p class="small text-muted">Modifica los mensajes visibles para los usuarios en la página principal.</p>
+              </div>
+            </div>
 
             <form id="formCmsGeneral">
-              <!-- Banner superior -->
-              <div class="form-group">
-                <label for="cmsBannerText">Texto del Banner Superior / Anuncio:</label>
-                <input type="text" id="cmsBannerText" class="admin-input" value="🌿 CreSer: Espacio seguro para el acompañamiento y bienestar emocional">
+              <div class="form-field-group" style="margin-bottom:1.25rem;">
+                <label for="cmsBannerText"><strong>Texto del Banner Superior:</strong></label>
+                <input type="text" id="cmsBannerText" class="input" style="width:100%; margin-top:0.4rem;" value="🌿 CreSer: Espacio seguro para el acompañamiento y bienestar emocional">
               </div>
 
-              <!-- Título principal del Hero -->
-              <div class="form-group">
-                <label for="cmsHeroTitle">Título Principal (Hero H1):</label>
-                <input type="text" id="cmsHeroTitle" class="admin-input" value="Tu espacio seguro para cultivar el bienestar emocional">
+              <div class="form-field-group" style="margin-bottom:1.25rem;">
+                <label for="cmsHeroTitle"><strong>Título Principal (Hero H1):</strong></label>
+                <input type="text" id="cmsHeroTitle" class="input" style="width:100%; margin-top:0.4rem;" value="Tu espacio seguro para cultivar el bienestar emocional">
               </div>
 
-              <!-- Subtítulo del Hero -->
-              <div class="form-group">
-                <label for="cmsHeroSubtitle">Subtítulo Descriptivo:</label>
-                <textarea id="cmsHeroSubtitle" class="admin-textarea" rows="3">Acompañamiento reflexivo, herramientas prácticas de autorregulación y biblioteca de recursos diseñada para tu crecimiento personal.</textarea>
+              <div class="form-field-group" style="margin-bottom:1.25rem;">
+                <label for="cmsHeroSubtitle"><strong>Subtítulo Descriptivo:</strong></label>
+                <textarea id="cmsHeroSubtitle" class="input" rows="3" style="width:100%; margin-top:0.4rem; font-family:inherit;">Acompañamiento reflexivo, herramientas prácticas de autorregulación y biblioteca de recursos diseñada para tu crecimiento personal.</textarea>
               </div>
 
-              <!-- Frase inspiradora del día -->
-              <div class="form-group">
-                <label for="cmsDailyQuote">Frase Inspiradora del Día:</label>
-                <input type="text" id="cmsDailyQuote" class="admin-input" value="«Cuidar de tu mente y de tus emociones es el acto más valiente de amor propio.»">
+              <div class="form-field-group" style="margin-bottom:1.25rem;">
+                <label for="cmsDailyQuote"><strong>Frase Inspiradora del Día:</strong></label>
+                <input type="text" id="cmsDailyQuote" class="input" style="width:100%; margin-top:0.4rem;" value="«Cuidar de tu mente y de tus emociones es el acto más valiente de amor propio.»">
               </div>
 
-              <!-- Mensaje de bienvenida de KIRI -->
-              <div class="form-group">
-                <label for="cmsKiriWelcome">Mensaje Inicial del Asistente KIRI:</label>
-                <textarea id="cmsKiriWelcome" class="admin-textarea" rows="2">¡Hola! Soy KIRI, tu asistente de bienestar en CreSer. ¿Cómo te sientes el día de hoy?</textarea>
+              <div class="form-field-group" style="margin-bottom:1.5rem;">
+                <label for="cmsKiriWelcome"><strong>Mensaje de Bienvenida de KIRI:</strong></label>
+                <textarea id="cmsKiriWelcome" class="input" rows="2" style="width:100%; margin-top:0.4rem; font-family:inherit;">¡Hola! Soy KIRI, tu asistente de bienestar en CreSer. ¿Cómo te sientes el día de hoy?</textarea>
               </div>
 
-              <div class="form-actions-row">
-                <button type="submit" class="btn primary">Guardar Textos de la Web</button>
+              <div style="display:flex; justify-content:flex-end; gap:1rem;">
+                <button type="submit" class="btn primary">💾 Guardar Textos del CMS</button>
+                <button type="button" class="btn secondary" id="btnSaveAllCms">☁️ Guardar Todo en la Nube</button>
               </div>
             </form>
           </div>
         </div>
 
         <!-- =====================================================================
-             Pestaña 2: Gestor de Recursos Educativos (CRUD de Recursos)
+             Pestaña 4: Gestor de Recursos Educativos (CRUD)
              ===================================================================== -->
         <div id="tab-cms-recursos" class="admin-tab-panel">
-          <div class="card admin-form-card">
+          <div class="admin-card">
             <div class="admin-section-header">
               <div>
-                <h3>📚 Biblioteca de Recursos Educativos</h3>
-                <p class="card-desc">Crea, edita o elimina artículos, guías, podcasts, infografías y videos.</p>
+                <h3>📚 Gestor de Recursos Educativos</h3>
+                <p class="small text-muted">Administra lecturas, guías y ejercicios disponibles en la biblioteca.</p>
               </div>
-              <button class="btn primary" id="btnOpenNewResourceModal">+ Publicar Nuevo Recurso</button>
             </div>
 
-            <!-- Tabla de Recursos -->
-            <div class="audit-table-wrap">
-              <table class="audit-table">
+            <div class="admin-table-wrapper">
+              <table class="admin-data-table">
                 <thead>
                   <tr>
-                    <th>Título</th>
+                    <th>Título del Recurso</th>
                     <th>Categoría</th>
-                    <th>Tipo</th>
                     <th>Duración</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody id="adminResourcesTableBody">
-                  <!-- Renderizado dinámico desde app.js -->
+                  <!-- Rellenado dinámicamente por admin.js -->
                 </tbody>
               </table>
             </div>
@@ -184,85 +279,31 @@
         </div>
 
         <!-- =====================================================================
-             Pestaña 3: Gestor de Directorio de Ayuda Profesional
+             Pestaña 5: Directorio de Crisis y Primeros Auxilios
              ===================================================================== -->
         <div id="tab-cms-ayuda" class="admin-tab-panel">
-          <div class="card admin-form-card">
+          <div class="admin-card">
             <div class="admin-section-header">
               <div>
-                <h3>🛟 Directorio de Líneas de Emergencia y Terapeutas</h3>
-                <p class="card-desc">Gestiona los contactos de asistencia en crisis 24/7 y centros psicológicos en Nicaragua.</p>
+                <h3>🛟 Directorio de Apoyo en Crisis en Nicaragua</h3>
+                <p class="small text-muted">Líneas de emergencia y contactos profesionales para atención urgente.</p>
               </div>
-              <button class="btn primary" id="btnOpenNewHelpModal">+ Agregar Contacto de Ayuda</button>
             </div>
 
-            <!-- Tabla de Contactos de Ayuda -->
-            <div class="audit-table-wrap">
-              <table class="audit-table">
+            <div class="admin-table-wrapper">
+              <table class="admin-data-table">
                 <thead>
                   <tr>
-                    <th>Institución / Profesional</th>
-                    <th>Tipo de Servicio</th>
-                    <th>Teléfono / Contacto</th>
+                    <th>Entidad / Servicio</th>
+                    <th>Teléfono</th>
                     <th>Disponibilidad</th>
-                    <th>Acciones</th>
+                    <th>Descripción</th>
                   </tr>
                 </thead>
                 <tbody id="adminHelpTableBody">
-                  <!-- Renderizado dinámico desde app.js -->
+                  <!-- Rellenado dinámicamente por admin.js -->
                 </tbody>
               </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- =====================================================================
-             Pestaña 4: Gestor de Usuarios y Asignación de Roles (RBAC)
-             ===================================================================== -->
-        <div id="tab-cms-usuarios" class="admin-tab-panel">
-          <div class="card admin-form-card">
-            <h3>👥 Directorio de Usuarios y Asignación de Roles</h3>
-            <p class="card-desc">Solo el Administrador puede promover o revocar roles de <strong>Auditor</strong> o <strong>Administrador</strong>.</p>
-
-            <div class="audit-table-wrap">
-              <table class="audit-table">
-                <thead>
-                  <tr>
-                    <th>Nombre</th>
-                    <th>Correo Electrónico</th>
-                    <th>Rol Actual</th>
-                    <th>Cambiar Rol</th>
-                    <th>Estado</th>
-                  </tr>
-                </thead>
-                <tbody id="adminUsersTableBody">
-                  <!-- Renderizado dinámico desde app.js -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- =====================================================================
-             Pestaña 5: Ajustes Generales, Respaldo y Firebase Sync
-             ===================================================================== -->
-        <div id="tab-cms-ajustes" class="admin-tab-panel">
-          <div class="card admin-form-card">
-            <h3>⚙️ Respaldo y Sincronización del Sistema</h3>
-            <p class="card-desc">Exporta copias de seguridad de la base de datos o sincroniza con Cloud Firestore.</p>
-
-            <div class="settings-actions-grid">
-              <div class="setting-item-card">
-                <h4>📥 Exportar Respaldo Completo</h4>
-                <p>Descarga un archivo JSON con todos los textos, recursos, usuarios y bitácora.</p>
-                <button class="btn ghost" id="btnAdminExportJson">Descargar Archivo JSON</button>
-              </div>
-
-              <div class="setting-item-card">
-                <h4>☁️ Sincronizar con Firebase Realtime DB</h4>
-                <p>Envía la configuración actual a <code>cresernicaragua-default-rtdb</code>.</p>
-                <button class="btn primary" id="btnAdminSyncFirebase">Sincronizar Nube</button>
-              </div>
             </div>
           </div>
         </div>
@@ -270,7 +311,7 @@
       </section>
     </main>
 
-    <!-- Pie de página unificado -->
+    <!-- Pie de página institucional -->
     <footer class="footer">
       <div class="footer-inner">
         <div class="footer-links">
@@ -280,58 +321,16 @@
           <a href="convivencia.html">Normas de Convivencia</a>
           <a href="legal.html">Aviso Legal</a>
         </div>
-        <p class="footer-copy">© 2026 CreSer — Plataforma de Bienestar Emocional en Nicaragua. Todos los derechos reservados.</p>
+        <p class="footer-copy">© 2026 CreSer — Plataforma de Bienestar Emocional en Nicaragua. Panel de Control Administrativo.</p>
       </div>
     </footer>
   </div>
 
-  <!-- Modal para Crear / Editar Recurso Educativo -->
-  <div id="resourceModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="resModalTitle">
-    <div class="modal-dialog">
-      <div class="modal-header">
-        <h3 id="resModalTitle" class="modal-title-text">Publicar Nuevo Recurso</h3>
-        <button class="ghost" onclick="closeModal('resourceModal')" aria-label="Cerrar modal">✕</button>
-      </div>
-      <form id="formResourceModal">
-        <div class="modal-body-content">
-          <input type="hidden" id="modalResIndex" value="-1">
-          <div class="form-group">
-            <label for="modalResTitle">Título del Recurso:</label>
-            <input type="text" id="modalResTitle" class="admin-input" required placeholder="Ej: Guía de Respiración Diafragmática">
-          </div>
-          <div class="form-group">
-            <label for="modalResCat">Categoría:</label>
-            <select id="modalResCat" class="admin-input">
-              <option value="articulos">Artículos</option>
-              <option value="guias">Guías Prácticas</option>
-              <option value="podcasts">Podcasts</option>
-              <option value="videos">Videos</option>
-              <option value="infografias">Infografías</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="modalResType">Tipo / Formato:</label>
-            <input type="text" id="modalResType" class="admin-input" placeholder="Ej: Lectura breve, Audio 10 min, Guía PDF">
-          </div>
-          <div class="form-group">
-            <label for="modalResDuration">Tiempo Estimado:</label>
-            <input type="text" id="modalResDuration" class="admin-input" placeholder="Ej: 5 min, 12 min">
-          </div>
-          <div class="form-group">
-            <label for="modalResDesc">Descripción / Contenido:</label>
-            <textarea id="modalResDesc" class="admin-textarea" rows="3" required placeholder="Breve resumen del recurso para los usuarios"></textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn ghost" onclick="closeModal('resourceModal')">Cancelar</button>
-          <button type="submit" class="btn primary">Guardar Recurso</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Inclusión de Firebase SDK y la lógica central -->
-  <script type="module" src="../assets/js/firebase-config.js?v=1.0"></script>
-  <script src="../assets/js/app.js?v=3.4"></script>
+  <!-- Inclusión de la configuración y SDK de Google Firebase -->
+  <script type="module" src="../assets/js/firebase-config.js?v=5.0"></script>
+  <!-- Script global de la aplicación -->
+  <script src="../assets/js/app.js?v=5.0"></script>
+  <!-- Controlador dedicado para el panel administrativo -->
+  <script src="../assets/js/admin.js?v=1.0"></script>
 </body>
 </html>

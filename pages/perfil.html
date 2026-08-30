@@ -1,18 +1,21 @@
 <!doctype html>
 <!-- 
-  ¿POR QUÉ?: Documento HTML5 estándar para la gestión de perfil y preferencias.
-  ¿CÓMO?: Utilizando semántica estricta y componentes accesibles para control de sesión y roles.
-  ¿PARA QUÉ?: Permitir la personalización visual, cambio de rol (Admin, Usuario, Auditor) y consulta de auditoría.
+  ¿POR QUÉ?: Documento HTML5 estándar para el Portal de Perfil de Usuario en CreSer.
+  ¿CÓMO?: Semántica estricta, diseño Glassmorphism y separación clara de roles y administración.
+  ¿PARA QUÉ?: Permitir al usuario gestionar su cuenta, preferencias visuales y acceder al CMS solo si posee permisos autorizados.
 -->
 <html lang="es">
 <head>
-  <!-- ¿POR QUÉ?: Codificación universal para admitir acentos y símbolos. -->
+  <!-- Codificación universal UTF-8 -->
   <meta charset="utf-8"/>
-  <!-- ¿CÓMO?: Viewport responsive para cualquier pantalla. -->
+  <!-- Viewport responsive -->
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>CreSer — Perfil, Roles, Auditoría y Ajustes</title>
-  <meta name="description" content="Configuración de preferencias, control de roles (Admin, Usuario, Auditor) y bitácora de auditoría en CreSer."/>
-  <link rel="stylesheet" href="../assets/css/main.css?v=3.3">
+  <title>CreSer — Mi Perfil de Usuario & Accesibilidad</title>
+  <meta name="description" content="Portal personal del usuario en CreSer: Gestión de cuenta, preferencias visuales, privacidad y accesos."/>
+  
+  <!-- Hojas de estilo globales y modular de perfil -->
+  <link rel="stylesheet" href="../assets/css/main.css?v=5.0">
+  <link rel="stylesheet" href="../assets/css/perfil.css?v=1.0">
 </head>
 <body>
 
@@ -62,7 +65,7 @@
       <a href="multimedia.html">🎵 Multimedia & Relax</a>
       <a href="comunidad.html">👥 Espacios de Comunidad</a>
       <a href="ayuda.html">🛟 Ayuda Profesional</a>
-      <a href="perfil.html" class="active">👤 Perfil & Accesibilidad</a>
+      <a href="perfil.html" class="active">👤 Mi Perfil & Ajustes</a>
       
       <hr class="drawer-separator">
       
@@ -78,116 +81,135 @@
     <a href="bienestar.html"><span class="ico">💚</span><span>Bienestar</span></a>
     <a href="herramientas.html"><span class="ico">🫁</span><span>Ejercicios</span></a>
     <a href="kiri.html"><span class="ico">🤖</span><span>KIRI</span></a>
-    <a href="perfil.html" class="active"><span class="ico">⚙️</span><span>Ajustes</span></a>
+    <a href="perfil.html" class="active"><span class="ico">👤</span><span>Perfil</span></a>
   </nav>
 
   <!-- =========================================================================
-       Contenido Central: Perfil, Control de Roles y Seguridad
+       Contenido Central: Portal del Usuario
        ========================================================================= -->
   <div class="app">
-    <main>
+    <main class="profile-page-wrapper">
       
-      <!-- Título de cabecera -->
-      <div class="section-title">
+      <!-- 1. Tarjeta Hero de Identidad del Usuario -->
+      <section class="profile-hero-card">
+        <div class="profile-identity-group">
+          <div class="profile-avatar-box" id="profileAvatarBox" title="Tu avatar de CreSer">
+            👤
+          </div>
+          <div class="profile-meta-info">
+            <h2 id="profileUserName">Cargando perfil...</h2>
+            <p class="profile-email-text" id="profileUserEmail">cargando@creser.org</p>
+            <div class="profile-badges-row">
+              <span class="role-badge usuario" id="profileRoleBadge">🌱 USUARIO</span>
+              <span class="badge badge-green" id="profileJoinDate">Miembro CreSer</span>
+            </div>
+          </div>
+        </div>
+
         <div>
-          <h2>Perfil, Accesibilidad y Control de Roles</h2>
-          <p class="small">Gestión de sesión activa, conmutador de roles (Admin, Usuario, Auditor) y seguridad</p>
+          <button class="btn ghost btn-danger-soft" id="profileLogoutBtn">
+            <span>🚪 Cerrar Sesión</span>
+          </button>
         </div>
-      </div>
+      </section>
 
-      <!-- Cuadrícula con las 3 tarjetas de control -->
-      <div class="grid-3">
+      <!-- 2. Banner VIP de Acceso al Panel Administrativo (Visible solo para Admin y Auditor) -->
+      <section class="admin-access-banner" id="profileAdminBanner" style="display:none;">
+        <div class="admin-banner-text">
+          <div class="admin-banner-icon">👑</div>
+          <div class="admin-banner-info">
+            <h4>Panel de Control Administrativo (CMS)</h4>
+            <p>Tienes permisos para gestionar textos, recursos, directorio de crisis y auditar eventos.</p>
+          </div>
+        </div>
+        <a href="admin.html" class="btn-admin-portal">
+          <span>Ir al Panel de Administración ➔</span>
+        </a>
+      </section>
+
+      <!-- 3. Cuadrícula de Opciones y Preferencias -->
+      <div class="profile-grid-layout">
         
-        <!-- Tarjeta 1: Mi Cuenta y Rol Asignado -->
-        <div class="card">
-          <h3>👤 Sesión y Rol Asignado</h3>
-          <p class="user-session-info" id="userDisplayName"><strong>Usuario:</strong> Andrea</p>
-          
-          <div class="role-badge-row">
-            <span class="role-label-text">Rol Activo:</span>
-            <span class="badge badge-purple" id="userRoleBadge">USUARIO</span>
-          </div>
-
-          <div id="adminPanelLinkWrap" class="mt-3 hidden">
-            <a href="admin.html" class="primary btn-full-link">👑 Panel Administrativo (CMS)</a>
-          </div>
-
-          <div class="mt-3">
-            <a href="login.html" class="secondary btn-full-link">Cerrar Sesión / Cambiar Cuenta</a>
-          </div>
-        </div>
-
-        <!-- Tarjeta 2: Preferencias Visuales y Accesibilidad -->
-        <div class="card">
-          <h3>Preferencias Visuales</h3>
-          
-          <!-- Alternador de Modo Oscuro -->
-          <div class="setting-item">
-            <div class="setting-info">
-              <h4>Modo Oscuro</h4>
-              <p>Reduce la fatiga visual nocturna</p>
-            </div>
-            <div id="darkToggle" class="toggle-switch" role="switch" aria-checked="false" aria-label="Alternar modo oscuro" tabindex="0"></div>
-          </div>
-
-          <!-- Alternador de Texto Aumentado -->
-          <div class="setting-item">
-            <div class="setting-info">
-              <h4>Texto Aumentado</h4>
-              <p>Mejora la legibilidad del texto</p>
-            </div>
-            <div id="textToggle" class="toggle-switch" role="switch" aria-checked="false" aria-label="Alternar texto grande" tabindex="0"></div>
-          </div>
-        </div>
-
-        <!-- Tarjeta 3: Control y Privacidad de Datos -->
-        <div class="card">
-          <h3>Control de Privacidad</h3>
-          <p class="small">Tus registros residen exclusivamente en tu navegador.</p>
-          <div class="btn-group-column">
-            <button class="secondary" id="exportDataBtn">Exportar mis Datos (JSON)</button>
-            <button class="secondary btn-danger-soft" id="clearDataBtn">Borrar Registros Locales</button>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- =========================================================================
-           Panel de Auditoría y Trazabilidad (Solo visible para Roles Admin y Auditor)
-           ¿POR QUÉ?: Para cumplir con el requerimiento de auditoría y supervisión de seguridad.
-           ========================================================================= -->
-      <div class="card mt-4 audit-card-wrapper" id="auditPanelCard">
-        <div class="audit-header-flex">
+        <!-- Tarjeta A: Preferencias Visuales y Accesibilidad -->
+        <div class="profile-card">
           <div>
-            <h3 class="audit-title">🛡️ Bitácora de Auditoría y Trazabilidad</h3>
-            <p class="small audit-subtitle">Registro de eventos de seguridad y actividad del sistema (Permiso: Admin & Auditor)</p>
+            <div class="profile-card-header">
+              <div class="profile-card-icon">🎨</div>
+              <h3 class="profile-card-title">Preferencias Visuales</h3>
+            </div>
+            
+            <div class="profile-settings-list">
+              <!-- Modo Oscuro -->
+              <div class="profile-setting-row">
+                <div class="profile-setting-text">
+                  <strong>Modo Oscuro</strong>
+                  <span>Reduce la fatiga visual nocturna</span>
+                </div>
+                <div id="profileDarkSwitch" class="profile-switch" role="switch" aria-checked="false" tabindex="0"></div>
+              </div>
+
+              <!-- Texto Aumentado -->
+              <div class="profile-setting-row">
+                <div class="profile-setting-text">
+                  <strong>Texto Aumentado</strong>
+                  <span>Mejora la legibilidad del contenido</span>
+                </div>
+                <div id="profileTextSwitch" class="profile-switch" role="switch" aria-checked="false" tabindex="0"></div>
+              </div>
+            </div>
           </div>
-          <button class="ghost audit-refresh-btn" id="refreshAuditBtn">🔄 Actualizar Logs</button>
         </div>
 
-        <!-- Tabla con los registros de auditoría -->
-        <div class="audit-table-wrap">
-          <table class="audit-table">
-            <thead>
-              <tr class="audit-table-head-row">
-                <th class="audit-th">ID Evento</th>
-                <th class="audit-th">Fecha / Hora</th>
-                <th class="audit-th">Usuario</th>
-                <th class="audit-th">Rol</th>
-                <th class="audit-th">Acción Realizada</th>
-                <th class="audit-th">Origen IP</th>
-              </tr>
-            </thead>
-            <tbody id="auditTableBody">
-              <!-- Rellenado dinámicamente por JavaScript -->
-            </tbody>
-          </table>
+        <!-- Tarjeta B: Mi Actividad y Autocuidado -->
+        <div class="profile-card">
+          <div>
+            <div class="profile-card-header">
+              <div class="profile-card-icon">📊</div>
+              <h3 class="profile-card-title">Mi Actividad en CreSer</h3>
+            </div>
+            
+            <div class="profile-kpi-summary">
+              <div class="profile-kpi-box">
+                <div class="profile-kpi-box-num" id="userKpiStreak">5 días</div>
+                <div class="profile-kpi-box-lbl">Racha Activa</div>
+              </div>
+              <div class="profile-kpi-box">
+                <div class="profile-kpi-box-num" id="userKpiReflections">0</div>
+                <div class="profile-kpi-box-lbl">Reflexiones</div>
+              </div>
+              <div class="profile-kpi-box" style="grid-column: span 2;">
+                <div class="profile-kpi-box-num" id="userKpiPauses">12</div>
+                <div class="profile-kpi-box-lbl">Pausas y Micro-Herramientas Completadas</div>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <!-- Tarjeta C: Privacidad y Control de Datos -->
+        <div class="profile-card">
+          <div>
+            <div class="profile-card-header">
+              <div class="profile-card-icon">🔒</div>
+              <h3 class="profile-card-title">Control de Privacidad</h3>
+            </div>
+            <p class="small text-muted" style="margin-bottom:1.25rem;">Tus reflexiones y registros se almacenan de forma local y confidencial en tu dispositivo.</p>
+            
+            <div style="display:flex; flex-direction:column; gap:0.75rem;">
+              <button class="profile-action-btn" id="profileExportDataBtn">
+                <span>📥 Descargar Mis Datos (JSON)</span>
+              </button>
+              <button class="profile-action-btn danger" id="profileClearDataBtn">
+                <span>🗑️ Borrar Mis Registros Locales</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
       </div>
 
     </main>
 
-    <!-- Pie de página -->
+    <!-- Pie de página institucional -->
     <footer class="footer">
       <div class="footer-inner">
         <div class="footer-links">
@@ -202,23 +224,11 @@
     </footer>
   </div>
 
-  <!-- Modal legal -->
-  <div id="infoModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-dialog">
-      <div class="modal-header">
-        <h3 id="modalTitle" class="modal-title-text">Información</h3>
-        <button class="ghost" onclick="closeModal('infoModal')" aria-label="Cerrar modal">✕</button>
-      </div>
-      <div id="modalBody"></div>
-      <div class="modal-footer">
-        <button class="primary" onclick="closeModal('infoModal')">Entendido</button>
-      </div>
-    </div>
-  </div>
-
   <!-- Inclusión de la configuración y SDK de Google Firebase -->
-  <script type="module" src="../assets/js/firebase-config.js?v=1.0"></script>
-  <!-- Lógica JavaScript modular -->
-  <script src="../assets/js/app.js?v=3.3"></script>
+  <script type="module" src="../assets/js/firebase-config.js?v=5.0"></script>
+  <!-- Script global de la aplicación -->
+  <script src="../assets/js/app.js?v=5.0"></script>
+  <!-- Controlador dedicado para la página de perfil -->
+  <script src="../assets/js/perfil.js?v=1.0"></script>
 </body>
 </html>

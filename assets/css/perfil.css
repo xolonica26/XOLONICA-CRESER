@@ -1,0 +1,403 @@
+/**
+ * ============================================================================
+ * CreSer — Hoja de Estilos del Portal de Perfil de Usuario (perfil.css)
+ * ============================================================================
+ * 
+ * ¿POR QUÉ?:
+ * Brindar una experiencia visual sofisticada, privada e intuitiva para que el
+ * usuario gestione su cuenta, preferencias de accesibilidad y datos personales
+ * sin sobrecargar la interfaz con opciones de administración.
+ * 
+ * ¿CÓMO?:
+ * Utilizando CSS moderno con variables HSL, Glassmorphism, sombras multicapa,
+ * animaciones de elevación y diseño adaptable a pantallas móviles y de escritorio.
+ * 
+ * ¿PARA QUÉ?:
+ * Proporcionar un portal de usuario ejecutivo, acogedor y accesible.
+ * ============================================================================
+ */
+
+/* ==========================================================================
+   1. Contenedor Principal y Cabecera de Perfil
+   ========================================================================== */
+
+/* ¿POR QUÉ?: Enmarcar el perfil en un diseño centrado con espaciado óptimo.
+   ¿CÓMO?: Contenedor con ancho máximo de 1040px y padding responsivo.
+   ¿PARA QUÉ?: Garantizar legibilidad y balance visual en cualquier resolución. */
+.profile-page-wrapper {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 2.25rem 1.25rem 4rem;
+}
+
+/* ¿POR QUÉ?: Banner de presentación del usuario con diseño de tarjeta iluminada.
+   ¿CÓMO?: Fondo degradado suave, borde traslúcido y disposición flexbox alineada.
+   ¿PARA QUÉ?: Generar un impacto visual inmediato que identifique al titular de la cuenta. */
+.profile-hero-card {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: 28px;
+  padding: 2.25rem;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(255, 255, 255, 0.7) inset;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+}
+
+body.dark .profile-hero-card {
+  background: rgba(30, 41, 59, 0.75);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4);
+}
+
+.profile-identity-group {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* ¿POR QUÉ?: Avatar interactivo del usuario con inicial o emoji de bienestar.
+   ¿CÓMO?: Caja circular de 72px con degradado CreSer, sombra y borde blanco.
+   ¿PARA QUÉ?: Representar de forma cálida la identidad del usuario. */
+.profile-avatar-box {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2563eb 0%, #059669 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.profile-avatar-box:hover {
+  transform: scale(1.06) rotate(5deg);
+}
+
+.profile-meta-info h2 {
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--ink-primary);
+  margin: 0 0 0.25rem 0;
+  letter-spacing: -0.015em;
+}
+
+.profile-email-text {
+  font-size: 0.9rem;
+  color: var(--ink-secondary);
+  margin: 0 0 0.6rem 0;
+}
+
+.profile-badges-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+/* Insignias de roles específicos con paleta distintiva */
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.role-badge.admin {
+  background: rgba(147, 51, 234, 0.12);
+  color: #9333ea;
+  border: 1.5px solid rgba(147, 51, 234, 0.3);
+}
+
+.role-badge.auditor {
+  background: rgba(245, 158, 11, 0.12);
+  color: #d97706;
+  border: 1.5px solid rgba(245, 158, 11, 0.3);
+}
+
+.role-badge.usuario {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+  border: 1.5px solid rgba(16, 185, 129, 0.3);
+}
+
+/* ==========================================================================
+   2. Tarjeta de Acceso Administrativo (Exclusiva para Admin y Auditor)
+   ========================================================================== */
+
+/* ¿POR QUÉ?: Destacar el acceso directo al panel administrativo con estética VIP.
+   ¿CÓMO?: Fondo degradado en azul cobalto / esmeralda, bordes brillantes y botón CTA directo.
+   ¿PARA QUÉ?: Facilitar el paso rápido a admin.html solo a los usuarios con permisos. */
+.admin-access-banner {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.09) 0%, rgba(5, 150, 105, 0.09) 100%);
+  border: 1.5px solid rgba(37, 99, 235, 0.3);
+  border-radius: 24px;
+  padding: 1.5rem 1.85rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  box-shadow: 0 8px 24px -4px rgba(37, 99, 235, 0.1);
+}
+
+.admin-banner-text {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.admin-banner-icon {
+  font-size: 2rem;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+}
+
+body.dark .admin-banner-icon {
+  background: #1e293b;
+}
+
+.admin-banner-info h4 {
+  font-size: 1.12rem;
+  font-weight: 800;
+  color: var(--ink-primary);
+  margin: 0 0 0.2rem 0;
+}
+
+.admin-banner-info p {
+  font-size: 0.86rem;
+  color: var(--ink-secondary);
+  margin: 0;
+}
+
+.btn-admin-portal {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 0.92rem;
+  padding: 0.8rem 1.6rem;
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-admin-portal:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.45);
+  filter: brightness(1.08);
+}
+
+/* ==========================================================================
+   3. Cuadrícula de Ajustes y Métricas del Perfil
+   ========================================================================== */
+
+.profile-grid-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.profile-card {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: 24px;
+  padding: 1.85rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  transition: all 0.25s ease;
+}
+
+body.dark .profile-card {
+  background: rgba(30, 41, 59, 0.75);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.profile-card:hover {
+  border-color: rgba(59, 130, 246, 0.35);
+  box-shadow: 0 10px 28px -4px rgba(0, 0, 0, 0.06);
+}
+
+.profile-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.profile-card-icon {
+  font-size: 1.5rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+}
+
+.profile-card-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--ink-primary);
+  margin: 0;
+}
+
+/* Lista de Preferencias con Interruptores Táctiles */
+.profile-settings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.profile-setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.profile-setting-text strong {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--ink-primary);
+  font-weight: 700;
+  margin-bottom: 0.15rem;
+}
+
+.profile-setting-text span {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+}
+
+/* Interruptor tipo Switch */
+.profile-switch {
+  position: relative;
+  width: 48px;
+  height: 26px;
+  background: var(--line);
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: background 0.25s ease;
+  flex-shrink: 0;
+}
+
+.profile-switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.profile-switch.on {
+  background: #2563eb;
+}
+
+.profile-switch.on::after {
+  transform: translateX(22px);
+}
+
+/* Métricas de Actividad Personal */
+.profile-kpi-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.profile-kpi-box {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.profile-kpi-box-num {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #2563eb;
+  margin-bottom: 0.2rem;
+}
+
+.profile-kpi-box-lbl {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+
+/* Botones de acción del perfil */
+.profile-action-btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.25rem;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1.5px solid var(--line);
+  background: var(--surface-2);
+  color: var(--ink-primary);
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.profile-action-btn:hover {
+  background: var(--surface);
+  border-color: #2563eb;
+  color: #2563eb;
+  transform: translateY(-1px);
+}
+
+.profile-action-btn.danger {
+  color: #dc2626;
+  border-color: rgba(239, 68, 68, 0.25);
+  background: rgba(239, 68, 68, 0.05);
+}
+
+.profile-action-btn.danger:hover {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: #dc2626;
+}

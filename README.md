@@ -167,6 +167,18 @@ La plataforma está dividida en páginas autónomas e interconectadas para evita
 | 🛟 **Ayuda** | [`pages/ayuda.html`](file:///d:/Desktop/creser/pages/ayuda.html) | Directorio de profesionales y teléfonos de emergencia 24/7. |
 | 👤 **Perfil** | [`pages/perfil.html`](file:///d:/Desktop/creser/pages/perfil.html) | Modo oscuro, texto aumentado y bitácora de auditoría. |
 | 🔐 **Acceso** | [`pages/login.html`](file:///d:/Desktop/creser/pages/login.html) | Formulario de acceso y registro con Google y correo. |
+| 🔒 **Privacidad** | [`pages/privacidad.html`](file:///d:/Desktop/creser/pages/privacidad.html) | Política de Privacidad y Tratamiento de Datos Personales (ARCO). |
+| 📄 **Términos** | [`pages/terminos.html`](file:///d:/Desktop/creser/pages/terminos.html) | Términos y Condiciones de Uso del Servicio. |
+| 🍪 **Cookies** | [`pages/cookies.html`](file:///d:/Desktop/creser/pages/cookies.html) | Política de Cookies y Almacenamiento Local (localStorage). |
+| 🤝 **Convivencia** | [`pages/convivencia.html`](file:///d:/Desktop/creser/pages/convivencia.html) | Normas de Convivencia y Seguridad Comunitaria. |
+| ⚖️ **Aviso Legal** | [`pages/legal.html`](file:///d:/Desktop/creser/pages/legal.html) | Aviso Legal, Deslinde Médico y Tabla de Dominios Oficiales. |
+
+### 3.1 Dominios Web Oficiales en Producción (Google Firebase)
+
+| Dominio | Estado | Tipo |
+| :--- | :--- | :--- |
+| 🌐 **[https://cresernicaragua.web.app](https://cresernicaragua.web.app)** | Activo | Predeterminado |
+| 🌐 **[https://cresernicaragua.firebaseapp.com](https://cresernicaragua.firebaseapp.com)** | Activo | Predeterminado |
 
 ---
 

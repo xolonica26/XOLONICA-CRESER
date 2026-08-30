@@ -2035,4 +2035,86 @@ body.dark .chat-messages {
   color: #ffffff;
 }
 
+/* ==========================================================================
+   Estilos de Páginas de Documentación Legal Profesional
+   ========================================================================== */
+
+.legal-document-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding-bottom: 4rem;
+}
+
+.legal-content-card {
+  padding: 2.5rem;
+  line-height: 1.8;
+}
+
+.legal-section {
+  margin-bottom: 2.5rem;
+}
+
+.legal-section h2 {
+  font-size: 1.35rem;
+  color: var(--primary);
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.legal-section p {
+  color: var(--ink-secondary);
+  font-size: 0.96rem;
+  margin-bottom: 1rem;
+}
+
+.legal-section ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.legal-section li {
+  color: var(--ink-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.legal-domain-list {
+  padding-left: 1.25rem;
+  margin: 0.5rem 0 0 0;
+}
+
+.legal-domain-list li {
+  font-size: 0.9rem;
+  margin-bottom: 0.35rem;
+}
+
+.card-alert-yellow {
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+}
+
+.card-alert-red {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+}
+
+.text-ink-primary {
+  color: var(--ink-primary);
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+
 

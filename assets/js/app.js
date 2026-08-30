@@ -848,7 +848,19 @@ window.openInfoModal = function(key) {
 
   const data = modalContentData[key] || { title: "Información", body: "Contenido informativo en preparación." };
   titleEl.textContent = data.title;
-  bodyEl.innerHTML = `<p class="modal-content-p">${data.body}</p>`;
+
+  const pageMap = {
+    privacy: 'privacidad.html',
+    terms: 'terminos.html',
+    cookies: 'cookies.html',
+    community: 'convivencia.html',
+    legal: 'legal.html'
+  };
+
+  const targetPage = pageMap[key] ? (window.location.pathname.includes('/pages/') ? pageMap[key] : `pages/${pageMap[key]}`) : null;
+  const linkHtml = targetPage ? `<div class="mt-3"><a href="${targetPage}" class="btn primary">Ver Documento Oficial Completo ↗</a></div>` : '';
+
+  bodyEl.innerHTML = `<p class="modal-content-p">${data.body}</p>${linkHtml}`;
   modal.classList.add('show');
 };
 

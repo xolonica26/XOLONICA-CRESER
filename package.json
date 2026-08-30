@@ -1,4 +1,11 @@
 {
+  "name": "creser",
+  "version": "1.0.0",
+  "description": "CreSer — Plataforma de Bienestar Emocional y Crecimiento Personal",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "@dataconnect/generated": "file:src/dataconnect-generated",
     "firebase": "^12.18.0"

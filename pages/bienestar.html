@@ -11,9 +11,9 @@
   <!-- Descripción de la página para accesibilidad y SEO -->
   <meta name="description" content="Centro Integral de Bienestar Emocional de CreSer: acompañamiento adaptativo, herramientas prácticas, seguimiento de hábitos y recursos de autocuidado."/>
   <!-- Enlace relativo a los estilos globales principales -->
-  <link rel="stylesheet" href="../assets/css/main.css?v=4.0">
+  <link rel="stylesheet" href="../assets/css/main.css?v=5.0">
   <!-- Hoja de estilos modular dedicada exclusivamente a Bienestar -->
-  <link rel="stylesheet" href="../assets/css/bienestar.css?v=4.2">
+  <link rel="stylesheet" href="../assets/css/bienestar.css?v=5.4">
 </head>
 <body>
 
@@ -211,135 +211,178 @@
       </section>
 
       <!-- =====================================================================
-           4. HERRAMIENTAS RÁPIDAS (8 Micro-Herramientas Funcionales)
+           4. HERRAMIENTAS RÁPIDAS (Galería en Movimiento Continuo Ultra-Premium)
            ===================================================================== -->
       <section class="wellness-section" aria-labelledby="quickToolsTitle">
         <div class="wellness-section-head">
           <div>
+            <div class="gallery-live-badge">
+              <span class="pulse-dot"></span>
+              <span>Galería Interactiva en Vivo</span>
+            </div>
             <h2 id="quickToolsTitle">Herramientas para este momento</h2>
-            <p>Pausas interactivas breves diseñadas para modular tu ritmo y restaurar tu equilibrio:</p>
+            <p>Pausas interactivas breves diseñadas para modular tu ritmo y restaurar tu equilibrio en cualquier instante:</p>
+          </div>
+          
+          <div class="carousel-nav-controls" role="toolbar" aria-label="Controles de la galería">
+            <button type="button" id="btnQuickToolsPrev" class="carousel-nav-btn" title="Desplazar a la izquierda" aria-label="Anterior">
+              <span>‹</span>
+            </button>
+            <button type="button" id="btnQuickToolsPlayPause" class="carousel-play-btn" title="Pausar o reanudar movimiento automático" aria-label="Pausa automática">
+              <span id="playPauseIcon">⏸️</span>
+            </button>
+            <button type="button" id="btnQuickToolsNext" class="carousel-nav-btn" title="Desplazar a la derecha" aria-label="Siguiente">
+              <span>›</span>
+            </button>
           </div>
         </div>
 
-        <div class="quick-tools-grid">
-          <!-- 1. Respiración -->
-          <div class="quick-tool-card">
-            <div>
-              <div class="quick-tool-header">
-                <div class="quick-tool-icon">🫁</div>
-                <div class="quick-tool-info">
-                  <h4>Pausa de respiración</h4>
-                  <span class="quick-tool-duration">⏱️ 1-3 min</span>
+        <div class="quick-tools-carousel-container" id="quickToolsCarouselContainer">
+          <div class="quick-tools-carousel-viewport" id="quickToolsCarouselViewport" tabindex="0" role="region" aria-label="Carrusel de herramientas de bienestar">
+            <div class="quick-tools-carousel-track" id="quickToolsCarouselTrack">
+              
+              <!-- 1. Respiración -->
+              <div class="quick-tool-card" data-tool="respiracion">
+                <div class="quick-tool-content">
+                  <div class="quick-tool-header">
+                    <div class="quick-tool-icon">🫁</div>
+                    <div class="quick-tool-info">
+                      <h4>Pausa de respiración</h4>
+                      <span class="quick-tool-duration">⏱️ 1-3 min</span>
+                    </div>
+                  </div>
+                  <p class="quick-tool-desc">Respiración cuadrada 4-4-4 para desacelerar el ritmo cardíaco y calmar la tensión física.</p>
                 </div>
+                <button class="primary btn-full btn-tool-action" data-open-tool="respiracion">
+                  <span>✨ Comenzar</span>
+                </button>
               </div>
-              <p class="quick-tool-desc">Respiración cuadrada 4-4-4 para desacelerar el ritmo cardíaco y calmar la tensión.</p>
+
+              <!-- 2. Grounding -->
+              <div class="quick-tool-card" data-tool="grounding">
+                <div class="quick-tool-content">
+                  <div class="quick-tool-header">
+                    <div class="quick-tool-icon">🌿</div>
+                    <div class="quick-tool-info">
+                      <h4>Grounding 5-4-3-2-1</h4>
+                      <span class="quick-tool-duration">⏱️ 3 min</span>
+                    </div>
+                  </div>
+                  <p class="quick-tool-desc">Técnica sensorial para anclarte al espacio presente y disipar pensamientos rumiantes.</p>
+                </div>
+                <button class="secondary btn-full btn-tool-action" data-open-tool="grounding">
+                  <span>🌿 Comenzar</span>
+                </button>
+              </div>
+
+              <!-- 3. Relajación Muscular -->
+              <div class="quick-tool-card" data-tool="muscular">
+                <div class="quick-tool-content">
+                  <div class="quick-tool-header">
+                    <div class="quick-tool-icon">💆</div>
+                    <div class="quick-tool-info">
+                      <h4>Relajación muscular</h4>
+                      <span class="quick-tool-duration">⏱️ 5 min</span>
+                    </div>
+                  </div>
+                  <p class="quick-tool-desc">Secuencia progresiva para tensar y soltar grupos musculares liberando la sobrecarga.</p>
+                </div>
+                <button class="primary btn-full btn-tool-action" data-open-tool="muscular">
+                  <span>💆 Comenzar</span>
+                </button>
+              </div>
+
+              <!-- 4. Descanso Visual -->
+              <div class="quick-tool-card" data-tool="visual">
+                <div class="quick-tool-content">
+                  <div class="quick-tool-header">
+                    <div class="quick-tool-icon">👁️</div>
+                    <div class="quick-tool-info">
+                      <h4>Descanso visual</h4>
+                      <span class="quick-tool-duration">⏱️ 2 min</span>
+                    </div>
+                  </div>
+                  <p class="quick-tool-desc">Regla 20-20-20 para aliviar la fatiga digital de pantallas y relajar la musculatura ocular.</p>
+                </div>
+                <button class="secondary btn-full btn-tool-action" data-open-tool="visual">
+                  <span>👁️ Comenzar</span>
+                </button>
+              </div>
+
+              <!-- 5. Escritura Emocional -->
+              <div class="quick-tool-card" data-tool="escritura">
+                <div class="quick-tool-content">
+                  <div class="quick-tool-header">
+                    <div class="quick-tool-icon">✍️</div>
+                    <div class="quick-tool-info">
+                      <h4>Escritura emocional</h4>
+                      <span class="quick-tool-duration">⏱️ 5 min</span>
+                    </div>
+                  </div>
+                  <p class="quick-tool-desc">Desahogo reflexivo confidencial para plasmar lo que sientes sin juicios ni censuras.</p>
+                </div>
+                <button class="primary btn-full btn-tool-action" data-open-tool="escritura">
+                  <span>✍️ Comenzar</span>
+                </button>
+              </div>
+
+              <!-- 6. Concentración Guiada -->
+              <div class="quick-tool-card" data-tool="concentracion">
+                <div class="quick-tool-content">
+                  <div class="quick-tool-header">
+                    <div class="quick-tool-icon">🎯</div>
+                    <div class="quick-tool-info">
+                      <h4>Concentración guiada</h4>
+                      <span class="quick-tool-duration">⏱️ 3 min</span>
+                    </div>
+                  </div>
+                  <p class="quick-tool-desc">Intervalo de foco mental para recuperar la atención y disipar la dispersión cognitiva.</p>
+                </div>
+                <button class="secondary btn-full btn-tool-action" data-open-tool="concentracion">
+                  <span>🎯 Comenzar</span>
+                </button>
+              </div>
+
+              <!-- 7. Pausa Consciente -->
+              <div class="quick-tool-card" data-tool="pausa">
+                <div class="quick-tool-content">
+                  <div class="quick-tool-header">
+                    <div class="quick-tool-icon">🧘</div>
+                    <div class="quick-tool-info">
+                      <h4>Pausa consciente</h4>
+                      <span class="quick-tool-duration">⏱️ 3 min</span>
+                    </div>
+                  </div>
+                  <p class="quick-tool-desc">Escaneo corporal paso a paso para reconectar con tu postura, cuello y respiración.</p>
+                </div>
+                <button class="primary btn-full btn-tool-action" data-open-tool="pausa">
+                  <span>🧘 Comenzar</span>
+                </button>
+              </div>
+
+              <!-- 8. Sonidos Ambientales -->
+              <div class="quick-tool-card" data-tool="sonidos">
+                <div class="quick-tool-content">
+                  <div class="quick-tool-header">
+                    <div class="quick-tool-icon">🎧</div>
+                    <div class="quick-tool-info">
+                      <h4>Sonidos ambientales</h4>
+                      <span class="quick-tool-duration">⏱️ 5-30 min</span>
+                    </div>
+                  </div>
+                  <p class="quick-tool-desc">Frecuencias y paisajes sonoros sintetizados para sumergirte en una atmósfera de calma.</p>
+                </div>
+                <button class="secondary btn-full btn-tool-action" data-open-tool="sonidos">
+                  <span>🎧 Comenzar</span>
+                </button>
+              </div>
+
             </div>
-            <button class="primary btn-full" data-open-tool="respiracion">Comenzar</button>
           </div>
 
-          <!-- 2. Grounding -->
-          <div class="quick-tool-card">
-            <div>
-              <div class="quick-tool-header">
-                <div class="quick-tool-icon">🌿</div>
-                <div class="quick-tool-info">
-                  <h4>Grounding 5-4-3-2-1</h4>
-                  <span class="quick-tool-duration">⏱️ 3 min</span>
-                </div>
-              </div>
-              <p class="quick-tool-desc">Técnica sensorial para conectar con el entorno presente y reducir pensamientos rumiantes.</p>
-            </div>
-            <button class="secondary btn-full" data-open-tool="grounding">Comenzar</button>
-          </div>
-
-          <!-- 3. Relajación Muscular -->
-          <div class="quick-tool-card">
-            <div>
-              <div class="quick-tool-header">
-                <div class="quick-tool-icon">💆</div>
-                <div class="quick-tool-info">
-                  <h4>Relajación muscular</h4>
-                  <span class="quick-tool-duration">⏱️ 5 min</span>
-                </div>
-              </div>
-              <p class="quick-tool-desc">Secuencia suave para tensar y soltar grupos musculares liberando la sobrecarga física.</p>
-            </div>
-            <button class="primary btn-full" data-open-tool="muscular">Comenzar</button>
-          </div>
-
-          <!-- 4. Descanso Visual -->
-          <div class="quick-tool-card">
-            <div>
-              <div class="quick-tool-header">
-                <div class="quick-tool-icon">👁️</div>
-                <div class="quick-tool-info">
-                  <h4>Descanso visual</h4>
-                  <span class="quick-tool-duration">⏱️ 2 min</span>
-                </div>
-              </div>
-              <p class="quick-tool-desc">Regla 20-20-20 para aliviar la fatiga de pantallas y relajar la musculatura ocular.</p>
-            </div>
-            <button class="secondary btn-full" data-open-tool="visual">Comenzar</button>
-          </div>
-
-          <!-- 5. Escritura Emocional -->
-          <div class="quick-tool-card">
-            <div>
-              <div class="quick-tool-header">
-                <div class="quick-tool-icon">✍️</div>
-                <div class="quick-tool-info">
-                  <h4>Escritura emocional</h4>
-                  <span class="quick-tool-duration">⏱️ 5 min</span>
-                </div>
-              </div>
-              <p class="quick-tool-desc">Desahogo reflexivo libre para plasmar lo que sientes sin juicios ni censuras.</p>
-            </div>
-            <button class="primary btn-full" data-open-tool="escritura">Comenzar</button>
-          </div>
-
-          <!-- 6. Ejercicio de Concentración -->
-          <div class="quick-tool-card">
-            <div>
-              <div class="quick-tool-header">
-                <div class="quick-tool-icon">🎯</div>
-                <div class="quick-tool-info">
-                  <h4>Concentración guiada</h4>
-                  <span class="quick-tool-duration">⏱️ 3 min</span>
-                </div>
-              </div>
-              <p class="quick-tool-desc">Intervalo de foco mental para recuperar la atención y disipar la dispersión.</p>
-            </div>
-            <button class="secondary btn-full" data-open-tool="concentracion">Comenzar</button>
-          </div>
-
-          <!-- 7. Pausa Consciente -->
-          <div class="quick-tool-card">
-            <div>
-              <div class="quick-tool-header">
-                <div class="quick-tool-icon">🧘</div>
-                <div class="quick-tool-info">
-                  <h4>Pausa consciente</h4>
-                  <span class="quick-tool-duration">⏱️ 3 min</span>
-                </div>
-              </div>
-              <p class="quick-tool-desc">Escaneo corporal paso a paso para reconectar con tu postura y respiración.</p>
-            </div>
-            <button class="primary btn-full" data-open-tool="pausa">Comenzar</button>
-          </div>
-
-          <!-- 8. Sonidos Ambientales -->
-          <div class="quick-tool-card">
-            <div>
-              <div class="quick-tool-header">
-                <div class="quick-tool-icon">🎧</div>
-                <div class="quick-tool-info">
-                  <h4>Sonidos ambientales</h4>
-                  <span class="quick-tool-duration">⏱️ 5-30 min</span>
-                </div>
-              </div>
-              <p class="quick-tool-desc">Frecuencias y paisajes sonoros sintetizados para generar una atmósfera de calma.</p>
-            </div>
-            <button class="secondary btn-full" data-open-tool="sonidos">Comenzar</button>
+          <!-- Barra de progreso del carrusel en vivo -->
+          <div class="carousel-progress-track">
+            <div class="carousel-progress-fill" id="quickToolsProgressFill"></div>
           </div>
         </div>
       </section>
@@ -415,37 +458,128 @@
             <h2 id="journalSectionTitle">Mi diario emocional</h2>
             <p>Espacio confidencial para registrar pensamientos, desahogo y motivos de gratitud:</p>
           </div>
-          <button id="btnViewJournalPatterns" class="btn ghost btn-sm">Ver mis patrones</button>
+          <button id="btnViewJournalPatterns" class="btn-journal-patterns-top">
+            <span>📊 Ver mis patrones</span>
+          </button>
         </div>
 
         <div class="journal-split-grid">
           <!-- Formulario de Entrada -->
           <div class="journal-form-card">
-            <form id="formWellnessJournal">
-              <label for="journalEntryType" class="field-label">Tipo de reflexión:</label>
-              <select id="journalEntryType" class="input" style="margin-bottom:0.75rem;">
-                <option value="Lo que siento">💭 Lo que siento</option>
-                <option value="Gratitud">🌟 Gratitud diaria</option>
-                <option value="Pensamientos">🧠 Pensamientos y desahogo</option>
-                <option value="Algo que me preocupa">🌧️ Algo que me preocupa</option>
-                <option value="Algo que logré">🏆 Algo que logré hoy</option>
-                <option value="Algo que quiero recordar">📌 Algo que quiero recordar</option>
-              </select>
+            <div class="journal-card-header">
+              <div class="journal-card-icon">✍️</div>
+              <div>
+                <h3 class="journal-card-title">Nueva Reflexión</h3>
+                <p class="journal-card-subtitle">Escribe libremente en tu espacio privado y protegido.</p>
+              </div>
+            </div>
 
-              <label for="journalEntryTitle" class="field-label">Título opcional:</label>
-              <input type="text" id="journalEntryTitle" class="input" placeholder="Ej. Un momento de calma hoy..." style="margin-bottom:0.75rem;">
+            <form id="formWellnessJournal" class="journal-form-body">
+              
+              <div class="journal-field-group">
+                <label for="journalEntryType" class="field-label">
+                  <span>📌 Tipo de reflexión</span>
+                </label>
+                <div class="select-wrapper">
+                  <select id="journalEntryType" class="input input-select">
+                    <option value="Lo que siento">💭 Lo que siento en este momento</option>
+                    <option value="Gratitud">🌟 Gratitud diaria (¿Qué agradeces hoy?)</option>
+                    <option value="Pensamientos">🧠 Pensamientos y desahogo mental</option>
+                    <option value="Algo que me preocupa">🌧️ Algo que me inquieta o preocupa</option>
+                    <option value="Algo que logré">🏆 Un logro o avance personal</option>
+                    <option value="Algo que quiero recordar">📌 Un aprendizaje que quiero recordar</option>
+                  </select>
+                </div>
+              </div>
 
-              <label for="journalEntryText" class="field-label">Escribe lo que sientes:</label>
-              <textarea id="journalEntryText" class="input" rows="4" placeholder="Escribe libremente... Este espacio solo tú puedes verlo." required style="margin-bottom:1rem;"></textarea>
+              <div class="journal-field-group">
+                <label class="field-label">
+                  <span>🌈 ¿Qué emoción acompaña tu reflexión?</span>
+                </label>
+                <div class="journal-emotion-tags" id="journalEmotionTags" role="radiogroup" aria-label="Emoción de la reflexión">
+                  <button type="button" class="journal-emotion-chip active" data-emotion="😌 En calma">
+                    <span class="chip-emoji">😌</span> <span>En calma</span>
+                  </button>
+                  <button type="button" class="journal-emotion-chip" data-emotion="😊 Alegre">
+                    <span class="chip-emoji">😊</span> <span>Alegre</span>
+                  </button>
+                  <button type="button" class="journal-emotion-chip" data-emotion="💡 Inspirado/a">
+                    <span class="chip-emoji">💡</span> <span>Inspirado/a</span>
+                  </button>
+                  <button type="button" class="journal-emotion-chip" data-emotion="🌧️ Vulnerable">
+                    <span class="chip-emoji">🌧️</span> <span>Vulnerable</span>
+                  </button>
+                  <button type="button" class="journal-emotion-chip" data-emotion="🧘 Centrado/a">
+                    <span class="chip-emoji">🧘</span> <span>Centrado/a</span>
+                  </button>
+                  <button type="button" class="journal-emotion-chip" data-emotion="💪 Motivado/a">
+                    <span class="chip-emoji">💪</span> <span>Motivado/a</span>
+                  </button>
+                </div>
+              </div>
 
-              <button type="submit" class="primary">Guardar Reflexión</button>
+              <div class="journal-field-group">
+                <label for="journalEntryTitle" class="field-label">
+                  <span>🏷️ Título de la nota <span class="field-label-opt">(opcional)</span></span>
+                </label>
+                <input type="text" id="journalEntryTitle" class="input input-text" placeholder="Ej. Un momento de claridad esta mañana...">
+              </div>
+
+              <div class="journal-field-group">
+                <label for="journalEntryText" class="field-label">
+                  <span>📝 Tu reflexión</span>
+                </label>
+                <div class="textarea-wrapper">
+                  <textarea id="journalEntryText" class="input input-textarea" rows="5" placeholder="Escribe con total libertad y calma... Este espacio está protegido y solo tú puedes acceder a él." required></textarea>
+                </div>
+                <div class="journal-meta-counter">
+                  <span id="journalWordCounter" class="journal-counter-badge">0 palabras | ~0 min de lectura</span>
+                  <span id="journalCharCounter" class="journal-counter-chars">0 caracteres</span>
+                </div>
+              </div>
+
+              <div class="journal-form-actions">
+                <button type="submit" class="btn-journal-submit">
+                  <span>✨ Guardar Reflexión</span>
+                </button>
+                <button type="button" id="btnResetJournalForm" class="btn-journal-reset">
+                  <span>Limpiar</span>
+                </button>
+              </div>
             </form>
           </div>
 
           <!-- Historial de Entradas -->
           <div class="journal-history-card">
-            <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:0.75rem;">Entradas Anteriores</h3>
-            <div id="wellnessJournalList"></div>
+            <div class="journal-history-header">
+              <div>
+                <h3 class="journal-history-title">Entradas Anteriores (<span id="journalEntriesCount">0</span>)</h3>
+                <p class="journal-history-subtitle">Tus reflexiones guardadas cronológicamente</p>
+              </div>
+              <button id="btnExportJournal" class="btn-export-journal" title="Descargar mis reflexiones en JSON">
+                <span>📥 Exportar</span>
+              </button>
+            </div>
+            
+            <div class="journal-filter-bar">
+              <div class="search-input-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="journalSearchInput" class="input input-search" placeholder="Buscar en mis notas...">
+              </div>
+              <div class="select-wrapper select-filter-wrapper">
+                <select id="journalCategoryFilter" class="input input-filter-select">
+                  <option value="todos">Todos los tipos</option>
+                  <option value="Lo que siento">💭 Lo que siento</option>
+                  <option value="Gratitud">🌟 Gratitud</option>
+                  <option value="Pensamientos">🧠 Pensamientos</option>
+                  <option value="Algo que me preocupa">🌧️ Preocupaciones</option>
+                  <option value="Algo que logré">🏆 Logros</option>
+                  <option value="Algo que quiero recordar">📌 Recuerdos</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="wellnessJournalList" class="wellness-journal-scroll-list"></div>
           </div>
         </div>
       </section>
@@ -499,6 +633,15 @@
             </div>
 
             <h4 style="font-size:0.95rem; font-weight:700; margin-top:1.2rem;">Seguimiento de Hábitos Diarios</h4>
+            <div class="habit-progress-wrap">
+              <div class="habit-progress-info">
+                <span style="font-size:0.85rem; font-weight:600; color:var(--ink-secondary);">Progreso del día</span>
+                <span id="habitProgressPercent" class="habit-progress-badge">60%</span>
+              </div>
+              <div class="habit-progress-track">
+                <div id="habitProgressFill" class="habit-progress-fill" style="width:60%;"></div>
+              </div>
+            </div>
             <div class="habits-checklist">
               <label class="habit-checkbox-item">
                 <input type="checkbox" id="habit_hidrata" class="habit-check-input">
@@ -689,38 +832,86 @@
            15. NECESITO AYUDA & LÍNEAS OFICIALES EN NICARAGUA
            ===================================================================== -->
       <section class="wellness-section help-support-card" id="helpSupportSec" aria-labelledby="helpSupportTitle">
-        <h2 id="helpSupportTitle" style="font-size:1.4rem; font-weight:800; color:#ef4444; margin-bottom:0.4rem;">¿Necesitas hablar con alguien?</h2>
-        <p style="font-size:0.95rem; color:var(--ink-primary); line-height:1.5;">No tienes que afrontar una situación difícil completamente solo/a. El apoyo profesional y la escucha empática marcan la diferencia.</p>
+        <div class="help-support-header">
+          <div class="help-support-icon">🤝</div>
+          <div>
+            <h2 id="helpSupportTitle" class="help-support-title">¿Necesitas hablar con alguien hoy?</h2>
+            <p class="help-support-subtitle">No tienes que afrontar los momentos difíciles a solas. La orientación oportuna y la escucha empática salvan vidas.</p>
+          </div>
+        </div>
         
         <div class="help-grid-contacts">
           <div class="help-contact-box">
-            <strong>🚨 Línea Nacional de Emergencias</strong>
-            <code>118 / 102</code>
-            <p class="small text-muted">Atención de crisis, soporte y primeros auxilios — 24/7</p>
+            <div class="contact-box-header">
+              <span class="contact-icon">🚨</span>
+              <strong>Línea Nacional de Emergencias</strong>
+            </div>
+            <code class="contact-number">118 / 102</code>
+            <p class="small text-muted">Atención de crisis, soporte y primeros auxilios psicológicos — 24/7 en Nicaragua</p>
           </div>
           <div class="help-contact-box">
-            <strong>🏥 Cruz Roja Nicaragüense</strong>
-            <code>+505 2265-2081</code>
-            <p class="small text-muted">Atención psicosocial y orientación médica</p>
+            <div class="contact-box-header">
+              <span class="contact-icon">🏥</span>
+              <strong>Cruz Roja Nicaragüense</strong>
+            </div>
+            <code class="contact-number">+505 2265-2081</code>
+            <p class="small text-muted">Atención psicosocial y orientación médica especializada</p>
           </div>
           <div class="help-contact-box">
-            <strong>🌿 Orientación y Acompañamiento CreSer</strong>
-            <code>contacto@creser.org</code>
-            <p class="small text-muted">Terapia, talleres y canalización institucional</p>
+            <div class="contact-box-header">
+              <span class="contact-icon">🌿</span>
+              <strong>Acompañamiento CreSer</strong>
+            </div>
+            <code class="contact-number">contacto@creser.org</code>
+            <p class="small text-muted">Orientación profesional, talleres y canalización institucional</p>
           </div>
         </div>
 
-        <div style="background:rgba(255,255,255,0.6); padding:0.9rem; border-radius:var(--radius-md); border:1px solid rgba(239,68,68,0.2); font-size:0.85rem; color:var(--ink-secondary);">
-          ⚠️ <strong>Aviso Importante:</strong> Este espacio digital ofrece orientación preventiva y herramientas de autocuidado. <strong>No sustituye la atención presencial de profesionales de salud mental ni los servicios de urgencia hospitalaria.</strong>
+        <div class="wellness-disclaimer-box">
+          <span class="disclaimer-icon">⚠️</span>
+          <div>
+            <strong>Aviso Médico & Legal Importante:</strong> 
+            Este espacio digital ofrece orientación preventiva y recursos de autorregulación. 
+            <em>No sustituye el diagnóstico ni la atención médica o psiquiátrica de urgencia hospitalaria.</em>
+          </div>
         </div>
       </section>
 
       <!-- =====================================================================
-           PRIVACIDAD Y CONTROL DE DATOS
+           PRIVACIDAD Y CONTROL DE DATOS (TARJETA DE CONFIANZA ULTRA-PREMIUM)
            ===================================================================== -->
-      <section class="wellness-section text-center" style="padding:1.5rem 0;">
-        <p class="small text-muted" style="margin-bottom:0.6rem;">🔒 <strong>Tu privacidad importa:</strong> Tus reflexiones y registros emocionales son estrictamente privados y no se comparten con terceros.</p>
-        <button id="btnWellnessPrivacyInfo" class="btn ghost btn-sm">Conoce más sobre la privacidad de tus datos</button>
+      <section class="wellness-section" aria-labelledby="privacyTrustTitle">
+        <div class="wellness-privacy-card">
+          <div class="wellness-privacy-content">
+            <div class="wellness-privacy-icon-box" aria-hidden="true">
+              <span>🛡️</span>
+            </div>
+            <div class="wellness-privacy-text">
+              <div class="wellness-privacy-badge">
+                <span class="pulse-dot"></span>
+                <span>Máxima Confidencialidad & Seguridad</span>
+              </div>
+              <h3 id="privacyTrustTitle" class="wellness-privacy-heading">
+                Tu privacidad y bienestar emocional son sagrados
+              </h3>
+              <p class="wellness-privacy-desc">
+                Tus reflexiones, entradas del diario y registros de estado de ánimo son 100% confidenciales. 
+                Están protegidos con almacenamiento seguro y jamás serán compartidos ni comercializados con terceros.
+              </p>
+              <div class="wellness-privacy-pills">
+                <span class="privacy-pill">🔒 Cifrado Seguro de Datos</span>
+                <span class="privacy-pill">🚫 Cero Venta de Información</span>
+                <span class="privacy-pill">👤 Control y Borrado en Cualquier Momento</span>
+              </div>
+            </div>
+          </div>
+          <div class="wellness-privacy-action">
+            <a href="privacidad.html" id="btnWellnessPrivacyInfo" class="btn-privacy-trust">
+              <span>🛡️ Conoce nuestra Política de Privacidad</span>
+              <span class="privacy-btn-arrow">→</span>
+            </a>
+          </div>
+        </div>
       </section>
 
     </main>
@@ -747,14 +938,22 @@
   <!-- Modal 1: Respiración 4-4-4 -->
   <div class="wellness-tool-modal" id="modalTool_respiracion" role="dialog" aria-modal="true" aria-labelledby="modalRespTitle">
     <div class="wellness-tool-dialog">
-      <button class="wellness-tool-close-btn" aria-label="Cerrar modal">✕</button>
-      <h3 id="modalRespTitle" style="font-size:1.3rem; font-weight:700;">🌬️ Pausa de Respiración 4-4-4</h3>
-      <p class="small text-muted">Sigue el círculo: inhala en 4s, sostén en 4s y exhala en 4s.</p>
+      <button class="wellness-tool-close-btn" aria-label="Cerrar modal" onclick="closeAllToolModals()">✕</button>
+      <h3 id="modalRespTitle">🌬️ Pausa de Respiración 4-4-4</h3>
+      <p class="modal-subtitle">Sigue el ritmo del círculo armónico: inhala en 4s, sostén en 4s y exhala en 4s.</p>
       <div class="modal-breath-circle" id="modalBreathCircle">4-4-4</div>
-      <p id="modalBreathPrompt" style="text-align:center; font-weight:600; min-height:24px; color:var(--primary); margin:0.75rem 0;">Iniciando ciclo...</p>
-      <div id="modalBreathCounter" style="text-align:center; font-size:0.85rem; color:var(--ink-muted);">36s restantes</div>
-      <div style="text-align:center; margin-top:1.5rem;">
-        <button class="primary" onclick="closeAllToolModals()">Finalizar Pausa</button>
+      <p id="modalBreathPrompt" style="text-align:center; font-weight:700; min-height:26px; color:#2563eb; margin:0.85rem 0; font-size:1.05rem;">Iniciando ciclo...</p>
+      <div id="modalBreathCounter" style="text-align:center; font-size:0.9rem; font-weight:600; color:var(--ink-muted);">36s restantes</div>
+      <div class="modal-sound-control">
+        <label class="modal-sound-toggle">
+          <input type="checkbox" id="toggleBreathingSound" checked>
+          <span>🔔 Tono armónico relajante (432 Hz Web Audio)</span>
+        </label>
+      </div>
+      <div class="modal-actions-center">
+        <button class="primary btn-modal-action" onclick="closeAllToolModals()">
+          <span>Completar Pausa</span>
+        </button>
       </div>
     </div>
   </div>
@@ -762,18 +961,20 @@
   <!-- Modal 2: Grounding 5-4-3-2-1 -->
   <div class="wellness-tool-modal" id="modalTool_grounding" role="dialog" aria-modal="true" aria-labelledby="modalGroundTitle">
     <div class="wellness-tool-dialog">
-      <button class="wellness-tool-close-btn" aria-label="Cerrar modal">✕</button>
-      <h3 id="modalGroundTitle" style="font-size:1.3rem; font-weight:700;">🌿 Técnica de Grounding 5-4-3-2-1</h3>
-      <p class="small text-muted">Conecta tus sentidos con el espacio presente:</p>
-      <ul style="list-style:none; padding:0; margin:1.25rem 0; display:flex; flex-direction:column; gap:0.75rem;">
-        <li style="background:var(--surface-2); padding:0.75rem 1rem; border-radius:var(--radius-sm);">👀 <strong>5 cosas que puedes ver</strong> a tu alrededor</li>
-        <li style="background:var(--surface-2); padding:0.75rem 1rem; border-radius:var(--radius-sm);">✋ <strong>4 cosas que puedes tocar</strong> (tu ropa, la mesa, tus manos)</li>
-        <li style="background:var(--surface-2); padding:0.75rem 1rem; border-radius:var(--radius-sm);">👂 <strong>3 cosas que puedes escuchar</strong> en este instante</li>
-        <li style="background:var(--surface-2); padding:0.75rem 1rem; border-radius:var(--radius-sm);">👃 <strong>2 cosas que puedes oler</strong> olores del entorno</li>
-        <li style="background:var(--surface-2); padding:0.75rem 1rem; border-radius:var(--radius-sm);">👅 <strong>1 cosa que puedes saborear</strong> o un sorbo de agua</li>
+      <button class="wellness-tool-close-btn" aria-label="Cerrar modal" onclick="closeAllToolModals()">✕</button>
+      <h3 id="modalGroundTitle">🌿 Técnica de Grounding 5-4-3-2-1</h3>
+      <p class="modal-subtitle">Ancla tu mente al momento presente conectando con tus 5 sentidos:</p>
+      <ul class="grounding-step-list">
+        <li class="grounding-step-item">👀 <strong>5 cosas que puedes ver</strong> a tu alrededor ahora mismo</li>
+        <li class="grounding-step-item">✋ <strong>4 cosas que puedes tocar</strong> (tu ropa, la superficie, tus manos)</li>
+        <li class="grounding-step-item">👂 <strong>3 cosas que puedes escuchar</strong> en tu entorno</li>
+        <li class="grounding-step-item">👃 <strong>2 cosas que puedes oler</strong> o percibir</li>
+        <li class="grounding-step-item">👅 <strong>1 cosa que puedes saborear</strong> o un sorbo de agua fresca</li>
       </ul>
-      <div style="text-align:center;">
-        <button class="primary" onclick="closeAllToolModals()">Completado</button>
+      <div class="modal-actions-center">
+        <button class="primary btn-modal-action" onclick="closeAllToolModals()">
+          <span>✨ Me siento más presente</span>
+        </button>
       </div>
     </div>
   </div>
@@ -781,17 +982,19 @@
   <!-- Modal 3: Relajación Muscular -->
   <div class="wellness-tool-modal" id="modalTool_muscular" role="dialog" aria-modal="true" aria-labelledby="modalMuscTitle">
     <div class="wellness-tool-dialog">
-      <button class="wellness-tool-close-btn" aria-label="Cerrar modal">✕</button>
-      <h3 id="modalMuscTitle" style="font-size:1.3rem; font-weight:700;">💆 Relajación Muscular Progresiva</h3>
-      <p class="small text-muted">Tensa suavemente durante 5 segundos y luego suelta con una exhalación profunda:</p>
-      <ol style="padding-left:1.25rem; margin:1rem 0; display:flex; flex-direction:column; gap:0.65rem; font-size:0.92rem; color:var(--ink-secondary);">
-        <li><strong>Hombros:</strong> Súbelos hacia las orejas, mantén la tensión 5s y déjalos caer.</li>
-        <li><strong>Manos:</strong> Aprieta los puños suavemente, siente la fuerza y suelta los dedos.</li>
-        <li><strong>Rostro y Mandíbula:</strong> Aprieta los labios suavemente y relaja la lengua.</li>
+      <button class="wellness-tool-close-btn" aria-label="Cerrar modal" onclick="closeAllToolModals()">✕</button>
+      <h3 id="modalMuscTitle">💆 Relajación Muscular Progresiva</h3>
+      <p class="modal-subtitle">Tensa suavemente durante 5 segundos y luego suelta con una exhalación profunda:</p>
+      <ol style="padding-left:1.25rem; margin:1.25rem 0; display:flex; flex-direction:column; gap:0.75rem; font-size:0.95rem; color:var(--ink-primary); line-height:1.6;">
+        <li><strong>Hombros:</strong> Súbelos hacia las orejas, mantén la tensión 5s y déjalos caer suavemente.</li>
+        <li><strong>Manos:</strong> Aprieta los puños suavemente, siente la tensión y abre los dedos despacio.</li>
+        <li><strong>Rostro y Mandíbula:</strong> Aprieta los labios suavemente y luego relaja toda la expresión facial.</li>
         <li><strong>Pies y Piernas:</strong> Apoya los pies firmes en el suelo y afloja la postura.</li>
       </ol>
-      <div style="text-align:center; margin-top:1rem;">
-        <button class="primary" onclick="closeAllToolModals()">Finalizar Sesión</button>
+      <div class="modal-actions-center">
+        <button class="primary btn-modal-action" onclick="closeAllToolModals()">
+          <span>✨ Finalizar Sesión</span>
+        </button>
       </div>
     </div>
   </div>
@@ -799,12 +1002,14 @@
   <!-- Modal 4: Descanso Visual -->
   <div class="wellness-tool-modal" id="modalTool_visual" role="dialog" aria-modal="true" aria-labelledby="modalVisTitle">
     <div class="wellness-tool-dialog">
-      <button class="wellness-tool-close-btn" aria-label="Cerrar modal">✕</button>
-      <h3 id="modalVisTitle" style="font-size:1.3rem; font-weight:700;">👁️ Descanso Visual 20-20-20</h3>
-      <p class="small text-muted">Mira hacia un punto lejano (al menos a 6 metros) durante 20 segundos para relajar tu enfoque.</p>
-      <div id="visualRestTimer" style="font-size:2.5rem; font-weight:800; color:var(--primary); text-align:center; margin:1.5rem 0;">00:20</div>
-      <div style="text-align:center;">
-        <button class="primary" onclick="closeAllToolModals()">Listo</button>
+      <button class="wellness-tool-close-btn" aria-label="Cerrar modal" onclick="closeAllToolModals()">✕</button>
+      <h3 id="modalVisTitle">👁️ Descanso Visual 20-20-20</h3>
+      <p class="modal-subtitle">Mira hacia un punto lejano (al menos a 6 metros) durante 20 segundos para relajar el enfoque ocular:</p>
+      <div id="visualRestTimer" class="timer-large-display">00:20</div>
+      <div class="modal-actions-center">
+        <button class="primary btn-modal-action" onclick="closeAllToolModals()">
+          <span>✨ Vista Relajada</span>
+        </button>
       </div>
     </div>
   </div>
@@ -812,12 +1017,16 @@
   <!-- Modal 5: Escritura Emocional -->
   <div class="wellness-tool-modal" id="modalTool_escritura" role="dialog" aria-modal="true" aria-labelledby="modalEscrTitle">
     <div class="wellness-tool-dialog">
-      <button class="wellness-tool-close-btn" aria-label="Cerrar modal">✕</button>
-      <h3 id="modalEscrTitle" style="font-size:1.3rem; font-weight:700;">✍️ Escritura Emocional Libre</h3>
-      <p class="small text-muted">Escribe lo que sientes en este instante sin preocuparte por la ortografía ni la estructura:</p>
-      <textarea class="input" rows="5" placeholder="Hoy me siento..." style="margin:1rem 0;"></textarea>
-      <div style="text-align:center;">
-        <button class="primary" onclick="alert('Reflexión registrada en tu diario privado.'); closeAllToolModals();">Guardar en mi Diario</button>
+      <button class="wellness-tool-close-btn" aria-label="Cerrar modal" onclick="closeAllToolModals()">✕</button>
+      <h3 id="modalEscrTitle">✍️ Escritura Emocional Libre</h3>
+      <p class="modal-subtitle">Escribe lo que sientes en este instante sin preocuparte por la estructura ni la ortografía. Este espacio es 100% privado:</p>
+      <div style="width:100%;">
+        <textarea id="modalWritingInput" class="modal-textarea" rows="5" placeholder="¿Qué está pasando por tu mente y corazón en este instante?... Escribe sin filtros."></textarea>
+      </div>
+      <div class="modal-actions-center">
+        <button class="primary btn-modal-action" id="btnSaveModalWriting">
+          <span>✨ Guardar en mi Diario</span>
+        </button>
       </div>
     </div>
   </div>
@@ -825,12 +1034,17 @@
   <!-- Modal 6: Concentración -->
   <div class="wellness-tool-modal" id="modalTool_concentracion" role="dialog" aria-modal="true" aria-labelledby="modalConcTitle">
     <div class="wellness-tool-dialog">
-      <button class="wellness-tool-close-btn" aria-label="Cerrar modal">✕</button>
-      <h3 id="modalConcTitle" style="font-size:1.3rem; font-weight:700;">🎯 Intervalo de Foco Mental</h3>
-      <p class="small text-muted">Dedica los próximos 3 minutos a una sola tarea sin distracciones:</p>
-      <div id="focusCountdown" style="font-size:2.5rem; font-weight:800; color:var(--primary); text-align:center; margin:1.5rem 0;">03:00</div>
-      <div style="text-align:center;">
-        <button class="primary" onclick="closeAllToolModals()">Finalizar</button>
+      <button class="wellness-tool-close-btn" aria-label="Cerrar modal" onclick="closeAllToolModals()">✕</button>
+      <h3 id="modalConcTitle">🎯 Intervalo de Foco Mental</h3>
+      <p class="modal-subtitle">Dedica los próximos 3 minutos a una sola tarea importante, en silencio y sin distracciones:</p>
+      <div id="focusCountdown" class="timer-large-display">03:00</div>
+      <div style="display:flex; justify-content:center; gap:0.85rem; align-items:center;">
+        <button class="primary btn-modal-action" id="btnToggleFocusTimer">
+          <span>▶️ Iniciar</span>
+        </button>
+        <button class="btn-journal-reset" id="btnResetFocusTimer">
+          <span>Reiniciar</span>
+        </button>
       </div>
     </div>
   </div>
@@ -838,17 +1052,19 @@
   <!-- Modal 7: Pausa Consciente -->
   <div class="wellness-tool-modal" id="modalTool_pausa" role="dialog" aria-modal="true" aria-labelledby="modalPausaTitle">
     <div class="wellness-tool-dialog">
-      <button class="wellness-tool-close-btn" aria-label="Cerrar modal">✕</button>
-      <h3 id="modalPausaTitle" style="font-size:1.3rem; font-weight:700;">🧘 Pausa Consciente & Escaneo Corporal</h3>
-      <p class="small text-muted">Cierra los ojos suavemente y observa tu postura:</p>
-      <p style="font-size:0.95rem; color:var(--ink-primary); line-height:1.6; margin:1rem 0;">
-        1. Siente el peso de tu cuerpo sobre la silla o el suelo.<br>
-        2. Nota la temperatura del aire entrando por tu nariz.<br>
-        3. Suelta cualquier tensión en tus párpados y cuello.<br>
-        4. Agradece a tu cuerpo por todo el esfuerzo del día.
-      </p>
-      <div style="text-align:center;">
-        <button class="primary" onclick="closeAllToolModals()">Concluir Pausa</button>
+      <button class="wellness-tool-close-btn" aria-label="Cerrar modal" onclick="closeAllToolModals()">✕</button>
+      <h3 id="modalPausaTitle">🧘 Pausa Consciente & Escaneo Corporal</h3>
+      <p class="modal-subtitle">Cierra los ojos suavemente y observa tu postura en este instante:</p>
+      <div style="background:var(--surface-2); border:1px solid var(--line); border-radius:16px; padding:1.25rem; margin:1.25rem 0; line-height:1.7; font-size:0.95rem; color:var(--ink-primary);">
+        <p style="margin:0 0 0.5rem 0;">1. 🪑 Siente el peso de tu cuerpo sobre la silla o el suelo.</p>
+        <p style="margin:0 0 0.5rem 0;">2. 🌬️ Nota la temperatura del aire entrando y saliendo por tu nariz.</p>
+        <p style="margin:0 0 0.5rem 0;">3. 💆 Suelta conscientemente cualquier tensión en tus párpados, mandíbula y cuello.</p>
+        <p style="margin:0;">4. 💖 Agradece a tu mente y a tu cuerpo por todo lo vivido hoy.</p>
+      </div>
+      <div class="modal-actions-center">
+        <button class="primary btn-modal-action" onclick="closeAllToolModals()">
+          <span>✨ Concluir Pausa</span>
+        </button>
       </div>
     </div>
   </div>
@@ -856,17 +1072,134 @@
   <!-- Modal 8: Sonidos Ambientales -->
   <div class="wellness-tool-modal" id="modalTool_sonidos" role="dialog" aria-modal="true" aria-labelledby="modalSonTitle">
     <div class="wellness-tool-dialog">
-      <button class="wellness-tool-close-btn" aria-label="Cerrar modal">✕</button>
-      <h3 id="modalSonTitle" style="font-size:1.3rem; font-weight:700;">🎧 Sonidos Ambientales Relajantes</h3>
-      <p class="small text-muted">Elige una frecuencia de relajación:</p>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin:1.25rem 0;">
-        <a href="multimedia.html" class="btn secondary">🌧️ Lluvia Suave</a>
-        <a href="multimedia.html" class="btn secondary">🌲 Bosque & Pájaros</a>
-        <a href="multimedia.html" class="btn secondary">🌊 Olas del Mar</a>
-        <a href="multimedia.html" class="btn secondary">🌬️ Ruido Blanco</a>
+      <button class="wellness-tool-close-btn" aria-label="Cerrar modal" onclick="closeAllToolModals()">✕</button>
+      <h3 id="modalSonTitle">🎧 Sonidos Ambientales Relajantes</h3>
+      <p class="modal-subtitle">Elige una frecuencia sonora para acompañar tu relajación o descanso mental:</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.85rem; margin:1.5rem 0;">
+        <a href="multimedia.html" class="btn secondary" style="padding:0.9rem; text-align:center; border-radius:14px; font-weight:700;">🌧️ Lluvia Suave</a>
+        <a href="multimedia.html" class="btn secondary" style="padding:0.9rem; text-align:center; border-radius:14px; font-weight:700;">🌲 Bosque & Pájaros</a>
+        <a href="multimedia.html" class="btn secondary" style="padding:0.9rem; text-align:center; border-radius:14px; font-weight:700;">🌊 Olas del Mar</a>
+        <a href="multimedia.html" class="btn secondary" style="padding:0.9rem; text-align:center; border-radius:14px; font-weight:700;">🌬️ Ruido Blanco</a>
       </div>
-      <div style="text-align:center;">
-        <button class="primary" onclick="closeAllToolModals()">Cerrar</button>
+      <div class="modal-actions-center">
+        <button class="btn-journal-reset" onclick="closeAllToolModals()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 9: Patrones del Diario Emocional -->
+  <div class="wellness-tool-modal" id="modalJournalPatterns" role="dialog" aria-modal="true" aria-labelledby="modalPatternsTitle">
+    <div class="wellness-tool-dialog">
+      <button class="wellness-tool-close-btn" aria-label="Cerrar modal" onclick="closeAllToolModals()">✕</button>
+      <h3 id="modalPatternsTitle">📊 Tus Patrones de Autocuidado</h3>
+      <p class="modal-subtitle">Resumen analítico y reflexivo de tu constancia emocional en CreSer:</p>
+      <div id="journalPatternsContent" style="margin:1.25rem 0;"></div>
+      <div class="modal-actions-center">
+        <button class="primary btn-modal-action" onclick="closeAllToolModals()">
+          <span>Entendido</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 10: Centro de Exportación y Reporte Institucional CreSer -->
+  <div class="wellness-tool-modal" id="modalExportReport" role="dialog" aria-modal="true" aria-labelledby="modalExportTitle">
+    <div class="wellness-tool-dialog export-dialog">
+      <button class="wellness-tool-close-btn" aria-label="Cerrar modal" onclick="closeAllToolModals()">✕</button>
+      
+      <div class="export-modal-header">
+        <div class="export-header-icon">📄</div>
+        <div>
+          <h3 id="modalExportTitle" class="export-header-title">Centro de Descarga & Reporte Institucional</h3>
+          <p class="modal-subtitle">Genera un documento oficial de autocuidado con formato editorial CreSer de alta resolución.</p>
+        </div>
+      </div>
+
+      <div class="export-options-grid">
+        <!-- Columna 1: Selección de Contenidos -->
+        <div class="export-section-group">
+          <label class="export-group-title">📌 Selecciona lo que deseas incluir:</label>
+          <div class="export-checkbox-list">
+            <label class="export-checkbox-card">
+              <input type="checkbox" id="exportIncludeJournal" checked>
+              <div class="checkbox-card-info">
+                <strong>📖 Diario Emocional & Reflexiones</strong>
+                <span class="small text-muted">Pensamientos, notas personales y emociones acompañantes.</span>
+              </div>
+            </label>
+
+            <label class="export-checkbox-card">
+              <input type="checkbox" id="exportIncludeStats" checked>
+              <div class="checkbox-card-info">
+                <strong>📊 Métricas Semanales de Autocuidado</strong>
+                <span class="small text-muted">Racha de días, total de pausas realizadas y evolución.</span>
+              </div>
+            </label>
+
+            <label class="export-checkbox-card">
+              <input type="checkbox" id="exportIncludeSleep" checked>
+              <div class="checkbox-card-info">
+                <strong>🌙 Registro de Sueño y Batería de Energía</strong>
+                <span class="small text-muted">Horas de descanso promedio y nivel energético registrado.</span>
+              </div>
+            </label>
+
+            <label class="export-checkbox-card">
+              <input type="checkbox" id="exportIncludeHabits" checked>
+              <div class="checkbox-card-info">
+                <strong>🎯 Hábitos Diarios y Retos Personales</strong>
+                <span class="small text-muted">Progreso de hidratación, pausas activas y retos completados.</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Columna 2: Filtro de Rango y Formato -->
+        <div class="export-section-group">
+          <label class="export-group-title">📅 Rango temporal a exportar:</label>
+          <div class="select-wrapper" style="margin-bottom:1.25rem;">
+            <select id="exportDateRange" class="input input-select">
+              <option value="all">Todo mi historial registrado</option>
+              <option value="7days">Últimos 7 días</option>
+              <option value="30days">Últimos 30 días</option>
+            </select>
+          </div>
+
+          <label class="export-group-title">💎 Formato del Documento:</label>
+          <div class="export-format-selector">
+            <label class="export-format-card active" id="cardFormatPdf">
+              <input type="radio" name="exportFormat" value="pdf" checked>
+              <div class="format-card-content">
+                <span class="format-icon">📄</span>
+                <div>
+                  <strong>Reporte Oficial CreSer (PDF / Imprimible)</strong>
+                  <span class="small text-muted">Diseño editorial prémium, membrete institucional y sellos éticos.</span>
+                </div>
+              </div>
+            </label>
+
+            <label class="export-format-card" id="cardFormatJson">
+              <input type="radio" name="exportFormat" value="json">
+              <div class="format-card-content">
+                <span class="format-icon">💾</span>
+                <div>
+                  <strong>Archivo de Datos Estructurado (JSON)</strong>
+                  <span class="small text-muted">Copia de seguridad técnica completa para tus archivos.</span>
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botones de Acción -->
+      <div class="export-actions-bar">
+        <button type="button" id="btnPreviewReport" class="btn-export-preview">
+          <span>👁️ Vista Previa del Reporte</span>
+        </button>
+        <button type="button" id="btnConfirmGenerateReport" class="btn-export-download">
+          <span>✨ Generar y Descargar Reporte</span>
+        </button>
       </div>
     </div>
   </div>
@@ -881,11 +1214,14 @@
     </div>
   </div>
 
+  <!-- Toast Notification Flotante -->
+  <div id="creserToast" class="creser-toast" role="alert" aria-live="assertive"></div>
+
   <!-- Inclusión de la configuración y SDK de Google Firebase -->
-  <script type="module" src="../assets/js/firebase-config.js?v=4.0"></script>
+  <script type="module" src="../assets/js/firebase-config.js?v=5.4"></script>
   <!-- Inclusión del script global de la aplicación -->
-  <script src="../assets/js/app.js?v=4.0"></script>
+  <script src="../assets/js/app.js?v=5.4"></script>
   <!-- Controlador modular específico de Bienestar -->
-  <script src="../assets/js/bienestar.js?v=4.2"></script>
+  <script src="../assets/js/bienestar.js?v=5.4"></script>
 </body>
 </html>

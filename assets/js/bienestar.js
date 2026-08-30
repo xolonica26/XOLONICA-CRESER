@@ -22,8 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initAdaptiveWellness();
   initNeedsSelector();
   initQuickToolModals();
+  initQuickToolsCarousel();
   initWeeklyStats();
   initWellnessJournal();
+  initExportReportCenter();
   initSleepAndEnergy();
   initWellnessHabits();
   initWellnessLibrary();
@@ -256,6 +258,250 @@ function initNeedsSelector() {
    3. Modales Funcionales de Herramientas Rápidas (8 Herramientas)
    ========================================================================== */
 let activeToolTimer = null;
+let focusTimeRemaining = 180;
+let isFocusTimerRunning = false;
+let audioCtxInstance = null;
+
+/**
+ * Función auxiliar para emitir un tono armónico puro relajante mediante Web Audio API
+ * 
+ * ¿POR QUÉ?: Acompañar los ejercicios de respiración y descanso con señales auditivas suaves.
+ * ¿CÓMO?: Creando un oscilador senoidal a 432 Hz / 528 Hz y aplicando caída exponencial en la ganancia.
+ * ¿PARA QUÉ?: Ofrecer una experiencia inmersiva de relajación sin requerir archivos de audio pesados.
+ */
+function playHarmonicChime(freq = 432, duration = 1.8) {
+  try {
+    const soundToggle = document.getElementById('toggleBreathingSound');
+    if (soundToggle && !soundToggle.checked) return;
+
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+
+    if (!audioCtxInstance) {
+      audioCtxInstance = new AudioContextClass();
+    }
+    if (audioCtxInstance.state === 'suspended') {
+      audioCtxInstance.resume();
+    }
+
+    const now = audioCtxInstance.currentTime;
+    const osc = audioCtxInstance.createOscillator();
+    const gain = audioCtxInstance.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(freq, now);
+
+    // Ataque suave y decaimiento exponencial natural tipo campana tibetana
+    gain.gain.setValueAtTime(0.001, now);
+    gain.gain.exponentialRampToValueAtTime(0.25, now + 0.08);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+    osc.connect(gain);
+    gain.connect(audioCtxInstance.destination);
+
+    osc.start(now);
+    osc.stop(now + duration + 0.1);
+  } catch (err) {
+    console.warn("Web Audio API no disponible o bloqueada:", err);
+  }
+}
+
+/**
+ * Función para mostrar notificaciones Toast flotantes
+ * 
+ * ¿POR QUÉ?: Reemplazar alertas nativas intrusivas por mensajes visuales fluidos.
+ * ¿CÓMO?: Inyectando el texto y manipulando la clase 'show' con temporizador de remoción.
+ * ¿PARA QUÉ?: Confirmar acciones como guardar, copiar o exportar datos de forma elegante.
+ */
+function showCreSerToast(message, icon = '🌿') {
+  const toast = document.getElementById('creserToast');
+  if (!toast) return;
+
+  toast.innerHTML = `<span style="font-size:1.1rem;">${icon}</span> <span>${escapeHtml(message)}</span>`;
+  toast.classList.add('show');
+
+  if (toast._timer) clearTimeout(toast._timer);
+  toast._timer = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3500);
+}
+
+/* ==========================================================================
+   4. Galería en Movimiento Continuo de Herramientas Rápidas (Carrusel Premium)
+   ========================================================================== */
+
+/* ¿POR QUÉ?: Crear un bucle verdaderamente infinito sin cortes, saltos bruscos ni bloqueos.
+   ¿CÓMO?: Duplicando el conjunto de tarjetas en el track, midiendo el ancho base (singleSetWidth) y reiniciando scrollLeft de forma invisible cuando se alcanza el punto medio.
+   ¿PARA QUÉ?: Garantizar un flujo continuo ininterrumpido (Infinite Marquee) que nunca se detenga ni se quede pegado. */
+function initQuickToolsCarousel() {
+  const container = document.getElementById('quickToolsCarouselContainer');
+  const viewport = document.getElementById('quickToolsCarouselViewport');
+  const track = document.getElementById('quickToolsCarouselTrack');
+  const btnPrev = document.getElementById('btnQuickToolsPrev');
+  const btnNext = document.getElementById('btnQuickToolsNext');
+  const btnPlayPause = document.getElementById('btnQuickToolsPlayPause');
+  const iconPlayPause = document.getElementById('playPauseIcon');
+  const progressFill = document.getElementById('quickToolsProgressFill');
+
+  if (!viewport || !track) return;
+
+  // Duplicar tarjetas para bucle infinito continuo
+  const initialCards = Array.from(track.children);
+  if (initialCards.length > 0 && track.children.length === 8) {
+    initialCards.forEach(card => {
+      const clone = card.cloneNode(true);
+      track.appendChild(clone);
+    });
+  }
+
+  // Re-vincular eventos de apertura de modales a todas las tarjetas (originales y clones)
+  const allToolBtns = track.querySelectorAll('[data-open-tool]');
+  allToolBtns.forEach(btn => {
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      const toolId = btn.dataset.openTool;
+      openToolModal(toolId);
+    };
+  });
+
+  let isAutoScrolling = true;
+  let isUserInteracting = false;
+  let resumeTimer = null;
+  let scrollSpeed = 0.75; // Velocidad suave en píxeles por frame
+  let animationFrameId = null;
+
+  // Calcular el punto medio del track duplicado
+  function getSingleSetWidth() {
+    return track.scrollWidth / 2;
+  }
+
+  // Actualizar barra de progreso del carrusel
+  function updateProgressBar() {
+    if (!progressFill) return;
+    const singleWidth = getSingleSetWidth();
+    if (singleWidth <= 0) return;
+    const currentOffset = viewport.scrollLeft % singleWidth;
+    const percent = (currentOffset / singleWidth) * 100;
+    progressFill.style.width = `${Math.min(100, Math.max(12, percent))}%`;
+  }
+
+  // Bucle de movimiento continuo verdaderamente infinito
+  function autoScrollLoop() {
+    if (isAutoScrolling && !isUserInteracting) {
+      viewport.scrollLeft += scrollSpeed;
+      const singleWidth = getSingleSetWidth();
+      // Si superamos el primer set completo, saltamos al inicio de manera imperceptible
+      if (viewport.scrollLeft >= singleWidth) {
+        viewport.scrollLeft -= singleWidth;
+      }
+      updateProgressBar();
+    }
+    animationFrameId = requestAnimationFrame(autoScrollLoop);
+  }
+
+  animationFrameId = requestAnimationFrame(autoScrollLoop);
+
+  // Pausa temporal al pasar el cursor o interactuar
+  function markInteraction() {
+    isUserInteracting = true;
+    if (resumeTimer) clearTimeout(resumeTimer);
+    // Auto-reanudar tras 3 segundos de inactividad para que nunca quede pegado
+    resumeTimer = setTimeout(() => {
+      isUserInteracting = false;
+    }, 3000);
+  }
+
+  viewport.addEventListener('mouseenter', () => {
+    isUserInteracting = true;
+  });
+
+  viewport.addEventListener('mouseleave', () => {
+    isUserInteracting = false;
+  });
+
+  // Pausa / Reanudación manual desde el botón
+  if (btnPlayPause && iconPlayPause) {
+    btnPlayPause.addEventListener('click', () => {
+      isAutoScrolling = !isAutoScrolling;
+      iconPlayPause.textContent = isAutoScrolling ? '⏸️' : '▶️';
+      showCreSerToast(isAutoScrolling ? 'Galería en movimiento reanudada' : 'Galería pausada', '✨');
+    });
+  }
+
+  // Botón Anterior (Desplazar 330px a la izquierda con salto infinito seguro)
+  if (btnPrev) {
+    btnPrev.addEventListener('click', () => {
+      markInteraction();
+      const singleWidth = getSingleSetWidth();
+      if (viewport.scrollLeft <= 10) {
+        viewport.scrollLeft += singleWidth;
+      }
+      viewport.scrollBy({ left: -330, behavior: 'smooth' });
+      setTimeout(updateProgressBar, 350);
+    });
+  }
+
+  // Botón Siguiente (Desplazar 330px a la derecha con salto infinito seguro)
+  if (btnNext) {
+    btnNext.addEventListener('click', () => {
+      markInteraction();
+      const singleWidth = getSingleSetWidth();
+      if (viewport.scrollLeft >= singleWidth) {
+        viewport.scrollLeft -= singleWidth;
+      }
+      viewport.scrollBy({ left: 330, behavior: 'smooth' });
+      setTimeout(updateProgressBar, 350);
+    });
+  }
+
+  // Soporte de Arrastre con Mouse (Drag to scroll)
+  let isDown = false;
+  let startX = 0;
+  let scrollLeftPos = 0;
+
+  viewport.addEventListener('mousedown', (e) => {
+    isDown = true;
+    markInteraction();
+    startX = e.pageX - viewport.offsetLeft;
+    scrollLeftPos = viewport.scrollLeft;
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (isDown) {
+      isDown = false;
+      markInteraction();
+    }
+  });
+
+  viewport.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - viewport.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    viewport.scrollLeft = scrollLeftPos - walk;
+    
+    // Control de límites infinitos durante el arrastre
+    const singleWidth = getSingleSetWidth();
+    if (viewport.scrollLeft >= singleWidth * 1.5) {
+      viewport.scrollLeft -= singleWidth;
+    } else if (viewport.scrollLeft <= 0) {
+      viewport.scrollLeft += singleWidth;
+    }
+    
+    updateProgressBar();
+  });
+
+  // Soporte de interacción táctil en móviles
+  viewport.addEventListener('touchstart', () => {
+    markInteraction();
+  }, { passive: true });
+
+  viewport.addEventListener('touchend', () => {
+    markInteraction();
+  });
+
+  viewport.addEventListener('scroll', updateProgressBar, { passive: true });
+}
 
 function initQuickToolModals() {
   const toolBtns = document.querySelectorAll('[data-open-tool]');
@@ -270,6 +516,65 @@ function initQuickToolModals() {
   closeBtns.forEach(btn => {
     btn.addEventListener('click', closeAllToolModals);
   });
+
+  // Modal Escritura Libre: Guardado directo al diario
+  const btnSaveModalWriting = document.getElementById('btnSaveModalWriting');
+  const modalWritingInput = document.getElementById('modalWritingInput');
+  if (btnSaveModalWriting && modalWritingInput) {
+    btnSaveModalWriting.addEventListener('click', () => {
+      const text = modalWritingInput.value.trim();
+      if (!text) {
+        showCreSerToast("Por favor escribe tu reflexión antes de guardar.", "✍️");
+        return;
+      }
+      const entry = {
+        type: "Pensamientos",
+        emotion: "😌 En calma",
+        title: "Escritura Libre",
+        text: text,
+        date: new Date().toLocaleString('es-NI', { dateStyle: 'medium', timeStyle: 'short' }),
+        timestamp: new Date().toISOString()
+      };
+      const entries = JSON.parse(localStorage.getItem('creser-journal-entries') || '[]');
+      entries.unshift(entry);
+      localStorage.setItem('creser-journal-entries', JSON.stringify(entries));
+
+      if (window.CreSerDB) {
+        window.CreSerDB.saveJournalEntry(entry);
+      }
+
+      modalWritingInput.value = '';
+      closeAllToolModals();
+      initWellnessJournal();
+      initWeeklyStats();
+      showCreSerToast("Reflexión guardada en tu diario personal.", "✅");
+    });
+  }
+
+  // Modal Concentración: Controles de inicio, pausa y reinicio
+  const btnToggleFocus = document.getElementById('btnToggleFocusTimer');
+  const btnResetFocus = document.getElementById('btnResetFocusTimer');
+  if (btnToggleFocus && btnResetFocus) {
+    btnToggleFocus.addEventListener('click', () => {
+      if (isFocusTimerRunning) {
+        clearInterval(activeToolTimer);
+        isFocusTimerRunning = false;
+        btnToggleFocus.textContent = "Continuar";
+      } else {
+        startFocusTimer();
+        btnToggleFocus.textContent = "Pausar";
+      }
+    });
+
+    btnResetFocus.addEventListener('click', () => {
+      clearInterval(activeToolTimer);
+      isFocusTimerRunning = false;
+      focusTimeRemaining = 180;
+      const timerEl = document.getElementById('focusCountdown');
+      if (timerEl) timerEl.textContent = "03:00";
+      btnToggleFocus.textContent = "Iniciar";
+    });
+  }
 }
 
 function openToolModal(toolKey) {
@@ -279,7 +584,14 @@ function openToolModal(toolKey) {
     modal.classList.add('open');
     if (toolKey === 'respiracion') startModalBreathing();
     if (toolKey === 'visual') startVisualRestTimer();
-    if (toolKey === 'concentracion') startFocusTimer();
+    if (toolKey === 'concentracion') {
+      focusTimeRemaining = 180;
+      isFocusTimerRunning = false;
+      const timerEl = document.getElementById('focusCountdown');
+      const btnToggle = document.getElementById('btnToggleFocusTimer');
+      if (timerEl) timerEl.textContent = "03:00";
+      if (btnToggle) btnToggle.textContent = "Iniciar";
+    }
   }
 }
 
@@ -287,9 +599,10 @@ function closeAllToolModals() {
   const modals = document.querySelectorAll('.wellness-tool-modal');
   modals.forEach(m => m.classList.remove('open'));
   if (activeToolTimer) clearInterval(activeToolTimer);
+  isFocusTimerRunning = false;
 }
 
-// 1. Respiración 4-4-4
+// 1. Respiración 4-4-4 con sonido armónico adaptativo
 function startModalBreathing() {
   const circle = document.getElementById('modalBreathCircle');
   const prompt = document.getElementById('modalBreathPrompt');
@@ -303,12 +616,14 @@ function startModalBreathing() {
     if (phase === 0) {
       prompt.textContent = "Inhala profundamente por la nariz...";
       circle.className = "modal-breath-circle inhale";
+      playHarmonicChime(432, 2.5); // Tono de inhalación en 432 Hz
     } else if (phase === 1) {
       prompt.textContent = "Sostén el aire suavemente...";
       circle.className = "modal-breath-circle hold";
     } else {
       prompt.textContent = "Exhala lento por la boca...";
       circle.className = "modal-breath-circle exhale";
+      playHarmonicChime(324, 2.5); // Tono de exhalación más grave
     }
     phase = (phase + 1) % 3;
   }
@@ -323,6 +638,9 @@ function startModalBreathing() {
       clearInterval(activeToolTimer);
       prompt.textContent = "¡Excelente sesión de respiración completada!";
       circle.className = "modal-breath-circle";
+      playHarmonicChime(528, 3.0); // Tono final armónico de cierre
+      incrementWeeklyPauses();
+      showCreSerToast("Pausa de respiración registrada con éxito.", "🫁");
     }
   }, 1000);
 }
@@ -333,12 +651,16 @@ function startVisualRestTimer() {
   if (!timerEl) return;
   let sec = 20;
   if (activeToolTimer) clearInterval(activeToolTimer);
+  playHarmonicChime(432, 1.0);
   activeToolTimer = setInterval(() => {
     sec--;
     timerEl.textContent = `00:${sec < 10 ? '0' + sec : sec}`;
     if (sec <= 0) {
       clearInterval(activeToolTimer);
       timerEl.textContent = "¡Descanso visual completado! Parpadea suavemente.";
+      playHarmonicChime(528, 2.0);
+      incrementWeeklyPauses();
+      showCreSerToast("Descanso visual completado.", "👁️");
     }
   }, 1000);
 }
@@ -347,16 +669,21 @@ function startVisualRestTimer() {
 function startFocusTimer() {
   const timerEl = document.getElementById('focusCountdown');
   if (!timerEl) return;
-  let totalSec = 180; // 3 minutos
+  isFocusTimerRunning = true;
   if (activeToolTimer) clearInterval(activeToolTimer);
+  playHarmonicChime(432, 1.0);
+
   activeToolTimer = setInterval(() => {
-    totalSec--;
-    const m = Math.floor(totalSec / 60);
-    const s = totalSec % 60;
+    focusTimeRemaining--;
+    const m = Math.floor(focusTimeRemaining / 60);
+    const s = focusTimeRemaining % 60;
     timerEl.textContent = `${m < 10 ? '0' + m : m}:${s < 10 ? '0' + s : s}`;
-    if (totalSec <= 0) {
+    if (focusTimeRemaining <= 0) {
       clearInterval(activeToolTimer);
+      isFocusTimerRunning = false;
       timerEl.textContent = "¡Tiempo cumplido! Tómate una pausa.";
+      playHarmonicChime(528, 2.5);
+      showCreSerToast("Intervalo de foco mental finalizado.", "🎯");
     }
   }, 1000);
 }
@@ -373,7 +700,7 @@ function initWeeklyStats() {
   const streak = localStorage.getItem('creser-wellness-streak') || '5';
   const pauses = localStorage.getItem('creser-wellness-pauses') || '12';
   const journal = JSON.parse(localStorage.getItem('creser-journal-entries') || '[]');
-  const habits = localStorage.getItem('creser-wellness-habits-count') || '4';
+  const habits = localStorage.getItem('creser-wellness-habits-count') || '3';
 
   if (streakEl) streakEl.textContent = `${streak} días`;
   if (pausesEl) pausesEl.textContent = `${pauses}`;
@@ -387,48 +714,145 @@ function incrementWeeklyStreak() {
   initWeeklyStats();
 }
 
+function incrementWeeklyPauses() {
+  const cur = parseInt(localStorage.getItem('creser-wellness-pauses') || '12', 10) + 1;
+  localStorage.setItem('creser-wellness-pauses', cur.toString());
+  initWeeklyStats();
+}
+
 /* ==========================================================================
-   5. Diario Emocional y Gratitud con Historial
+   5. Diario Emocional y Gratitud con Historial, Búsqueda, Filtros y Exportación
    ========================================================================== */
 function initWellnessJournal() {
   const form = document.getElementById('formWellnessJournal');
   const list = document.getElementById('wellnessJournalList');
   const btnPatterns = document.getElementById('btnViewJournalPatterns');
+  const btnReset = document.getElementById('btnResetJournalForm');
+  const btnExport = document.getElementById('btnExportJournal');
+  const searchInput = document.getElementById('journalSearchInput');
+  const categoryFilter = document.getElementById('journalCategoryFilter');
+  const countEl = document.getElementById('journalEntriesCount');
+  const textarea = document.getElementById('journalEntryText');
+  const wordCounterEl = document.getElementById('journalWordCounter');
+  const charCounterEl = document.getElementById('journalCharCounter');
+  const emotionChips = document.querySelectorAll('.journal-emotion-chip');
 
+  let selectedJournalEmotion = '😌 En calma';
+
+  // Manejo de chips de emoción
+  emotionChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      emotionChips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      selectedJournalEmotion = chip.dataset.emotion || '😌 En calma';
+    });
+  });
+
+  // Contador en tiempo real de palabras y caracteres
+  if (textarea && wordCounterEl && charCounterEl) {
+    textarea.addEventListener('input', () => {
+      const text = textarea.value.trim();
+      const words = text ? text.split(/\s+/).length : 0;
+      const chars = textarea.value.length;
+      const readMin = Math.ceil(words / 150) || 1;
+
+      wordCounterEl.textContent = `${words} palabra${words === 1 ? '' : 's'} | ~${words > 0 ? readMin : 0} min de lectura`;
+      charCounterEl.textContent = `${chars} caracter${chars === 1 ? '' : 'es'}`;
+    });
+  }
+
+  // Renderizado dinámico del listado de reflexiones
   function renderJournalList() {
     if (!list) return;
     const entries = JSON.parse(localStorage.getItem('creser-journal-entries') || '[]');
-    if (entries.length === 0) {
-      list.innerHTML = '<p class="small text-muted">Aún no tienes reflexiones guardadas. Escribe lo que sientes hoy.</p>';
+    const query = (searchInput?.value || '').toLowerCase().trim();
+    const cat = categoryFilter?.value || 'todos';
+
+    let filtered = entries.filter(e => {
+      const matchCat = (cat === 'todos') || (e.type === cat);
+      const matchQuery = !query || 
+        (e.title && e.title.toLowerCase().includes(query)) ||
+        (e.text && e.text.toLowerCase().includes(query)) ||
+        (e.emotion && e.emotion.toLowerCase().includes(query));
+      return matchCat && matchQuery;
+    });
+
+    if (countEl) countEl.textContent = `${filtered.length}`;
+
+    if (filtered.length === 0) {
+      list.innerHTML = `
+        <div style="text-align:center; padding:1.5rem; color:var(--ink-muted);">
+          <span style="font-size:1.8rem; display:block; margin-bottom:0.4rem;">📖</span>
+          <p class="small">No se encontraron reflexiones con los filtros seleccionados.</p>
+        </div>
+      `;
       return;
     }
 
-    list.innerHTML = entries.map((e, idx) => `
-      <div class="journal-entry-card" style="background:var(--surface-2); border:1px solid var(--line); border-radius:var(--radius-md); padding:1rem; margin-bottom:0.75rem;">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem;">
-          <span style="font-size:0.8rem; font-weight:700; color:var(--primary);">${escapeHtml(e.type || 'Reflexión')}</span>
-          <span style="font-size:0.78rem; color:var(--ink-muted);">${escapeHtml(e.date || '')}</span>
+    list.innerHTML = filtered.map((e, idx) => {
+      const originalIndex = entries.findIndex(item => item.timestamp === e.timestamp);
+      return `
+        <div class="journal-entry-card" data-index="${originalIndex}">
+          <div class="journal-entry-header">
+            <div class="journal-entry-badges">
+              <span class="journal-entry-type-badge">${escapeHtml(e.type || 'Reflexión')}</span>
+              ${e.emotion ? `<span class="journal-entry-emotion-badge">${escapeHtml(e.emotion)}</span>` : ''}
+            </div>
+            <span style="font-size:0.78rem; color:var(--ink-muted);">${escapeHtml(e.date || '')}</span>
+          </div>
+          <h4 style="font-size:0.95rem; font-weight:700; margin:0.3rem 0; color:var(--ink-primary);">${escapeHtml(e.title || 'Nota personal')}</h4>
+          <p style="font-size:0.88rem; color:var(--ink-secondary); margin:0; line-height:1.45; white-space:pre-wrap;">${escapeHtml(e.text || '')}</p>
+          <div class="journal-entry-actions">
+            <button type="button" class="journal-action-btn" onclick="copyJournalEntryText(${originalIndex})">📋 Copiar</button>
+            <button type="button" class="journal-action-btn btn-delete" onclick="deleteJournalEntry(${originalIndex})">🗑️ Eliminar</button>
+          </div>
         </div>
-        <h4 style="font-size:0.95rem; font-weight:700; margin-bottom:0.3rem;">${escapeHtml(e.title || 'Nota personal')}</h4>
-        <p style="font-size:0.88rem; color:var(--ink-secondary); margin:0; line-height:1.4;">${escapeHtml(e.text || '')}</p>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
 
+  // Eventos de búsqueda y filtrado
+  if (searchInput) searchInput.addEventListener('input', renderJournalList);
+  if (categoryFilter) categoryFilter.addEventListener('change', renderJournalList);
+
+  // Limpiar formulario
+  if (btnReset) {
+    btnReset.addEventListener('click', () => {
+      if (form) form.reset();
+      if (wordCounterEl) wordCounterEl.textContent = '0 palabras | ~0 min de lectura';
+      if (charCounterEl) charCounterEl.textContent = '0 caracteres';
+      emotionChips.forEach(c => c.classList.remove('active'));
+      if (emotionChips[0]) emotionChips[0].classList.add('active');
+      selectedJournalEmotion = '😌 En calma';
+    });
+  }
+
+  // Abrir Centro de Exportación y Reporte Institucional CreSer
+  if (btnExport) {
+    btnExport.addEventListener('click', () => {
+      openExportReportModal();
+    });
+  }
+
+  // Envío del formulario de diario
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       const type = document.getElementById('journalEntryType')?.value || 'Lo que siento';
       const title = document.getElementById('journalEntryTitle')?.value || '';
-      const text = document.getElementById('journalEntryText')?.value || '';
+      const text = textarea?.value || '';
 
-      if (!text.trim()) return;
+      if (!text.trim()) {
+        showCreSerToast("Por favor escribe tu reflexión.", "✍️");
+        return;
+      }
 
       const entry = {
         type,
+        emotion: selectedJournalEmotion,
         title: title.trim() || type,
         text: text.trim(),
-        date: new Date().toLocaleDateString('es-NI', { dateStyle: 'medium', timeStyle: 'short' }),
+        date: new Date().toLocaleString('es-NI', { dateStyle: 'medium', timeStyle: 'short' }),
         timestamp: new Date().toISOString()
       };
 
@@ -441,20 +865,806 @@ function initWellnessJournal() {
       }
 
       form.reset();
+      if (wordCounterEl) wordCounterEl.textContent = '0 palabras | ~0 min de lectura';
+      if (charCounterEl) charCounterEl.textContent = '0 caracteres';
       renderJournalList();
       initWeeklyStats();
-      alert("✅ Tu reflexión ha sido guardada de forma segura y privada.");
+      showCreSerToast("Tu reflexión ha sido guardada de forma segura y privada.", "✅");
     });
   }
 
+  // Modal de análisis de patrones
   if (btnPatterns) {
     btnPatterns.addEventListener('click', () => {
       const entries = JSON.parse(localStorage.getItem('creser-journal-entries') || '[]');
-      alert(`📊 Patrones de Autocuidado:\n\n• Total de reflexiones registradas: ${entries.length}\n• Prácticas frecuentes: Gratitud y desahogo de pensamientos.\n• Recuerda que escribir con regularidad fortalece tu claridad mental.`);
+      const modalPatterns = document.getElementById('modalJournalPatterns');
+      const contentEl = document.getElementById('journalPatternsContent');
+
+      if (!modalPatterns || !contentEl) return;
+
+      if (entries.length === 0) {
+        contentEl.innerHTML = `
+          <div style="background:var(--surface-2); border-radius:var(--radius-md); padding:1.25rem; text-align:center;">
+            <p class="small text-muted" style="margin:0;">Aún no has registrado reflexiones. Al escribir tus primeras notas, aquí podrás visualizar tus estadísticas emocionales y hábitos de gratitud.</p>
+          </div>
+        `;
+      } else {
+        // Cálculo de métricas
+        const typeCounts = {};
+        const emotionCounts = {};
+        let totalWords = 0;
+
+        entries.forEach(e => {
+          typeCounts[e.type] = (typeCounts[e.type] || 0) + 1;
+          if (e.emotion) emotionCounts[e.emotion] = (emotionCounts[e.emotion] || 0) + 1;
+          totalWords += (e.text ? e.text.split(/\s+/).length : 0);
+        });
+
+        const topType = Object.entries(typeCounts).sort((a, b) => b[1] - a[1])[0];
+        const topEmotion = Object.entries(emotionCounts).sort((a, b) => b[1] - a[1])[0];
+
+        contentEl.innerHTML = `
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:1rem;">
+            <div style="background:var(--surface-2); padding:0.9rem; border-radius:var(--radius-sm); text-align:center;">
+              <span style="font-size:1.5rem; font-weight:800; color:var(--primary);">${entries.length}</span>
+              <p class="small text-muted" style="margin:0.2rem 0 0;">Total reflexiones</p>
+            </div>
+            <div style="background:var(--surface-2); padding:0.9rem; border-radius:var(--radius-sm); text-align:center;">
+              <span style="font-size:1.5rem; font-weight:800; color:var(--secondary);">${totalWords}</span>
+              <p class="small text-muted" style="margin:0.2rem 0 0;">Palabras escritas</p>
+            </div>
+          </div>
+          <div style="background:var(--surface-2); border-left:4px solid var(--primary); padding:0.9rem 1rem; border-radius:0 var(--radius-sm) var(--radius-sm) 0; font-size:0.88rem; line-height:1.5;">
+            <strong>🌟 Práctica más recurrente:</strong> ${topType ? topType[0] : 'Gratitud diaria'} (${topType ? topType[1] : 0} entradas).<br>
+            <strong>🌿 Emoción predominante:</strong> ${topEmotion ? topEmotion[0] : '😌 En calma'}.<br>
+            <em>Escribir regularmente estimula la autorregulación y la claridad mental.</em>
+          </div>
+        `;
+      }
+
+      modalPatterns.classList.add('open');
     });
   }
 
+  // Hacer accesibles globalmente las funciones de copia y borrado
+  window.copyJournalEntryText = (index) => {
+    const entries = JSON.parse(localStorage.getItem('creser-journal-entries') || '[]');
+    const entry = entries[index];
+    if (entry && entry.text) {
+      navigator.clipboard.writeText(`[${entry.type}] ${entry.title}\n\n${entry.text}`).then(() => {
+        showCreSerToast("Reflexión copiada al portapapeles.", "📋");
+      }).catch(() => {
+        showCreSerToast("No se pudo copiar el texto.", "⚠️");
+      });
+    }
+  };
+
+  window.deleteJournalEntry = (index) => {
+    if (confirm("¿Estás seguro/a de que deseas eliminar esta reflexión de tu diario privado?")) {
+      const entries = JSON.parse(localStorage.getItem('creser-journal-entries') || '[]');
+      entries.splice(index, 1);
+      localStorage.setItem('creser-journal-entries', JSON.stringify(entries));
+      renderJournalList();
+      initWeeklyStats();
+      showCreSerToast("Reflexión eliminada de tu diario.", "🗑️");
+    }
+  };
+
   renderJournalList();
+}
+
+/* ==========================================================================
+   5.1. Centro de Exportación y Reporte Institucional CreSer (Generador Oficial)
+   ========================================================================== */
+
+/**
+ * ¿POR QUÉ?: Abrir el modal de exportación personalizada cuando el usuario solicita descargar sus registros.
+ * ¿CÓMO?: Añadiendo la clase 'open' al modal #modalExportReport y actualizando estados de selección.
+ * ¿PARA QUÉ?: Permitir al usuario configurar el reporte a su medida antes de generar el archivo.
+ */
+function openExportReportModal() {
+  closeAllToolModals();
+  const modal = document.getElementById('modalExportReport');
+  if (modal) {
+    modal.classList.add('open');
+  }
+}
+
+/**
+ * ¿POR QUÉ?: Gestionar los eventos de selección de formato, vista previa y descarga del reporte oficial.
+ * ¿CÓMO?: Escuchando cambios en los radio buttons, checkboxes y botones de acción del modal.
+ * ¿PARA QUÉ?: Ofrecer una experiencia de descarga editorial fluida, configurable y prémium.
+ */
+function initExportReportCenter() {
+  const modal = document.getElementById('modalExportReport');
+  const btnPreview = document.getElementById('btnPreviewReport');
+  const btnDownload = document.getElementById('btnConfirmGenerateReport');
+  const formatCards = document.querySelectorAll('.export-format-card');
+  const radioFormats = document.querySelectorAll('input[name="exportFormat"]');
+
+  if (!modal) return;
+
+  // Sincronizar estilo visual de la tarjeta de formato seleccionada
+  radioFormats.forEach(radio => {
+    radio.addEventListener('change', () => {
+      formatCards.forEach(card => card.classList.remove('active'));
+      const activeCard = radio.closest('.export-format-card');
+      if (activeCard) activeCard.classList.add('active');
+    });
+  });
+
+  formatCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const radio = card.querySelector('input[type="radio"]');
+      if (radio) {
+        radio.checked = true;
+        formatCards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+      }
+    });
+  });
+
+  // Botón Vista Previa del Reporte
+  if (btnPreview) {
+    btnPreview.addEventListener('click', () => {
+      const options = getExportOptions();
+      const reportHtml = buildCreSerReportHTML(options);
+      
+      const previewWindow = window.open('', '_blank', 'width=950,height=800,scrollbars=yes');
+      if (previewWindow) {
+        previewWindow.document.open();
+        previewWindow.document.write(reportHtml);
+        previewWindow.document.close();
+      } else {
+        showCreSerToast("Por favor permite las ventanas emergentes para ver la vista previa.", "⚠️");
+      }
+    });
+  }
+
+  // Botón Generar y Descargar Reporte
+  if (btnDownload) {
+    btnDownload.addEventListener('click', () => {
+      const options = getExportOptions();
+
+      if (options.format === 'json') {
+        // Descarga de archivo estructurado JSON
+        downloadJsonReport(options);
+      } else {
+        // Generar y descargar documento oficial HTML/PDF
+        downloadPdfOfficialReport(options);
+      }
+    });
+  }
+}
+
+/**
+ * ¿POR QUÉ?: Recopilar las opciones seleccionadas en el formulario del modal de exportación.
+ * ¿CÓMO?: Leyendo los valores de los checkboxes, select de fecha y radio buttons.
+ * ¿PARA QUÉ?: Pasar un objeto de configuración limpio al generador de reportes.
+ */
+function getExportOptions() {
+  const incJournal = document.getElementById('exportIncludeJournal')?.checked ?? true;
+  const incStats = document.getElementById('exportIncludeStats')?.checked ?? true;
+  const incSleep = document.getElementById('exportIncludeSleep')?.checked ?? true;
+  const incHabits = document.getElementById('exportIncludeHabits')?.checked ?? true;
+  const dateRange = document.getElementById('exportDateRange')?.value || 'all';
+  const format = document.querySelector('input[name="exportFormat"]:checked')?.value || 'pdf';
+
+  return {
+    includeJournal: incJournal,
+    includeStats: incStats,
+    includeSleep: incSleep,
+    includeHabits: incHabits,
+    dateRange: dateRange,
+    format: format
+  };
+}
+
+/**
+ * ¿POR QUÉ?: Descargar los datos seleccionados en formato técnico JSON.
+ * ¿CÓMO?: Construyendo un Blob y disparando la descarga con un anchor temporal.
+ * ¿PARA QUÉ?: Permitir respaldo crudo de datos a usuarios avanzados.
+ */
+function downloadJsonReport(options) {
+  const exportPayload = {
+    institucion: "CreSer — Centro de Bienestar Emocional",
+    pais: "Nicaragua",
+    fechaExportacion: new Date().toISOString(),
+    fechaFormateada: new Date().toLocaleString('es-NI'),
+    usuario: localStorage.getItem('creser-user-name') || localStorage.getItem('creser-user-email') || "Usuario Confidencial",
+    configuracion: options,
+    datos: {}
+  };
+
+  if (options.includeJournal) {
+    exportPayload.datos.diario = JSON.parse(localStorage.getItem('creser-journal-entries') || '[]');
+  }
+  if (options.includeStats) {
+    exportPayload.datos.estadisticas = {
+      pausasRealizadas: localStorage.getItem('creser-weekly-pauses') || '0',
+      diasConstancia: '5'
+    };
+  }
+  if (options.includeSleep) {
+    exportPayload.datos.sueno = JSON.parse(localStorage.getItem('creser-last-sleep-log') || '{}');
+  }
+  if (options.includeHabits) {
+    exportPayload.datos.habitos = JSON.parse(localStorage.getItem('creser-wellness-habits') || '{}');
+  }
+
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportPayload, null, 2));
+  const downloadAnchor = document.createElement('a');
+  downloadAnchor.setAttribute("href", dataStr);
+  downloadAnchor.setAttribute("download", `Reporte_Datos_CreSer_${new Date().toISOString().slice(0, 10)}.json`);
+  document.body.appendChild(downloadAnchor);
+  downloadAnchor.click();
+  downloadAnchor.remove();
+  
+  closeAllToolModals();
+  showCreSerToast("Respaldo JSON generado y descargado con éxito.", "📥");
+}
+
+/**
+ * ¿POR QUÉ?: Descargar o imprimir el Reporte Institucional CreSer con formato editorial prémium.
+ * ¿CÓMO?: Creando una ventana emergente con el HTML maquetado y ejecutando window.print().
+ * ¿PARA QUÉ?: Entregar un documento con diseño oficial, membrete y sellos institucionales.
+ */
+function downloadPdfOfficialReport(options) {
+  const reportHtml = buildCreSerReportHTML(options);
+  const printWindow = window.open('', '_blank', 'width=950,height=800,scrollbars=yes');
+  
+  if (printWindow) {
+    printWindow.document.open();
+    printWindow.document.write(reportHtml);
+    printWindow.document.close();
+    
+    // Auto-disparar diálogo de impresión a PDF tras cargar estilos
+    printWindow.addEventListener('load', () => {
+      setTimeout(() => {
+        printWindow.focus();
+        printWindow.print();
+      }, 500);
+    });
+
+    closeAllToolModals();
+    showCreSerToast("Reporte Institucional preparado para descarga/impresión en PDF.", "📄");
+  } else {
+    // Si el navegador bloquea popups, descargar como archivo HTML imprimible
+    const blob = new Blob([reportHtml], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", url);
+    downloadAnchor.setAttribute("download", `Reporte_Bienestar_CreSer_${new Date().toISOString().slice(0, 10)}.html`);
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+    URL.revokeObjectURL(url);
+
+    closeAllToolModals();
+    showCreSerToast("Reporte Institucional descargado en formato imprimible.", "📥");
+  }
+}
+
+/**
+ * ¿POR QUÉ?: Construir el documento HTML completo del Reporte Institucional con maquetación de alto nivel.
+ * ¿CÓMO?: Generando un template HTML estructurado con estilos inline y reglas @media print optimizadas.
+ * ¿PARA QUÉ?: Garantizar que el documento impreso o en PDF luzca impecable y transmita la identidad visual de CreSer.
+ */
+function buildCreSerReportHTML(options) {
+  const userName = localStorage.getItem('creser-user-name') || localStorage.getItem('creser-user-email') || "Usuario Registrado";
+  const now = new Date();
+  const emissionCode = 'CR-BN-' + Math.floor(100000 + Math.random() * 900000);
+  const emissionDate = now.toLocaleDateString('es-NI', { dateStyle: 'full' });
+  const emissionTime = now.toLocaleTimeString('es-NI', { timeStyle: 'short' });
+
+  // 1. Filtrado de entradas de diario
+  let allEntries = JSON.parse(localStorage.getItem('creser-journal-entries') || '[]');
+  let filteredEntries = allEntries;
+  
+  if (options.dateRange === '7days') {
+    const sevenDaysAgo = new Date(now.getTime() - (7 * 24 * 60 * 60 * 1000));
+    filteredEntries = allEntries.filter(e => e.timestamp && new Date(e.timestamp) >= sevenDaysAgo);
+  } else if (options.dateRange === '30days') {
+    const thirtyDaysAgo = new Date(now.getTime() - (30 * 24 * 60 * 60 * 1000));
+    filteredEntries = allEntries.filter(e => e.timestamp && new Date(e.timestamp) >= thirtyDaysAgo);
+  }
+
+  // 2. Cálculo de métricas
+  const streakDays = "5 días";
+  const totalPauses = localStorage.getItem('creser-weekly-pauses') || "12";
+  const totalReflections = filteredEntries.length;
+  const sleepLog = JSON.parse(localStorage.getItem('creser-last-sleep-log') || '{"horas":"7.5","calidad":"Buena","energia":"Normal"}');
+
+  // 3. Frecuencia emocional
+  const emotionCounts = {};
+  filteredEntries.forEach(e => {
+    if (e.emotion) {
+      emotionCounts[e.emotion] = (emotionCounts[e.emotion] || 0) + 1;
+    }
+  });
+
+  return `<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Reporte Oficial de Autocuidado y Bienestar — CreSer Nicaragua</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f1f5f9;
+      color: #1e293b;
+      line-height: 1.6;
+      padding: 2.5rem 1rem;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .report-wrapper {
+      max-width: 860px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 24px;
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.07);
+      padding: 3.5rem;
+      border: 1px solid #e2e8f0;
+      position: relative;
+    }
+
+    /* Barra Superior con Marca y Metadatos de Emisión */
+    .report-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 2rem;
+      border-bottom: 2px solid #f1f5f9;
+      margin-bottom: 2.25rem;
+    }
+
+    .brand-box {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand-logo-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #2563eb 0%, #059669 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: #ffffff;
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
+    }
+
+    .brand-text h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+
+    .brand-text p {
+      font-size: 0.88rem;
+      color: #64748b;
+      margin-top: 2px;
+      font-weight: 500;
+    }
+
+    .emission-meta {
+      text-align: right;
+      font-size: 0.82rem;
+      color: #64748b;
+    }
+
+    .emission-code {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: #2563eb;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 3px 10px;
+      border-radius: 8px;
+      margin-bottom: 4px;
+    }
+
+    /* Insignia de Confidencialidad */
+    .seal-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #ecfdf5;
+      color: #059669;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      border: 1px solid #a7f3d0;
+      margin-bottom: 1.8rem;
+    }
+
+    /* Secciones del Documento */
+    .doc-section {
+      margin-bottom: 2.5rem;
+    }
+
+    .doc-section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      border-left: 4px solid #2563eb;
+      padding-left: 0.85rem;
+    }
+
+    /* Cuadrícula de KPIs */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .kpi-card {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 1.15rem 1rem;
+      text-align: center;
+    }
+
+    .kpi-value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #2563eb;
+      margin-bottom: 0.15rem;
+    }
+
+    .kpi-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    /* Frecuencia Emocional */
+    .emotion-freq-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.75rem;
+    }
+
+    .emotion-freq-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .emotion-freq-chip strong {
+      color: #2563eb;
+      font-weight: 700;
+    }
+
+    /* Tarjetas de Diario */
+    .journal-entry-item {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 1.35rem 1.5rem;
+      margin-bottom: 1rem;
+      page-break-inside: avoid;
+    }
+
+    .entry-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.6rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .entry-tags {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .tag-category {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #2563eb;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 2px 9px;
+      border-radius: 9999px;
+    }
+
+    .tag-emotion {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #475569;
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      padding: 2px 9px;
+      border-radius: 9999px;
+    }
+
+    .entry-date {
+      font-size: 0.78rem;
+      color: #94a3b8;
+      font-weight: 500;
+    }
+
+    .entry-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 0.4rem;
+    }
+
+    .entry-text {
+      font-size: 0.92rem;
+      color: #334155;
+      line-height: 1.65;
+      white-space: pre-wrap;
+    }
+
+    /* Bloque de Hábitos y Sueño */
+    .summary-info-box {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 0.9rem;
+    }
+
+    .summary-row:last-child {
+      border-bottom: none;
+    }
+
+    .summary-label {
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .summary-val {
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    /* Pie Institucional */
+    .report-footer {
+      margin-top: 3.5rem;
+      padding-top: 2rem;
+      border-top: 1.5px dashed #cbd5e1;
+      text-align: center;
+      font-size: 0.82rem;
+      color: #64748b;
+      line-height: 1.6;
+    }
+
+    .helpline-box {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      margin: 1.25rem 0 1rem;
+      font-size: 0.82rem;
+      color: #991b1b;
+    }
+
+    /* Botón flotante de impresión */
+    .floating-print-bar {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      display: flex;
+      gap: 0.75rem;
+      z-index: 1000;
+    }
+
+    .btn-print-doc {
+      background: linear-gradient(135deg, #2563eb 0%, #059669 100%);
+      color: #ffffff;
+      border: none;
+      padding: 0.85rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.35);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: transform 0.2s ease;
+    }
+
+    .btn-print-doc:hover {
+      transform: translateY(-2px);
+    }
+
+    @media print {
+      body {
+        background: #ffffff !important;
+        padding: 0 !important;
+      }
+      .report-wrapper {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+      }
+      .floating-print-bar {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="floating-print-bar">
+    <button class="btn-print-doc" onclick="window.print()">
+      <span>🖨️ Imprimir / Guardar en PDF</span>
+    </button>
+  </div>
+
+  <div class="report-wrapper">
+    
+    <!-- Encabezado Institucional CreSer -->
+    <header class="report-header">
+      <div class="brand-box">
+        <div class="brand-logo-icon">🌿</div>
+        <div class="brand-text">
+          <h1>CreSer Nicaragua</h1>
+          <p>Centro Integral de Bienestar Emocional & Autocuidado</p>
+        </div>
+      </div>
+      <div class="emission-meta">
+        <span class="emission-code">${emissionCode}</span>
+        <div><strong>Emisión:</strong> ${emissionDate}</div>
+        <div><strong>Hora:</strong> ${emissionTime}</div>
+        <div><strong>Titular:</strong> ${escapeHtml(userName)}</div>
+      </div>
+    </header>
+
+    <div class="seal-pill">
+      <span>🛡️</span> Documento Confidencial de Autocuidado & Bienestar
+    </div>
+
+    <!-- 1. Resumen Ejecutivo de Métricas -->
+    ${options.includeStats ? `
+    <section class="doc-section">
+      <h2 class="doc-section-title">📊 Resumen Ejecutivo de Métricas</h2>
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-value">${streakDays}</div>
+          <div class="kpi-label">Constancia Activa</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value">${totalPauses}</div>
+          <div class="kpi-label">Pausas Realizadas</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value">${totalReflections}</div>
+          <div class="kpi-label">Reflexiones en Diario</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-value">${sleepLog.horas || '7.5'}h</div>
+          <div class="kpi-label">Promedio de Sueño</div>
+        </div>
+      </div>
+
+      ${Object.keys(emotionCounts).length > 0 ? `
+      <div style="margin-top:1.25rem;">
+        <strong style="font-size:0.88rem; color:#475569;">Distribución de Emociones Registradas:</strong>
+        <div class="emotion-freq-wrap">
+          ${Object.entries(emotionCounts).map(([emotion, count]) => `
+            <span class="emotion-freq-chip">
+              <span>${escapeHtml(emotion)}</span>
+              <strong>(${count})</strong>
+            </span>
+          `).join('')}
+        </div>
+      </div>
+      ` : ''}
+    </section>
+    ` : ''}
+
+    <!-- 2. Diario Emocional y Reflexiones -->
+    ${options.includeJournal ? `
+    <section class="doc-section">
+      <h2 class="doc-section-title">📖 Diario Emocional y Reflexiones (${filteredEntries.length})</h2>
+      
+      ${filteredEntries.length === 0 ? `
+        <div style="padding:1.5rem; text-align:center; background:#f8fafc; border-radius:14px; color:#64748b; font-size:0.9rem;">
+          No hay reflexiones registradas en el rango de fechas seleccionado.
+        </div>
+      ` : filteredEntries.map(e => `
+        <div class="journal-entry-item">
+          <div class="entry-head">
+            <div class="entry-tags">
+              <span class="tag-category">${escapeHtml(e.type || 'Reflexión')}</span>
+              ${e.emotion ? `<span class="tag-emotion">${escapeHtml(e.emotion)}</span>` : ''}
+            </div>
+            <span class="entry-date">${escapeHtml(e.date || '')}</span>
+          </div>
+          <h3 class="entry-title">${escapeHtml(e.title || 'Reflexión Personal')}</h3>
+          <p class="entry-text">${escapeHtml(e.text || '')}</p>
+        </div>
+      `).join('')}
+    </section>
+    ` : ''}
+
+    <!-- 3. Sueño, Energía y Hábitos -->
+    ${(options.includeSleep || options.includeHabits) ? `
+    <section class="doc-section">
+      <h2 class="doc-section-title">🌙 Hábitos, Descanso y Nivel de Energía</h2>
+      <div class="summary-info-box">
+        ${options.includeSleep ? `
+        <div class="summary-row">
+          <span class="summary-label">Último registro de sueño:</span>
+          <span class="summary-val">${escapeHtml(sleepLog.horas || '7.5')} horas (Calidad: ${escapeHtml(sleepLog.calidad || 'Buena')})</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Nivel de energía matutino:</span>
+          <span class="summary-val">${escapeHtml(sleepLog.energia || 'Normal')}</span>
+        </div>
+        ` : ''}
+        ${options.includeHabits ? `
+        <div class="summary-row">
+          <span class="summary-label">Compromisos de autocuidado:</span>
+          <span class="summary-val">Hidratación consciente, Pausas activas y Desconexión nocturna</span>
+        </div>
+        ` : ''}
+      </div>
+    </section>
+    ` : ''}
+
+    <!-- Pie de Página Institucional y Avisos Legales -->
+    <footer class="report-footer">
+      <div class="helpline-box">
+        ⚠️ <strong>Aviso Importante:</strong> Este documento es un reporte personal de autorregulación y autocuidado. 
+        <strong>No constituye un diagnóstico clínico ni sustituye la atención médica o psiquiátrica especializada.</strong>
+        En caso de emergencia o crisis en Nicaragua, comunícate con la <strong>Línea de Emergencias (118 / 102)</strong> o <strong>Cruz Roja (+505 2265-2081)</strong>.
+      </div>
+      <p>© ${now.getFullYear()} CreSer — Plataforma de Bienestar Emocional en Nicaragua. Documento estrictamente confidencial.</p>
+    </footer>
+
+  </div>
+
+</body>
+</html>`;
 }
 
 /* ==========================================================================
@@ -470,6 +1680,7 @@ function initSleepAndEnergy() {
       energyBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       selectedEnergy = btn.dataset.energy || 'Normal';
+      showCreSerToast(`Nivel de energía seleccionado: ${selectedEnergy}`, '🔋');
     });
   });
 
@@ -487,27 +1698,44 @@ function initSleepAndEnergy() {
       };
 
       localStorage.setItem('creser-last-sleep-log', JSON.stringify(sleepLog));
-      alert(`🌙 Registro de descanso guardado: ${sleepHours} horas (${sleepQuality}). Nivel de energía: ${selectedEnergy}.`);
+      showCreSerToast(`Descanso guardado: ${sleepHours}h (${sleepQuality}).`, "🌙");
     });
   }
 }
 
 /* ==========================================================================
-   7. Seguimiento de Hábitos Diarios
+   7. Seguimiento de Hábitos Diarios con Barra de Progreso Dinámica
    ========================================================================== */
 function initWellnessHabits() {
   const checkboxes = document.querySelectorAll('.habit-check-input');
+  const fillEl = document.getElementById('habitProgressFill');
+  const percentEl = document.getElementById('habitProgressPercent');
+
+  function updateHabitsProgressBar() {
+    const total = checkboxes.length || 5;
+    const completed = document.querySelectorAll('.habit-check-input:checked').length;
+    const pct = Math.round((completed / total) * 100);
+
+    if (fillEl) fillEl.style.width = `${pct}%`;
+    if (percentEl) percentEl.textContent = `${pct}% (${completed}/${total})`;
+    localStorage.setItem('creser-wellness-habits-count', completed.toString());
+    initWeeklyStats();
+  }
+
   checkboxes.forEach(cb => {
     const saved = localStorage.getItem(`creser-habit-${cb.id}`);
     if (saved === '1') cb.checked = true;
 
     cb.addEventListener('change', () => {
       localStorage.setItem(`creser-habit-${cb.id}`, cb.checked ? '1' : '0');
-      const totalChecked = document.querySelectorAll('.habit-check-input:checked').length;
-      localStorage.setItem('creser-wellness-habits-count', totalChecked.toString());
-      initWeeklyStats();
+      updateHabitsProgressBar();
+      if (cb.checked) {
+        showCreSerToast("¡Hábito saludable completado!", "🌟");
+      }
     });
   });
+
+  updateHabitsProgressBar();
 }
 
 /* ==========================================================================

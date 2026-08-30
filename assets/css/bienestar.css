@@ -277,68 +277,228 @@ body.dark .wellness-hero-privacy-note {
   line-height: 1.5;
 }
 
-/* Herramientas Rápidas (8 Cards) */
-.quick-tools-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1.15rem;
+/* ==========================================================================
+   4. Galería en Movimiento Continuo de Herramientas (Carousel Ultra-Premium)
+   ========================================================================== */
+
+/* ¿POR QUÉ?: Mostrar el estado interactivo de la galería con un distintivo dinámico.
+   ¿CÓMO?: Insignia con punto pulsante e icono suave de galería.
+   ¿PARA QUÉ?: Captar la atención del usuario e invitar a la exploración horizontal. */
+.gallery-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #0284c7;
+  background: rgba(14, 165, 233, 0.1);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  padding: 3px 11px;
+  border-radius: 9999px;
+  margin-bottom: 0.45rem;
 }
 
-.quick-tool-card {
+body.dark .gallery-live-badge {
+  color: #38bdf8;
+  background: rgba(14, 165, 233, 0.2);
+}
+
+/* ¿POR QUÉ?: Proveer controles manuales de navegación (Anterior, Pausa/Play, Siguiente).
+   ¿CÓMO?: Botones circulares con flexbox, sombras suaves y transiciones reactivas.
+   ¿PARA QUÉ?: Permitir el control total de la velocidad y orientación del carrusel. */
+.carousel-nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.carousel-nav-btn,
+.carousel-play-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
   background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  padding: 1.35rem;
+  border: 1.5px solid var(--line);
+  color: var(--ink-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.carousel-play-btn {
+  font-size: 0.95rem;
+}
+
+.carousel-nav-btn:hover,
+.carousel-play-btn:hover {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+  transform: scale(1.08);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+}
+
+/* ¿POR QUÉ?: Crear el contenedor de vista del carrusel con scroll horizontal fluido y sin barras toscas.
+   ¿CÓMO?: Usando overflow-x auto, scroll-behavior smooth, cursor grab y ocultamiento de scrollbar nativa.
+   ¿PARA QUÉ?: Facilitar la navegación tanto por arrastre (touch/drag) como por deslizamiento automático. */
+.quick-tools-carousel-container {
+  position: relative;
+  width: 100%;
+  margin-top: 1.25rem;
+}
+
+.quick-tools-carousel-viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  cursor: grab;
+  padding: 0.85rem 0.25rem 1.25rem;
+}
+
+.quick-tools-carousel-viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.quick-tools-carousel-viewport:active {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.quick-tools-carousel-track {
+  display: flex;
+  gap: 1.35rem;
+  width: max-content;
+  align-items: stretch;
+}
+
+/* ¿POR QUÉ?: Diseñar cada tarjeta del carrusel con estética Glassmorphism, altura uniforme y efecto hover 3D.
+   ¿CÓMO?: Ancho fijo de 310px, padding generoso, sombra multicapa y elevación suave al cursor.
+   ¿PARA QUÉ?: Garantizar una experiencia visual deslumbrante y botones de acción inmediatos. */
+.quick-tool-card {
+  width: 310px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: 24px;
+  padding: 1.6rem 1.5rem 1.4rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: all var(--trans-fast);
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(255, 255, 255, 0.7) inset;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+body.dark .quick-tool-card {
+  background: rgba(30, 41, 59, 0.75);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.4);
 }
 
 .quick-tool-card:hover {
-  border-color: var(--primary);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 20px 40px -8px rgba(37, 99, 235, 0.18);
+  border-color: rgba(59, 130, 246, 0.45);
+}
+
+.quick-tool-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .quick-tool-header {
   display: flex;
-  align-items: flex-start;
-  gap: 0.85rem;
-  margin-bottom: 0.75rem;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 0.9rem;
 }
 
 .quick-tool-icon {
-  font-size: 1.75rem;
-  background: var(--surface-2);
-  width: 44px;
-  height: 44px;
+  font-size: 1.65rem;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(16, 185, 129, 0.12) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-md);
+  border-radius: 14px;
   flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
 }
 
 .quick-tool-info h4 {
-  font-size: 1.02rem;
-  font-weight: 700;
+  font-size: 1.05rem;
+  font-weight: 800;
   color: var(--ink-primary);
-  margin-bottom: 0.2rem;
+  margin: 0 0 0.2rem 0;
+  letter-spacing: -0.01em;
 }
 
 .quick-tool-duration {
-  font-size: 0.8rem;
-  color: var(--ink-muted);
-  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #2563eb;
+  padding: 2px 8px;
+  border-radius: 9999px;
+}
+
+body.dark .quick-tool-duration {
+  color: #60a5fa;
 }
 
 .quick-tool-desc {
   font-size: 0.88rem;
   color: var(--ink-secondary);
-  line-height: 1.5;
-  margin-bottom: 1.1rem;
+  line-height: 1.55;
+  margin: 0 0 1.25rem 0;
   flex-grow: 1;
+}
+
+.btn-tool-action {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ¿POR QUÉ?: Barra de progreso del carrusel en tiempo real.
+   ¿CÓMO?: Pista sutil con relleno degradado animado acorde a la posición de scroll.
+   ¿PARA QUÉ?: Ofrecer retroalimentación visual sobre la posición en la galería. */
+.carousel-progress-track {
+  width: 100%;
+  height: 6px;
+  background: var(--line);
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.carousel-progress-fill {
+  height: 100%;
+  width: 25%;
+  background: linear-gradient(90deg, #2563eb 0%, #10b981 100%);
+  border-radius: 9999px;
+  transition: width 0.15s ease-out;
 }
 
 /* Mi Bienestar esta Semana */
@@ -406,34 +566,7 @@ body.dark .wellness-hero-privacy-note {
   font-weight: 600;
 }
 
-/* Diario Emocional */
-.journal-split-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 1.5rem;
-}
-
-@media (max-width: 860px) {
-  .journal-split-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.journal-form-card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  padding: 1.5rem;
-}
-
-.journal-history-card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  padding: 1.5rem;
-  max-height: 480px;
-  overflow-y: auto;
-}
+/* (Los estilos del Diario Emocional y Gratitud se definen de forma modular y enriquecida en la sección posterior de este archivo) */
 
 /* Sueño, Energía y Hábitos */
 .sleep-energy-grid {
@@ -691,104 +824,854 @@ body.dark .wellness-hero-privacy-note {
   margin: 0.35rem 0;
 }
 
-/* Modales Interactivos de Herramientas */
+/* ==========================================================================
+   Modales Interactivos de Herramientas (Diseño Ultra-Premium & Glassmorphism)
+   ========================================================================== */
+
+/* ¿POR QUÉ?: Crear un fondo inmersivo con desenfoque de fondo y oscurecimiento cinemático.
+   ¿CÓMO?: Usando position fixed con degradado radial y backdrop-filter de 18px.
+   ¿PARA QUÉ?: Centrar toda la atención del usuario en la práctica de relajación sin distracciones. */
 .wellness-tool-modal {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: radial-gradient(circle at center, rgba(15, 23, 42, 0.78) 0%, rgba(2, 6, 23, 0.9) 100%);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   display: none;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 1rem;
+  padding: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .wellness-tool-modal.open {
   display: flex;
+  opacity: 1;
 }
 
+/* ¿POR QUÉ?: Diseñar el contenedor del diálogo con efecto de cristal esmerilado translúcido de alta gama.
+   ¿CÓMO?: Con fondo semitransparente, bordes iluminados, sombra profunda 3D y animación pop-in.
+   ¿PARA QUÉ?: Ofrecer una presencia visual deslumbrante, armónica y relajante. */
 .wellness-tool-dialog {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 28px;
   max-width: 580px;
   width: 100%;
-  padding: 2rem;
-  box-shadow: var(--shadow-lg);
+  padding: 2.25rem 2.25rem 2rem;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.9) inset;
   position: relative;
   max-height: 90vh;
   overflow-y: auto;
+  transform: scale(0.94) translateY(15px);
+  animation: modalPopIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  box-sizing: border-box;
 }
 
+body.dark .wellness-tool-dialog {
+  background: rgba(30, 41, 59, 0.92);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+
+@keyframes modalPopIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.92) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Botón de cierre circular flotante con micro-animación */
 .wellness-tool-close-btn {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: transparent;
-  border: none;
-  font-size: 1.2rem;
-  cursor: pointer;
-  color: var(--ink-muted);
-}
-
-.wellness-tool-close-btn:hover {
-  color: #ef4444;
-}
-
-/* Animación del círculo de respiración en modal */
-.modal-breath-circle {
-  width: 150px;
-  height: 150px;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  margin: 1.5rem auto;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.35) 0%, rgba(16, 185, 129, 0.45) 100%);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  color: var(--ink-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+}
+
+.wellness-tool-close-btn:hover {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
+  transform: rotate(90deg) scale(1.08);
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+}
+
+/* Títulos y subtítulos dentro de los modales */
+.wellness-tool-dialog h3 {
+  font-size: 1.4rem;
+  font-weight: 800;
   color: var(--ink-primary);
-  border: 3px solid var(--primary);
-  transition: transform 4s ease-in-out;
+  letter-spacing: -0.015em;
+  margin: 0 0 0.4rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.wellness-tool-dialog p.small.text-muted,
+.wellness-tool-dialog .modal-subtitle {
+  font-size: 0.92rem;
+  color: var(--ink-secondary);
+  line-height: 1.55;
+  margin-bottom: 1.25rem;
+}
+
+/* Entradas y áreas de texto dentro del modal garantizadas al 100% de ancho */
+.wellness-tool-dialog textarea,
+.wellness-tool-dialog input[type="text"],
+.wellness-tool-dialog .modal-textarea {
+  width: 100% !important;
+  display: block !important;
+  box-sizing: border-box !important;
+  padding: 1rem 1.25rem !important;
+  background: var(--surface-2) !important;
+  border: 1.5px solid var(--line) !important;
+  border-radius: 16px !important;
+  font-size: 0.95rem !important;
+  color: var(--ink-primary) !important;
+  font-family: inherit !important;
+  line-height: 1.6 !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  min-height: 140px !important;
+  resize: vertical !important;
+  margin: 1.15rem 0 !important;
+}
+
+.wellness-tool-dialog textarea:focus,
+.wellness-tool-dialog input[type="text"]:focus,
+.wellness-tool-dialog .modal-textarea:focus {
+  outline: none !important;
+  border-color: #3b82f6 !important;
+  background: var(--surface) !important;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.16) !important;
+}
+
+/* Botones principales y acciones en modales */
+.wellness-tool-dialog .primary,
+.wellness-tool-dialog .btn-modal-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #2563eb 0%, #059669 100%);
+  color: #ffffff;
+  font-size: 0.96rem;
+  font-weight: 700;
+  padding: 0.85rem 2rem;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px -4px rgba(37, 99, 235, 0.4);
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.wellness-tool-dialog .primary:hover,
+.wellness-tool-dialog .btn-modal-action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -4px rgba(37, 99, 235, 0.5);
+  filter: brightness(1.08);
+}
+
+.modal-actions-center {
+  text-align: center;
+  margin-top: 1.25rem;
+}
+
+/* Animación del círculo de respiración en modal con efecto Neón Orgánico */
+.modal-breath-circle {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  margin: 1.75rem auto;
+  background: radial-gradient(circle at 35% 35%, #60a5fa 0%, #3b82f6 50%, #10b981 100%);
+  box-shadow: 0 0 35px rgba(59, 130, 246, 0.4), 0 0 0 8px rgba(59, 130, 246, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffffff;
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  transition: transform 4s cubic-bezier(0.4, 0, 0.2, 1);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .modal-breath-circle.inhale {
-  transform: scale(1.4);
+  transform: scale(1.38);
+  box-shadow: 0 0 50px rgba(59, 130, 246, 0.6), 0 0 0 12px rgba(59, 130, 246, 0.2);
 }
 
 .modal-breath-circle.hold {
-  transform: scale(1.4);
-  border-color: var(--secondary);
+  transform: scale(1.38);
+  border-color: #10b981;
+  box-shadow: 0 0 50px rgba(16, 185, 129, 0.6), 0 0 0 12px rgba(16, 185, 129, 0.2);
 }
 
 .modal-breath-circle.exhale {
   transform: scale(0.85);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.25), 0 0 0 4px rgba(59, 130, 246, 0.08);
 }
 
-/* Clases de apoyo y utilidades de Bienestar (Zero Inline Styles) */
-.wellness-tip-box {
+/* ==========================================================================
+   12. Biblioteca de Bienestar (Buscador, Píldoras Gliding y Tarjetas)
+   ========================================================================== */
+
+/* ¿POR QUÉ?: Diseñar el buscador temático con icono integrado y bordes suaves.
+   ¿CÓMO?: Usando posición relativa, padding izquierdo amplio y anillo de foco luminoso.
+   ¿PARA QUÉ?: Permitir al usuario encontrar guías y recursos de forma inmediata. */
+.library-search-bar {
+  margin-bottom: 1.25rem;
+}
+
+.library-search-input {
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+  padding: 0.9rem 1.25rem;
   background: var(--surface-2);
-  border-radius: var(--radius-sm);
-  padding: 0.85rem;
-  margin-top: 1rem;
-  font-size: 0.85rem;
-  color: var(--ink-secondary);
+  border: 1.5px solid var(--line);
+  border-radius: 16px;
+  font-size: 0.95rem;
+  color: var(--ink-primary);
+  font-family: inherit;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.wellness-disclaimer-box {
-  background: rgba(255, 255, 255, 0.6);
-  padding: 0.9rem;
-  border-radius: var(--radius-md);
-  border: 1px solid rgba(239, 68, 68, 0.2);
-  font-size: 0.85rem;
+.library-search-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: var(--surface);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+}
+
+/* ¿POR QUÉ?: Fila horizontal de píldoras de categorías con desplazamiento suave (Gliding Row).
+   ¿CÓMO?: Usando display flex, overflow-x auto, scroll-behavior smooth y scrollbar oculta.
+   ¿PARA QUÉ?: Permitir filtrar de forma rápida y táctil entre 11 categorías sin saltos de línea. */
+.library-category-pills {
+  display: flex;
+  gap: 0.55rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0.4rem 0.2rem 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.library-category-pills::-webkit-scrollbar {
+  display: none;
+}
+
+.library-pill-btn {
+  flex-shrink: 0;
+  padding: 0.52rem 1.15rem;
+  border-radius: 9999px;
+  background: var(--surface-2);
+  border: 1.5px solid var(--line);
+  font-size: 0.86rem;
+  font-weight: 600;
   color: var(--ink-secondary);
-  margin-top: 1rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.library-pill-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(59, 130, 246, 0.4);
+  color: var(--ink-primary);
+  background: var(--surface);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+}
+
+.library-pill-btn.active {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff !important;
+  border-color: #2563eb;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+  transform: translateY(-1px);
+}
+
+/* Tarjetas de recursos de la biblioteca */
+.library-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.library-card {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: 20px;
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+  transition: transform var(--trans-fast), box-shadow var(--trans-fast), border-color var(--trans-fast);
+}
+
+.library-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px -6px rgba(0, 0, 0, 0.08);
+  border-color: rgba(59, 130, 246, 0.35);
+}
+
+/* ==========================================================================
+   14. Modal de Exportación y Reporte Institucional CreSer (Diseño Editorial)
+   ========================================================================== */
+
+/* ¿POR QUÉ?: Diálogo amplio y estructurado para configurar la descarga de reportes oficiales.
+   ¿CÓMO?: Ancho máximo de 720px, disposición en dos columnas y tarjetas interactivas de selección.
+   ¿PARA QUÉ?: Permitir al usuario elegir con precisión métricas y reflexiones a descargar. */
+.export-dialog {
+  max-width: 720px;
+  width: 100%;
+}
+
+.export-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.export-header-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(5, 150, 105, 0.15) 100%);
+  border: 1.5px solid rgba(37, 99, 235, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.15);
+}
+
+.export-header-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--ink-primary);
+  margin: 0 0 0.25rem 0;
+  letter-spacing: -0.015em;
+}
+
+.export-options-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 680px) {
+  .export-options-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.export-group-title {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  margin-bottom: 0.75rem;
+}
+
+.export-checkbox-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.export-checkbox-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 0.85rem 1rem;
+  background: var(--surface-2);
+  border: 1.5px solid var(--line);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+}
+
+.export-checkbox-card:hover {
+  border-color: #3b82f6;
+  background: var(--surface);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.08);
+}
+
+.export-checkbox-card input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #2563eb;
+  margin-top: 2px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.checkbox-card-info strong {
+  display: block;
+  font-size: 0.88rem;
+  color: var(--ink-primary);
+  font-weight: 700;
+  margin-bottom: 0.15rem;
+}
+
+.checkbox-card-info span {
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  line-height: 1.35;
+}
+
+.export-format-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.export-format-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.95rem 1.15rem;
+  background: var(--surface-2);
+  border: 1.5px solid var(--line);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+}
+
+.export-format-card input[type="radio"] {
+  accent-color: #2563eb;
+  cursor: pointer;
+  margin-right: 0.2rem;
+  flex-shrink: 0;
+}
+
+.export-format-card:hover {
+  border-color: #3b82f6;
+  background: var(--surface);
+}
+
+.export-format-card.active,
+.export-format-card:has(input:checked) {
+  border-color: #2563eb;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(5, 150, 105, 0.06) 100%);
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.12);
+}
+
+.format-card-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.format-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.format-card-content strong {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  margin-bottom: 0.15rem;
+}
+
+.format-card-content span {
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  line-height: 1.35;
+}
+
+.export-actions-bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.85rem;
+  align-items: center;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+
+.btn-export-preview {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--surface-2);
+  border: 1.5px solid var(--line);
+  padding: 0.85rem 1.4rem;
+  border-radius: 14px;
+  color: var(--ink-primary);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-export-preview:hover {
+  background: var(--surface);
+  border-color: #2563eb;
+  color: #2563eb;
+  transform: translateY(-1px);
+}
+
+.btn-export-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #2563eb 0%, #059669 100%);
+  color: #ffffff;
+  padding: 0.85rem 1.85rem;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 0.94rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 24px -4px rgba(37, 99, 235, 0.4);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-export-download:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px -4px rgba(37, 99, 235, 0.5);
+  filter: brightness(1.08);
+}
+
+/* ==========================================================================
+   15. Tarjeta de Apoyo en Crisis y Primeros Auxilios (Diseño de Alto Impacto)
+   ========================================================================== */
+
+/* ¿POR QUÉ?: Resaltar la sección de ayuda urgente con una estética acogedora, empática y clara.
+   ¿CÓMO?: Fondo suave, borde de contención y cabecera con icono destacado.
+   ¿PARA QUÉ?: Transmitir serenidad y acceso inmediato a líneas oficiales en momentos de angustia. */
+.help-support-card {
+  background: linear-gradient(135deg, rgba(254, 242, 242, 0.9) 0%, rgba(255, 255, 255, 0.95) 100%);
+  border: 1.5px solid rgba(239, 68, 68, 0.25);
+  border-radius: 26px;
+  padding: 2.25rem 2.25rem 2rem;
+  box-shadow: 0 12px 36px -8px rgba(239, 68, 68, 0.08);
+}
+
+body.dark .help-support-card {
+  background: linear-gradient(135deg, rgba(45, 20, 20, 0.75) 0%, rgba(30, 41, 59, 0.85) 100%);
+  border-color: rgba(239, 68, 68, 0.35);
+  box-shadow: 0 12px 36px -8px rgba(0, 0, 0, 0.45);
+}
+
+.help-support-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.help-support-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(249, 115, 22, 0.15) 100%);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.help-support-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #dc2626;
+  margin: 0 0 0.3rem 0;
+  letter-spacing: -0.015em;
+}
+
+body.dark .help-support-title {
+  color: #f87171;
+}
+
+.help-support-subtitle {
+  font-size: 0.94rem;
+  color: var(--ink-secondary);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.help-grid-contacts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.15rem;
+  margin: 1.5rem 0;
+}
+
+.help-contact-box {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: 18px;
+  padding: 1.25rem 1.35rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  transition: transform var(--trans-fast), box-shadow var(--trans-fast), border-color var(--trans-fast);
+}
+
+.help-contact-box:hover {
+  transform: translateY(-3px);
+  border-color: rgba(239, 68, 68, 0.4);
+  box-shadow: 0 8px 24px -4px rgba(239, 68, 68, 0.12);
+}
+
+.contact-box-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  margin-bottom: 0.5rem;
+}
+
+.contact-icon {
+  font-size: 1.2rem;
+}
+
+.contact-number {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace, monospace;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #dc2626;
+  background: rgba(239, 68, 68, 0.08);
+  padding: 4px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  margin-bottom: 0.5rem;
+}
+
+body.dark .contact-number {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.2);
+}
+
+/* Aviso médico y legal */
+.wellness-disclaimer-box {
+  background: rgba(254, 242, 242, 0.7);
+  border: 1.5px solid rgba(239, 68, 68, 0.2);
+  border-radius: 16px;
+  padding: 1rem 1.25rem;
+  font-size: 0.88rem;
+  color: var(--ink-secondary);
+  line-height: 1.55;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
 }
 
 body.dark .wellness-disclaimer-box {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(45, 20, 20, 0.5);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.disclaimer-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ==========================================================================
+   16. Tarjeta de Privacidad y Confianza (Privacy & Trust Shield Banner)
+   ========================================================================== */
+
+/* ¿POR QUÉ?: Brindar a los usuarios la máxima tranquilidad respecto a la confidencialidad de sus notas.
+   ¿CÓMO?: Creando un contenedor Glassmorphism insignia con insignias de confianza y botón interactivo.
+   ¿PARA QUÉ?: Elevar la percepción de profesionalismo, seguridad y cuidado ético de CreSer. */
+.wellness-privacy-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 249, 255, 0.9) 100%);
+  border: 1.5px solid rgba(59, 130, 246, 0.25);
+  border-radius: 28px;
+  padding: 2.25rem 2.5rem;
+  box-shadow: 0 20px 45px -10px rgba(37, 99, 235, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  transition: transform var(--trans-fast), box-shadow var(--trans-fast);
+}
+
+body.dark .wellness-privacy-card {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+}
+
+.wellness-privacy-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 25px 55px -10px rgba(37, 99, 235, 0.14);
+}
+
+.wellness-privacy-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  flex: 1;
+  min-width: 280px;
+}
+
+.wellness-privacy-icon-box {
+  width: 62px;
+  height: 62px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.18) 0%, rgba(16, 185, 129, 0.22) 100%);
+  border: 1.5px solid rgba(59, 130, 246, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.2);
+  flex-shrink: 0;
+}
+
+.wellness-privacy-text {
+  flex: 1;
+}
+
+.wellness-privacy-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  margin-bottom: 0.6rem;
+}
+
+body.dark .wellness-privacy-badge {
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.2);
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: pulseGreen 2s infinite;
+}
+
+@keyframes pulseGreen {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.wellness-privacy-heading {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--ink-primary);
+  letter-spacing: -0.015em;
+  margin: 0 0 0.4rem 0;
+}
+
+.wellness-privacy-desc {
+  font-size: 0.93rem;
+  color: var(--ink-secondary);
+  line-height: 1.6;
+  max-width: 680px;
+  margin: 0 0 1rem 0;
+}
+
+.wellness-privacy-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.privacy-pill {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  padding: 5px 11px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.wellness-privacy-action {
+  flex-shrink: 0;
+}
+
+.btn-privacy-trust {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 0.94rem;
+  padding: 0.9rem 1.65rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px -4px rgba(37, 99, 235, 0.35);
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-privacy-trust:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 30px -4px rgba(37, 99, 235, 0.45);
+  filter: brightness(1.06);
+}
+
+.privacy-btn-arrow {
+  font-size: 1.1rem;
+  transition: transform 0.2s ease;
+}
+
+.btn-privacy-trust:hover .privacy-btn-arrow {
+  transform: translateX(4px);
 }
 
 .wellness-grid-2col {
@@ -914,5 +1797,613 @@ body.dark .wellness-disclaimer-box {
   flex-wrap: wrap;
   margin-top: 1.5rem;
 }
+
+/* ==========================================================================
+   Mejoras Interactivas del Diario Emocional y Gratitud (Diseño Premium)
+   ========================================================================== */
+
+/* ¿POR QUÉ?: Organizar el diario en una cuadrícula equilibrada de dos columnas.
+   ¿CÓMO?: Empleando CSS Grid con proporciones ergonómicas y colapso responsive en móviles.
+   ¿PARA QUÉ?: Separar con claridad el área de redacción activa del historial de lecturas. */
+.journal-split-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 1.75rem;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .journal-split-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ¿POR QUÉ?: Presentar contenedores con estética Glassmorphism pulida y sombras multicapa.
+   ¿CÓMO?: Aplicando backdrop-filter blur, bordes semitransparentes y radios amplios de 22px.
+   ¿PARA QUÉ?: Proporcionar una atmósfera relajante, moderna y visualmente atractiva. */
+.journal-form-card,
+.journal-history-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 1.85rem;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(255, 255, 255, 0.7) inset;
+  transition: box-shadow var(--trans-fast);
+}
+
+body.dark .journal-form-card,
+body.dark .journal-history-card {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.35);
+}
+
+/* Cabecera interna de tarjetas de diario */
+.journal-card-header,
+.journal-history-header {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 1.35rem;
+  padding-bottom: 1.15rem;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.journal-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(16, 185, 129, 0.12) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.journal-card-title,
+.journal-history-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--ink-primary);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.journal-card-subtitle,
+.journal-history-subtitle {
+  font-size: 0.84rem;
+  color: var(--ink-muted);
+  margin: 0.15rem 0 0;
+}
+
+/* ¿POR QUÉ?: Agrupar etiquetas y campos en bloques verticales consistentes.
+   ¿CÓMO?: Usando display flex column con espaciado uniforme de 0.45rem y margen inferior.
+   ¿PARA QUÉ?: Evitar que los textos y los inputs se junten horizontalmente. */
+.journal-form-body {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.25rem !important;
+  width: 100% !important;
+}
+
+.journal-field-group {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.5rem !important;
+  width: 100% !important;
+  margin-bottom: 0 !important;
+}
+
+.field-label {
+  display: block !important;
+  width: 100% !important;
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  color: var(--ink-primary) !important;
+  letter-spacing: -0.01em !important;
+}
+
+.field-label-opt {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+}
+
+/* ¿POR QUÉ?: Estilizar todos los controles de entrada con bordes suaves y foco reactivo.
+   ¿CÓMO?: Definiendo padding generoso, fondo surface-2, radio de 12px y anillo de foco azul.
+   ¿PARA QUÉ?: Garantizar accesibilidad táctil, legibilidad y estética refinada. */
+.input {
+  width: 100%;
+  display: block;
+  padding: 0.75rem 1rem;
+  background: var(--surface-2);
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  font-size: 0.92rem;
+  color: var(--ink-primary);
+  font-family: inherit;
+  line-height: 1.5;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: var(--surface);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.14);
+}
+
+.select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.select-wrapper::after {
+  content: '▾';
+  position: absolute;
+  right: 1.1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  pointer-events: none;
+}
+
+.input-select,
+.input-filter-select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 2.4rem;
+  cursor: pointer;
+}
+
+.textarea-wrapper {
+  width: 100%;
+}
+
+.input-textarea {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.6;
+  padding: 0.85rem 1rem;
+}
+
+/* ¿POR QUÉ?: Permitir al usuario asociar una emoción visual a su reflexión.
+   ¿CÓMO?: Creando una barra de botones tipo chip con flex-wrap y transiciones suaves.
+   ¿PARA QUÉ?: Facilitar la identificación emocional rápida al redactar en el diario. */
+.journal-emotion-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.15rem;
+}
+
+.journal-emotion-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.48rem 0.9rem;
+  background: var(--surface-2);
+  border: 1.5px solid var(--line);
+  border-radius: 9999px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  cursor: pointer;
+  transition: all var(--trans-fast);
+}
+
+.journal-emotion-chip:hover {
+  border-color: rgba(59, 130, 246, 0.5);
+  color: var(--ink-primary);
+  transform: translateY(-2px);
+  background: var(--surface);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.08);
+}
+
+.journal-emotion-chip.active {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.16) 0%, rgba(16, 185, 129, 0.16) 100%);
+  border-color: #3b82f6;
+  color: #2563eb;
+  font-weight: 700;
+  box-shadow: 0 3px 12px rgba(59, 130, 246, 0.18);
+  transform: translateY(-1px);
+}
+
+body.dark .journal-emotion-chip.active {
+  color: #60a5fa;
+  border-color: #60a5fa;
+  background: rgba(59, 130, 246, 0.25);
+}
+
+/* Metadatos y contador de caracteres */
+.journal-meta-counter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  padding: 0.35rem 0.2rem 0;
+  margin-top: 0.25rem;
+}
+
+.journal-counter-badge {
+  color: #2563eb;
+  font-weight: 600;
+  background: rgba(59, 130, 246, 0.08);
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.journal-counter-chars {
+  color: var(--ink-muted);
+  font-weight: 500;
+}
+
+/* Botones de acción del formulario */
+.journal-form-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 1.15rem;
+}
+
+.btn-journal-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #2563eb 0%, #059669 100%);
+  color: #ffffff;
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 0.8rem 1.6rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px -2px rgba(37, 99, 235, 0.35);
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-journal-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -2px rgba(37, 99, 235, 0.45);
+  filter: brightness(1.06);
+}
+
+.btn-journal-reset {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 1.2rem;
+  background: var(--surface-2);
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  color: var(--ink-secondary);
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all var(--trans-fast);
+}
+
+.btn-journal-reset:hover {
+  background: var(--surface);
+  color: var(--ink-primary);
+  border-color: var(--ink-muted);
+}
+
+/* Botón de exportación e inspección de patrones */
+.btn-export-journal {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  color: #2563eb;
+  font-weight: 700;
+  font-size: 0.82rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all var(--trans-fast);
+}
+
+.btn-export-journal:hover {
+  background: #2563eb;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.btn-journal-patterns-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  padding: 0.45rem 0.95rem;
+  border-radius: 12px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  cursor: pointer;
+  transition: all var(--trans-fast);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.btn-journal-patterns-top:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.12);
+}
+
+/* ¿POR QUÉ?: Barra de filtrado con buscador y selector agrupados con precisión.
+   ¿CÓMO?: Flexbox con flex-wrap y contenedor de icono de lupa integrado.
+   ¿PARA QUÉ?: Permitir búsquedas fluidas y filtrado instantáneo por temática. */
+.journal-filter-bar {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 0.65rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 540px) {
+  .journal-filter-bar {
+    grid-template-columns: 1fr;
+  }
+}
+
+.search-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.search-input-wrapper .search-icon {
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.85rem;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.input-search {
+  padding-left: 2.25rem;
+}
+
+/* Lista scrolleable con scrollbar estilizada */
+.wellness-journal-scroll-list {
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 0.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.wellness-journal-scroll-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.wellness-journal-scroll-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.wellness-journal-scroll-list::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 9999px;
+}
+
+.wellness-journal-scroll-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.7);
+}
+
+/* Tarjeta individual de entrada del diario */
+.journal-entry-card {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1.15rem 1.25rem;
+  margin-bottom: 0.2rem;
+  transition: transform var(--trans-fast), box-shadow var(--trans-fast), border-color var(--trans-fast);
+}
+
+.journal-entry-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+  border-color: rgba(59, 130, 246, 0.35);
+  background: var(--surface);
+}
+
+.journal-entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.journal-entry-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.journal-entry-type-badge {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #2563eb;
+  background: rgba(59, 130, 246, 0.1);
+  padding: 3px 9px;
+  border-radius: 9999px;
+  border: 1px solid rgba(59, 130, 246, 0.18);
+}
+
+.journal-entry-emotion-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: 3px 9px;
+  border-radius: 9999px;
+}
+
+.journal-entry-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding-top: 0.65rem;
+  border-top: 1px dashed var(--line);
+  justify-content: flex-end;
+}
+
+.journal-action-btn {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 8px;
+  transition: all var(--trans-fast);
+}
+
+.journal-action-btn:hover {
+  background: var(--surface-2);
+  color: var(--ink-primary);
+  border-color: var(--primary);
+}
+
+.journal-action-btn.btn-delete:hover {
+  color: #ef4444;
+  border-color: #fca5a5;
+  background: rgba(239, 68, 68, 0.08);
+}
+
+/* ==========================================================================
+   Barra de Progreso de Hábitos Diarios
+   ========================================================================== */
+
+/* ¿POR QUÉ?: Mostrar visualmente el porcentaje de hábitos saludables completados hoy.
+   ¿CÓMO?: Mediante una barra de progreso lineal con transición animada y etiqueta de porcentaje.
+   ¿PARA QUÉ?: Reforzar positivamente la constancia y el autocuidado del usuario. */
+.habit-progress-wrap {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 0.9rem;
+  margin: 0.75rem 0 1rem;
+}
+
+.habit-progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+
+.habit-progress-badge {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.habit-progress-track {
+  height: 8px;
+  background: var(--line);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.habit-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6 0%, #10b981 100%);
+  border-radius: var(--radius-full);
+  transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   Control de Audio Armónico en Modales
+   ========================================================================== */
+
+/* ¿POR QUÉ?: Ofrecer la opción de acompañamiento sonoro durante ejercicios guiados.
+   ¿CÓMO?: Con un toggle estilizado dentro del diálogo del modal.
+   ¿PARA QUÉ?: Brindar control auditivo adaptado a las preferencias del usuario. */
+.modal-sound-control {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line);
+}
+
+.modal-sound-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--ink-secondary);
+  cursor: pointer;
+}
+
+.modal-sound-toggle input {
+  cursor: pointer;
+  accent-color: var(--primary);
+}
+
+/* ==========================================================================
+   Notificaciones Toast Flotantes (CreSer Toast)
+   ========================================================================== */
+
+/* ¿POR QUÉ?: Notificar acciones exitosas (guardado, copia, eliminación) de forma no intrusiva.
+   ¿CÓMO?: Con un toast flotante en la esquina inferior con animación slide-up y desvanecimiento.
+   ¿PARA QUÉ?: Evitar el uso de diálogos nativos 'alert()' y mantener una experiencia pulida. */
+.creser-toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--surface);
+  color: var(--ink-primary);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--secondary);
+  border-radius: var(--radius-md);
+  padding: 0.9rem 1.25rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  z-index: 9999;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  max-width: 380px;
+}
+
+.creser-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+body.dark .creser-toast {
+  background: #1e293b;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
 
 

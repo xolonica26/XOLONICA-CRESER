@@ -90,25 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Botón superior para reabrir el formulario en caso de haberlo cerrado
-  if (btnHeaderAuth) {
-    btnHeaderAuth.addEventListener('click', () => {
-      if (creserForm) {
-        creserForm.style.display = 'block';
-        creserForm.classList.add('active-btn');
-      }
-      btnHeaderAuth.classList.add('hidden');
-    });
-  }
-
-  // Botón '✕' para ocultar temporalmente la tarjeta de login
-  if (closeBtn) {
-    closeBtn.addEventListener('click', () => {
-      if (creserForm) creserForm.style.display = 'none';
-      if (btnHeaderAuth) btnHeaderAuth.classList.remove('hidden');
-    });
-  }
-
   /* =========================================================================
      Gestión de Formularios, Roles y Auditoría de Seguridad
      ========================================================================= */

@@ -26,7 +26,9 @@ import {
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword, 
   signOut, 
-  onAuthStateChanged 
+  onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithPopup
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { 
   getFirestore, 
@@ -164,9 +166,22 @@ Siempre responde en español, con calidez, respeto, brevedad (máximo 3 párrafo
   return null;
 }
 
-// Exporta la función de IA globalmente para la ventana del navegador
+/**
+ * Inicia sesión o registra un usuario con cuenta de Google (OAuth Popup)
+ * ¿POR QUÉ?: Permitir acceso instantáneo seguro con credenciales de Google.
+ * ¿CÓMO?: Invocando signInWithPopup(auth, provider) con GoogleAuthProvider.
+ * ¿PARA QUÉ?: Facilitar el acceso y asociar cuentas verificadas a los roles del sistema.
+ */
+export async function firebaseGoogleLogin() {
+  if (!auth) throw new Error("Firebase Auth no disponible");
+  const provider = new GoogleAuthProvider();
+  return await signInWithPopup(auth, provider);
+}
+
+// Exporta las funciones clave globalmente para el navegador
 if (typeof window !== "undefined") {
   window.askKiriAI = askKiriAI;
+  window.firebaseGoogleLogin = firebaseGoogleLogin;
 }
 
 export async function firebaseLogin(email, password) {

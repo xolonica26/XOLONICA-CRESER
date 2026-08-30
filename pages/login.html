@@ -107,10 +107,10 @@
             <!-- Selector de Rol para autenticación -->
             <div class="input-box select-box">
               <span class="input-icon">🏷️</span>
-              <select id="loginRole" aria-label="Seleccionar Rol de Acceso" style="width:100%;height:100%;background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.2);border-radius:14px;color:#fff;padding:0 35px 0 14px;font-size:0.92rem;outline:none;">
-                <option value="usuario" selected style="background:#0f172a;color:#fff">Rol: Usuario (Bienestar & Diario)</option>
-                <option value="admin" style="background:#0f172a;color:#fff">Rol: Administrador (Gestión Total)</option>
-                <option value="auditor" style="background:#0f172a;color:#fff">Rol: Auditor (Trazabilidad & Logs)</option>
+              <select id="loginRole" aria-label="Seleccionar Rol de Acceso" class="auth-role-select">
+                <option value="usuario" selected class="auth-role-option">Rol: Usuario (Bienestar & Diario)</option>
+                <option value="admin" class="auth-role-option">Rol: Administrador (Gestión Total)</option>
+                <option value="auditor" class="auth-role-option">Rol: Auditor (Trazabilidad & Logs)</option>
               </select>
             </div>
 
@@ -162,10 +162,10 @@
             <!-- Selector de rol al registrarse -->
             <div class="input-box select-box">
               <span class="input-icon">🏷️</span>
-              <select id="regRole" aria-label="Rol Solicitado" style="width:100%;height:100%;background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.2);border-radius:14px;color:#fff;padding:0 35px 0 14px;font-size:0.92rem;outline:none;">
-                <option value="usuario" selected style="background:#0f172a;color:#fff">Rol: Usuario</option>
-                <option value="admin" style="background:#0f172a;color:#fff">Rol: Administrador</option>
-                <option value="auditor" style="background:#0f172a;color:#fff">Rol: Auditor</option>
+              <select id="regRole" aria-label="Rol Solicitado" class="auth-role-select">
+                <option value="usuario" selected class="auth-role-option">Rol: Usuario</option>
+                <option value="admin" class="auth-role-option">Rol: Administrador</option>
+                <option value="auditor" class="auth-role-option">Rol: Auditor</option>
               </select>
             </div>
 

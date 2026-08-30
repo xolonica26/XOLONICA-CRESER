@@ -103,14 +103,14 @@
           <h3>👤 Sesión y Rol Actual</h3>
           <p class="user-session-info" id="userDisplayName"><strong>Usuario:</strong> Andrea</p>
           
-          <div style="margin: 10px 0; display:flex; align-items:center; gap:8px">
-            <span style="font-size:0.85rem;color:var(--ink-muted)">Rol Activo:</span>
+          <div class="role-badge-row">
+            <span class="role-label-text">Rol Activo:</span>
             <span class="badge badge-purple" id="userRoleBadge">USUARIO</span>
           </div>
 
-          <div style="margin: 12px 0">
-            <label for="roleSwitcher" style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;color:var(--ink-muted)">Cambiar Rol (Demostración):</label>
-            <select id="roleSwitcher" style="width:100%;padding:8px 12px;border-radius:10px;background:var(--card-bg);border:1px solid var(--card-border);color:var(--ink-primary);font-size:0.9rem;outline:none;">
+          <div class="role-switcher-group">
+            <label for="roleSwitcher" class="role-switcher-label">Cambiar Rol (Demostración):</label>
+            <select id="roleSwitcher" class="role-select-control">
               <option value="usuario">Rol: Usuario (Bienestar & Diario)</option>
               <option value="admin">Rol: Administrador (Gestión Total)</option>
               <option value="auditor">Rol: Auditor (Trazabilidad & Logs)</option>
@@ -161,26 +161,26 @@
            Panel de Auditoría y Trazabilidad (Solo visible para Roles Admin y Auditor)
            ¿POR QUÉ?: Para cumplir con el requerimiento de auditoría y supervisión de seguridad.
            ========================================================================= -->
-      <div class="card mt-4" id="auditPanelCard" style="border:1px solid rgba(59,130,246,0.3)">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div class="card mt-4 audit-card-wrapper" id="auditPanelCard">
+        <div class="audit-header-flex">
           <div>
-            <h3 style="margin:0">🛡️ Bitácora de Auditoría y Trazabilidad</h3>
-            <p class="small" style="margin:2px 0 0">Registro de eventos de seguridad y actividad del sistema (Permiso: Admin & Auditor)</p>
+            <h3 class="audit-title">🛡️ Bitácora de Auditoría y Trazabilidad</h3>
+            <p class="small audit-subtitle">Registro de eventos de seguridad y actividad del sistema (Permiso: Admin & Auditor)</p>
           </div>
-          <button class="ghost" id="refreshAuditBtn" style="font-size:0.85rem">🔄 Actualizar Logs</button>
+          <button class="ghost audit-refresh-btn" id="refreshAuditBtn">🔄 Actualizar Logs</button>
         </div>
 
         <!-- Tabla con los registros de auditoría -->
-        <div style="overflow-x:auto">
-          <table style="width:100%;border-collapse:collapse;font-size:0.85rem;text-align:left">
+        <div class="audit-table-wrap">
+          <table class="audit-table">
             <thead>
-              <tr style="border-bottom:1px solid var(--card-border);color:var(--ink-muted)">
-                <th style="padding:8px">ID Evento</th>
-                <th style="padding:8px">Fecha / Hora</th>
-                <th style="padding:8px">Usuario</th>
-                <th style="padding:8px">Rol</th>
-                <th style="padding:8px">Acción Realizada</th>
-                <th style="padding:8px">Origen IP</th>
+              <tr class="audit-table-head-row">
+                <th class="audit-th">ID Evento</th>
+                <th class="audit-th">Fecha / Hora</th>
+                <th class="audit-th">Usuario</th>
+                <th class="audit-th">Rol</th>
+                <th class="audit-th">Acción Realizada</th>
+                <th class="audit-th">Origen IP</th>
               </tr>
             </thead>
             <tbody id="auditTableBody">

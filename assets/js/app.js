@@ -513,17 +513,17 @@ function initJournalAndGoals() {
     if (!journalList) return;
     const entries = JSON.parse(localStorage.getItem('creser-journal-entries') || '[]');
     if (entries.length === 0) {
-      journalList.innerHTML = '<p class="small" style="color:var(--ink-muted);text-align:center;padding:10px 0">No tienes notas guardadas aún.</p>';
+      journalList.innerHTML = '<p class="small journal-empty-msg">No tienes notas guardadas aún.</p>';
       return;
     }
 
     journalList.innerHTML = entries.map((item, idx) => `
-      <div style="background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:12px;margin-bottom:8px;position:relative">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-          <span style="font-size:11px;color:var(--primary);font-weight:700">${item.date}</span>
-          <button onclick="deleteJournalEntry(${idx})" class="ghost" style="padding:2px 6px;font-size:12px;color:var(--ink-muted)" aria-label="Eliminar entrada">✕</button>
+      <div class="journal-entry-card">
+        <div class="journal-entry-head">
+          <span class="journal-entry-date">${item.date}</span>
+          <button onclick="deleteJournalEntry(${idx})" class="ghost journal-entry-del-btn" aria-label="Eliminar entrada">✕</button>
         </div>
-        <p style="font-size:13px;margin:0;color:var(--ink-primary)">${escapeHtml(item.text)}</p>
+        <p class="journal-entry-body">${escapeHtml(item.text)}</p>
       </div>
     `).join('');
   }
@@ -677,13 +677,13 @@ function initRoleAndAuditPanel() {
     }
 
     auditTableBody.innerHTML = logs.map(log => `
-      <tr style="border-bottom:1px solid rgba(255,255,255,0.06)">
-        <td style="padding:8px;font-family:monospace;color:var(--primary)">${log.id}</td>
-        <td style="padding:8px;color:var(--ink-muted)">${log.timestamp}</td>
-        <td style="padding:8px;font-weight:600">${log.user}</td>
-        <td style="padding:8px"><span class="badge ${log.role==='ADMIN'?'':log.role==='AUDITOR'?'badge-green':'badge-purple'}" style="font-size:10px">${log.role}</span></td>
-        <td style="padding:8px">${escapeHtml(log.action)}</td>
-        <td style="padding:8px;color:var(--ink-muted);font-family:monospace">${log.ip || '127.0.0.1'}</td>
+      <tr class="audit-table-row">
+        <td class="audit-log-id">${log.id}</td>
+        <td class="audit-log-time">${log.timestamp}</td>
+        <td class="audit-log-user">${log.user}</td>
+        <td class="audit-log-badge-td"><span class="badge ${log.role==='ADMIN'?'':log.role==='AUDITOR'?'badge-green':'badge-purple'}">${log.role}</span></td>
+        <td class="audit-log-action">${escapeHtml(log.action)}</td>
+        <td class="audit-log-ip">${log.ip || '127.0.0.1'}</td>
       </tr>
     `).join('');
   }
@@ -790,7 +790,7 @@ window.openInfoModal = function(key) {
 
   const data = modalContentData[key] || { title: "Información", body: "Contenido informativo en preparación." };
   titleEl.textContent = data.title;
-  bodyEl.innerHTML = `<p style="line-height:1.75;color:var(--ink-secondary)">${data.body}</p>`;
+  bodyEl.innerHTML = `<p class="modal-content-p">${data.body}</p>`;
   modal.classList.add('show');
 };
 

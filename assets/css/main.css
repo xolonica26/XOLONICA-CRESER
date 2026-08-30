@@ -847,11 +847,13 @@ body.dark .chat-messages {
   overflow-x: auto;
   background: var(--card-bg);
   border-top: 1px solid var(--line);
-  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .chat-suggestions::-webkit-scrollbar {
   display: none;
+  width: 0;
+  height: 0;
 }
 
 .chip-btn {
@@ -1664,3 +1666,170 @@ body.dark .chat-messages {
     font-size: 1.4rem;
   }
 }
+
+/* ==========================================================================
+   Utilidades de Perfil, Control de Roles y Auditoría (RBAC)
+   ========================================================================== */
+
+.role-badge-row {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.role-label-text {
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+}
+
+.role-switcher-group {
+  margin: 12px 0;
+}
+
+.role-switcher-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 4px;
+  color: var(--ink-muted);
+}
+
+.role-select-control {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--ink-primary);
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.audit-card-wrapper {
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.audit-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.audit-title {
+  margin: 0;
+}
+
+.audit-subtitle {
+  margin: 2px 0 0;
+}
+
+.audit-refresh-btn {
+  font-size: 0.85rem;
+}
+
+.audit-table-wrap {
+  overflow-x: auto;
+}
+
+.audit-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+.audit-table-head-row {
+  border-bottom: 1px solid var(--card-border);
+  color: var(--ink-muted);
+}
+
+.audit-th {
+  padding: 8px;
+}
+
+.audit-td {
+  padding: 8px;
+}
+
+.audit-log-id {
+  padding: 8px;
+  font-family: monospace;
+  color: var(--primary);
+}
+
+.audit-log-time {
+  padding: 8px;
+  color: var(--ink-muted);
+}
+
+.audit-log-user {
+  padding: 8px;
+  font-weight: 600;
+}
+
+.audit-log-badge-td {
+  padding: 8px;
+}
+
+.audit-log-action {
+  padding: 8px;
+}
+
+.audit-log-ip {
+  padding: 8px;
+  color: var(--ink-muted);
+  font-family: monospace;
+}
+
+.audit-table-row {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Utilidades del Diario Personal */
+.journal-empty-msg {
+  color: var(--ink-muted);
+  text-align: center;
+  padding: 10px 0;
+}
+
+.journal-entry-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.journal-entry-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.journal-entry-date {
+  font-size: 11px;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.journal-entry-del-btn {
+  padding: 2px 6px;
+  font-size: 12px;
+  color: var(--ink-muted);
+}
+
+.journal-entry-body {
+  font-size: 13px;
+  margin: 0;
+  color: var(--ink-primary);
+}
+
+.modal-content-p {
+  line-height: 1.75;
+  color: var(--ink-secondary);
+}
+

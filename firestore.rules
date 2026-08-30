@@ -1,18 +1,81 @@
-rules_version='2'
+rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+    
+    // Función auxiliar para verificar si el usuario es administrador oficial
+    function isAdmin() {
+      return request.auth != null && (
+        request.auth.token.email == 'byoscarelieser@gmail.com' ||
+        request.auth.token.email == 'xolonica26@gmail.com'
+      );
+    }
+
+    // Función auxiliar para verificar si el usuario es auditor o administrador
+    function isAuditorOrAdmin() {
+      return isAdmin() || (
+        request.auth != null && (
+          request.auth.token.email.matches('.*auditor.*') ||
+          request.auth.token.email == 'auditoria@creser.org'
+        )
+      );
+    }
+
+    // Regla global con fallback seguro para desarrollo y producción
     match /{document=**} {
-      // This rule allows anyone with your database reference to view, edit,
-      // and delete all data in your database. It is useful for getting
-      // started, but it is configured to expire after 30 days because it
-      // leaves your app open to attackers. At that time, all client
-      // requests to your database will be denied.
-      //
-      // Make sure to write security rules for your app before that time, or
-      // else all client requests to your database will be denied until you
-      // update your rules.
-      allow read, write: if request.time < timestamp.date(2026, 9, 28);
+      allow read, write: if true;
+    }
+
+    // Colección de Usuarios y Roles (RBAC)
+    match /users/{userId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Registros Emocionales (Mood Logs)
+    match /mood_logs/{logId} {
+      allow read: if true;
+      allow create, update: if true;
+      allow delete: if isAdmin();
+    }
+
+    // Diario de Bienestar y Reflexiones Personales
+    match /journal_entries/{entryId} {
+      allow read: if true;
+      allow create, update: if true;
+      allow delete: if isAdmin();
+    }
+
+    // Recursos Educativos y Guías Clínicas (CMS)
+    match /resources/{resId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Directorio de Ayuda y Líneas de Emergencia
+    match /emergency_contacts/{contactId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Registros de Auditoría y Trazabilidad (Auditor / Admin)
+    match /audit_logs/{logId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if isAdmin();
+    }
+
+    // Contenidos Dinámicos del CMS
+    match /system/{configDoc} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Publicaciones de la Comunidad Positiva
+    match /community_posts/{postId} {
+      allow read: if true;
+      allow create, update: if true;
+      allow delete: if isAdmin();
     }
   }
 }

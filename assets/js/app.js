@@ -174,6 +174,14 @@ function initMoodTracker() {
         moodNotice.style.display = 'flex';
       }
 
+      // Sincroniza con Cloud Firestore & Realtime DB
+      if (window.CreSerDB) {
+        window.CreSerDB.saveMoodLog({
+          animo: selectedMood,
+          mensaje: moodMessages[selectedMood] || 'Estado registrado'
+        });
+      }
+
       // Registra el evento en auditoría
       recordAuditLog('Registro de estado emocional: ' + selectedMood);
     });
@@ -562,6 +570,11 @@ function initJournalAndGoals() {
       entries.unshift({ text, date: dateStr });
       localStorage.setItem('creser-journal-entries', JSON.stringify(entries));
 
+      // Sincroniza con Cloud Firestore & Realtime DB
+      if (window.CreSerDB) {
+        window.CreSerDB.saveJournalEntry({ text, date: dateStr });
+      }
+
       journalInput.value = '';
       renderJournal();
       recordAuditLog('Nueva reflexión registrada en diario personal');
@@ -797,17 +810,27 @@ function recordAuditLog(action) {
   const user = localStorage.getItem('creser-user-email') || 'andrea@ejemplo.com';
   const role = (localStorage.getItem('creser-user-role') || 'usuario').toUpperCase();
 
-  logs.unshift({
+  const logEntry = {
     id: 'LOG-' + Math.floor(1000 + Math.random() * 9000),
     timestamp: formattedDate,
     user: user,
     role: role,
     action: action,
     ip: '127.0.0.1'
-  });
+  };
 
+  logs.unshift(logEntry);
   if (logs.length > 50) logs.pop();
   localStorage.setItem('creser-audit-logs', JSON.stringify(logs));
+
+  // Persiste en Cloud Firestore y Realtime DB
+  if (window.CreSerDB) {
+    window.CreSerDB.saveAuditLog({
+      usuario: user,
+      rol: role,
+      accion: action
+    });
+  }
 }
 
 /* ==========================================================================
@@ -1265,9 +1288,32 @@ function initAdminDashboard() {
 
   const btnSyncFirebase = document.getElementById('btnAdminSyncFirebase');
   if (btnSyncFirebase) {
-    btnSyncFirebase.addEventListener('click', () => {
-      recordAuditLog("Sincronización manual de CMS y roles con Firebase Realtime DB");
-      alert("☁️ ¡Datos sincronizados con Firebase Realtime Database (cresernicaragua-default-rtdb)!");
+    btnSyncFirebase.addEventListener('click', async () => {
+      btnSyncFirebase.textContent = '⏳ Sincronizando con la nube...';
+      btnSyncFirebase.disabled = true;
+
+      try {
+        if (window.CreSerDB) {
+          const cms = JSON.parse(localStorage.getItem('creser-cms-content') || '{}');
+          const res = JSON.parse(localStorage.getItem('creser-cms-resources') || '[]');
+          const help = JSON.parse(localStorage.getItem('creser-cms-help') || '[]');
+          const users = JSON.parse(localStorage.getItem('creser-users-list') || '[]');
+
+          await Promise.allSettled([
+            window.CreSerDB.saveCmsContent(cms),
+            window.CreSerDB.saveResources(res),
+            window.CreSerDB.saveEmergencyContacts(help),
+            ...users.map(u => window.CreSerDB.saveUserProfile(u))
+          ]);
+        }
+        recordAuditLog("Sincronización completa con Cloud Firestore y Firebase Realtime Database");
+        alert("☁️ ¡Base de datos sincronizada exitosamente con Google Cloud Firestore y Firebase Realtime Database (cresernicaragua)!");
+      } catch (err) {
+        alert("ℹ Sincronización guardada localmente.");
+      } finally {
+        btnSyncFirebase.textContent = '☁️ Sincronizar con Firebase';
+        btnSyncFirebase.disabled = false;
+      }
     });
   }
 

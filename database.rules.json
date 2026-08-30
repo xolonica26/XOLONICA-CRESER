@@ -1,6 +1,31 @@
 {
   "rules": {
     ".read": true,
-    ".write": true
+    ".write": true,
+    "users": {
+      ".indexOn": ["email", "role"]
+    },
+    "mood_logs": {
+      ".indexOn": ["userEmail", "fecha"]
+    },
+    "journal_entries": {
+      ".indexOn": ["userEmail", "fecha"]
+    },
+    "resources": {
+      ".indexOn": ["categoria", "titulo"]
+    },
+    "emergency_contacts": {
+      ".indexOn": ["tipo", "institucion"]
+    },
+    "audit_logs": {
+      ".indexOn": ["usuario", "timestamp", "rol"]
+    },
+    "cms_content": {
+      ".read": true,
+      ".write": true
+    },
+    "community_posts": {
+      ".indexOn": ["timestamp", "categoria"]
+    }
   }
 }

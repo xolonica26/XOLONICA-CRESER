@@ -124,6 +124,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mantiene un máximo de 50 registros recientes
     if (logs.length > 50) logs.pop();
     localStorage.setItem('creser-audit-logs', JSON.stringify(logs));
+
+    // Sincroniza con Cloud Firestore & Realtime DB
+    if (window.CreSerDB) {
+      window.CreSerDB.saveAuditLog({
+        usuario: userEmail,
+        rol: role,
+        accion: action
+      });
+    }
   }
 
   /**
@@ -175,6 +184,16 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('creser-user-email', userEmail);
     localStorage.setItem('creser-user-role', assignedRole);
 
+    // Sincroniza perfil en la nube
+    if (window.CreSerDB) {
+      window.CreSerDB.saveUserProfile({
+        email: userEmail,
+        nombre: userName,
+        rol: assignedRole,
+        proveedor: 'google.com'
+      });
+    }
+
     logAuditEvent(userEmail, assignedRole, `Acceso con cuenta de Google (${source})`);
     
     // Redirige al inicio con la sesión activa
@@ -202,6 +221,15 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem('creser-user-role', assignedRole);
       localStorage.setItem('creser-user-name', email.split('@')[0]);
 
+      if (window.CreSerDB) {
+        window.CreSerDB.saveUserProfile({
+          email: email,
+          nombre: email.split('@')[0],
+          rol: assignedRole,
+          proveedor: 'password'
+        });
+      }
+
       // Registra el evento de auditoría
       logAuditEvent(email, assignedRole, `Inicio de sesión con rol ${assignedRole.toUpperCase()}`);
     });
@@ -218,6 +246,15 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem('creser-user-name', name);
       localStorage.setItem('creser-user-email', email);
       localStorage.setItem('creser-user-role', assignedRole);
+
+      if (window.CreSerDB) {
+        window.CreSerDB.saveUserProfile({
+          email: email,
+          nombre: name,
+          rol: assignedRole,
+          proveedor: 'password'
+        });
+      }
 
       // Registra el evento de auditoría
       logAuditEvent(email, assignedRole, `Registro de cuenta con rol ${assignedRole.toUpperCase()}`);

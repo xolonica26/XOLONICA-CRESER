@@ -2,6 +2,9 @@
 node_modules/
 package-lock.json
 
+# Firebase Cache
+.firebase/
+
 # Archivos de entorno y logs
 .env
 *.log

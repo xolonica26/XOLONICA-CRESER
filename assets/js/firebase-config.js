@@ -64,6 +64,9 @@ export const firebaseConfig = {
 };
 
 // Habilita el token de depuración para App Check en desarrollo local
+if (typeof self !== "undefined") {
+  self.FIREBASE_APPCHECK_DEBUG_TOKEN = "CEA5D9AD-E760-4858-9D3F-F70146913AE0";
+}
 if (typeof window !== "undefined") {
   window.FIREBASE_APPCHECK_DEBUG_TOKEN = "CEA5D9AD-E760-4858-9D3F-F70146913AE0";
 }

@@ -172,12 +172,14 @@ button {
 .brand .c1 {
   background: linear-gradient(135deg, #3b82f6, #60a5fa);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .brand .c3 {
   background: linear-gradient(135deg, #10b981, #34d399);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 

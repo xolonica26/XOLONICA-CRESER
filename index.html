@@ -1,26 +1,26 @@
 <!doctype html>
-<!-- Declaración del tipo de documento HTML5 estándar -->
+<!-- DeclaraciÃƒÂ³n del tipo de documento HTML5 estÃƒÂ¡ndar -->
 <html lang="es">
 <head>
-  <!-- Codificación de caracteres universal UTF-8 para admitir tildes, eñes y caracteres especiales -->
+  <!-- CodificaciÃƒÂ³n de caracteres universal UTF-8 para admitir tildes, eÃƒÂ±es y caracteres especiales -->
   <meta charset="utf-8"/>
-  <!-- Configuración de escala responsiva para adaptarse a móviles, tablets y ordenadores -->
+  <!-- ConfiguraciÃƒÂ³n de escala responsiva para adaptarse a mÃƒÂ³viles, tablets y ordenadores -->
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <!-- Título principal que se visualiza en la pestaña del navegador -->
-  <title>CreSer — Inicio | Plataforma de Bienestar Emocional</title>
-  <!-- Meta descripción optimizada para motores de búsqueda y accesibilidad -->
-  <meta name="description" content="Espacio integral para el bienestar emocional, desarrollo personal, recursos educativos y orientación con KIRI."/>
+  <!-- TÃƒÂ­tulo principal que se visualiza en la pestaÃƒÂ±a del navegador -->
+  <title>CreSer Ã¢â‚¬â€ Inicio | Plataforma de Bienestar Emocional</title>
+  <!-- Meta descripciÃƒÂ³n optimizada para motores de bÃƒÂºsqueda y accesibilidad -->
+  <meta name="description" content="Espacio integral para el bienestar emocional, desarrollo personal, recursos educativos y orientaciÃƒÂ³n con KIRI."/>
   <!-- Enlace a la hoja de estilos principal centralizada -->
   <link rel="stylesheet" href="assets/css/main.css?v=3.2">
 </head>
 <body>
 
   <!-- =========================================================================
-       Barra Superior de Navegación (Topbar)
+       Barra Superior de NavegaciÃƒÂ³n (Topbar)
        ========================================================================= -->
   <header class="topbar">
-    <!-- Botón para abrir el menú lateral en dispositivos móviles y pantallas táctiles -->
-    <button id="menuToggle" class="mobile-menu-btn" aria-label="Abrir menú de navegación">☰</button>
+    <!-- BotÃƒÂ³n para abrir el menÃƒÂº lateral en dispositivos mÃƒÂ³viles y pantallas tÃƒÂ¡ctiles -->
+    <button id="menuToggle" class="mobile-menu-btn" aria-label="Abrir menÃƒÂº de navegaciÃƒÂ³n">Ã¢ËœÂ°</button>
 
     <!-- Enlace con la identidad y logotipo de la plataforma -->
     <a href="index.html" class="brand">
@@ -28,8 +28,8 @@
       <img src="assets/img/valores.gif" alt="CreSer Logo Animado" class="creserlogo">
     </a>
     
-    <!-- Barra de navegación con enlaces directos a cada una de las páginas individuales -->
-    <nav class="nav" aria-label="Navegación principal">
+    <!-- Barra de navegaciÃƒÂ³n con enlaces directos a cada una de las pÃƒÂ¡ginas individuales -->
+    <nav class="nav" aria-label="NavegaciÃƒÂ³n principal">
       <a href="index.html" class="navitem active">Inicio</a>
       <a href="pages/bienestar.html" class="navitem">Bienestar</a>
       <a href="pages/recursos.html" class="navitem">Recursos</a>
@@ -40,7 +40,7 @@
       <a href="pages/ayuda.html" class="navitem">Ayuda</a>
       <a href="pages/perfil.html" class="navitem">Perfil</a>
       
-      <!-- Contenedor del botón de acción destacado para autenticación -->
+      <!-- Contenedor del botÃƒÂ³n de acciÃƒÂ³n destacado para autenticaciÃƒÂ³n -->
       <div class="nav-actions">
         <a href="pages/login.html" class="navitem btn-header-action btn-auth">Acceder</a>
       </div>
@@ -48,80 +48,80 @@
   </header>
 
   <!-- =========================================================================
-       Menú Lateral Móvil Desplegable (Drawer)
+       MenÃƒÂº Lateral MÃƒÂ³vil Desplegable (Drawer)
        ========================================================================= -->
-  <!-- Fondo oscurecido para enfocar la atención en el menú móvil -->
+  <!-- Fondo oscurecido para enfocar la atenciÃƒÂ³n en el menÃƒÂº mÃƒÂ³vil -->
   <div id="drawerBackdrop" class="drawer-backdrop"></div>
-  <!-- Menú lateral accesible -->
-  <aside id="mobileDrawer" class="mobile-drawer" aria-label="Menú móvil">
+  <!-- MenÃƒÂº lateral accesible -->
+  <aside id="mobileDrawer" class="mobile-drawer" aria-label="MenÃƒÂº mÃƒÂ³vil">
     <div class="drawer-head">
       <div class="brand"><span class="c1">Cre</span><span class="c3">Ser</span></div>
-      <!-- Botón para cerrar el menú lateral -->
-      <button id="drawerClose" class="ghost" aria-label="Cerrar menú">✕</button>
+      <!-- BotÃƒÂ³n para cerrar el menÃƒÂº lateral -->
+      <button id="drawerClose" class="ghost" aria-label="Cerrar menÃƒÂº">Ã¢Å“â€¢</button>
     </div>
 
-    <!-- Lista de enlaces de navegación en versión móvil -->
+    <!-- Lista de enlaces de navegaciÃƒÂ³n en versiÃƒÂ³n mÃƒÂ³vil -->
     <div class="drawer-nav-list">
-      <a href="index.html" class="active">🏠 Inicio</a>
-      <a href="pages/bienestar.html">💚 Bienestar Emocional</a>
-      <a href="pages/recursos.html">📚 Recursos Educativos</a>
-      <a href="pages/herramientas.html">🧰 Herramientas Prácticas</a>
-      <a href="pages/kiri.html">🤖 Asistente KIRI</a>
-      <a href="pages/multimedia.html">🎵 Multimedia & Relax</a>
-      <a href="pages/comunidad.html">👥 Espacios de Comunidad</a>
-      <a href="pages/ayuda.html">🛟 Ayuda Profesional</a>
-      <a href="pages/perfil.html">👤 Perfil & Accesibilidad</a>
+      <a href="index.html" class="active">Ã°Å¸ÂÂ  Inicio</a>
+      <a href="pages/bienestar.html">Ã°Å¸â€™Å¡ Bienestar Emocional</a>
+      <a href="pages/recursos.html">Ã°Å¸â€œÅ¡ Recursos Educativos</a>
+      <a href="pages/herramientas.html">Ã°Å¸Â§Â° Herramientas PrÃƒÂ¡cticas</a>
+      <a href="pages/kiri.html">Ã°Å¸Â¤â€“ Asistente KIRI</a>
+      <a href="pages/multimedia.html">Ã°Å¸Å½Âµ Multimedia & Relax</a>
+      <a href="pages/comunidad.html">Ã°Å¸â€˜Â¥ Espacios de Comunidad</a>
+      <a href="pages/ayuda.html">Ã°Å¸â€ºÅ¸ Ayuda Profesional</a>
+      <a href="pages/perfil.html">Ã°Å¸â€˜Â¤ Perfil & Accesibilidad</a>
       
       <!-- Separador visual -->
       <hr class="drawer-separator">
       
-      <!-- Enlaces secundarios en el menú lateral -->
-      <a href="pages/login.html" class="drawer-auth-link">🔐 Iniciar Sesión / Registro</a>
-      <button data-modal="privacy">🔒 Privacidad y Datos</button>
-      <button data-modal="terms">📄 Términos de Servicio</button>
+      <!-- Enlaces secundarios en el menÃƒÂº lateral -->
+      <a href="pages/login.html" class="drawer-auth-link">Ã°Å¸â€Â Iniciar SesiÃƒÂ³n / Registro</a>
+      <button data-modal="privacy">Ã°Å¸â€â€™ Privacidad y Datos</button>
+      <button data-modal="terms">Ã°Å¸â€œâ€ž TÃƒÂ©rminos de Servicio</button>
     </div>
   </aside>
 
   <!-- =========================================================================
-       Barra Inferior Móvil Fija (Bottom Navigation)
+       Barra Inferior MÃƒÂ³vil Fija (Bottom Navigation)
        ========================================================================= -->
-  <nav class="mobile-bottom-nav" aria-label="Navegación rápida móvil">
-    <a href="index.html" class="active"><span class="ico">🏠</span><span>Inicio</span></a>
-    <a href="pages/bienestar.html"><span class="ico">💚</span><span>Bienestar</span></a>
-    <a href="pages/herramientas.html"><span class="ico">🫁</span><span>Ejercicios</span></a>
-    <a href="pages/kiri.html"><span class="ico">🤖</span><span>KIRI</span></a>
-    <a href="pages/perfil.html"><span class="ico">⚙️</span><span>Ajustes</span></a>
+  <nav class="mobile-bottom-nav" aria-label="NavegaciÃƒÂ³n rÃƒÂ¡pida mÃƒÂ³vil">
+    <a href="index.html" class="active"><span class="ico">Ã°Å¸ÂÂ </span><span>Inicio</span></a>
+    <a href="pages/bienestar.html"><span class="ico">Ã°Å¸â€™Å¡</span><span>Bienestar</span></a>
+    <a href="pages/herramientas.html"><span class="ico">Ã°Å¸Â«Â</span><span>Ejercicios</span></a>
+    <a href="pages/kiri.html"><span class="ico">Ã°Å¸Â¤â€“</span><span>KIRI</span></a>
+    <a href="pages/perfil.html"><span class="ico">Ã¢Å¡â„¢Ã¯Â¸Â</span><span>Ajustes</span></a>
   </nav>
 
   <!-- =========================================================================
-       Contenido Central de la Página de Inicio
+       Contenido Central de la PÃƒÂ¡gina de Inicio
        ========================================================================= -->
   <div class="app">
     <main>
       
-      <!-- Sección Hero Principal de Bienvenida -->
+      <!-- SecciÃƒÂ³n Hero Principal de Bienvenida -->
       <section class="hero">
         <div>
-          <!-- Píldora descriptiva de la plataforma -->
+          <!-- PÃƒÂ­ldora descriptiva de la plataforma -->
           <span id="cmsHeroBadge" class="badge badge-green">Plataforma Digital de Cuidado Emocional</span>
-          <!-- Título llamativo con tipografía destacada -->
+          <!-- TÃƒÂ­tulo llamativo con tipografÃƒÂ­a destacada -->
           <h1 id="cmsHeroTitle">Bienvenido a <span class="c1">Cre</span><span class="c3">Ser</span></h1>
-          <!-- Párrafo introductorio descriptivo -->
-          <p id="cmsHeroDesc">Un entorno digital seguro y accesible diseñado para acompañarte en el autoconocimiento, la gestión de tus emociones y la adopción de hábitos de vida saludables.</p>
+          <!-- PÃƒÂ¡rrafo introductorio descriptivo -->
+          <p id="cmsHeroDesc">Un entorno digital seguro y accesible diseÃƒÂ±ado para acompaÃƒÂ±arte en el autoconocimiento, la gestiÃƒÂ³n de tus emociones y la adopciÃƒÂ³n de hÃƒÂ¡bitos de vida saludables.</p>
           
-          <!-- Botones de llamada a la acción hacia las secciones dedicadas -->
+          <!-- Botones de llamada a la acciÃƒÂ³n hacia las secciones dedicadas -->
           <div class="hero-cta-group">
-            <a href="pages/bienestar.html" class="primary">Comenzar Ahora →</a>
+            <a href="pages/bienestar.html" class="primary">Comenzar Ahora Ã¢â€ â€™</a>
             <a href="pages/kiri.html" class="secondary">Conversar con KIRI</a>
             <a href="pages/multimedia.html" class="secondary">Escuchar Audio Relax</a>
           </div>
-          <!-- Mensaje ético aclaratorio -->
-          <p class="small hero-disclaimer">KIRI brinda orientación preventiva y acompañamiento continuo sin sustituir la atención médica o psicológica.</p>
+          <!-- Mensaje ÃƒÂ©tico aclaratorio -->
+          <p class="small hero-disclaimer">KIRI brinda orientaciÃƒÂ³n preventiva y acompaÃƒÂ±amiento continuo sin sustituir la atenciÃƒÂ³n mÃƒÂ©dica o psicolÃƒÂ³gica.</p>
         </div>
 
-        <!-- Panel visual derecho con estadísticas y animaciones -->
+        <!-- Panel visual derecho con estadÃƒÂ­sticas y animaciones -->
         <div class="hero-art-container">
-          <div class="hero-art-emojis">🧠 💚 🌱</div>
+          <div class="hero-art-emojis">Ã°Å¸Â§Â  Ã°Å¸â€™Å¡ Ã°Å¸Å’Â±</div>
           <div class="hero-stats">
             <div class="hero-stat-item">
               <div class="hero-stat-num">100%</div>
@@ -129,7 +129,7 @@
             </div>
             <div class="hero-stat-item">
               <div class="hero-stat-num">+30</div>
-              <div class="hero-stat-label">Guías y Audios</div>
+              <div class="hero-stat-label">GuÃƒÂ­as y Audios</div>
             </div>
             <div class="hero-stat-item">
               <div class="hero-stat-num">24/7</div>
@@ -139,13 +139,13 @@
         </div>
       </section>
 
-      <!-- Título de la sección de pilares -->
+      <!-- TÃƒÂ­tulo de la secciÃƒÂ³n de pilares -->
       <div class="section-title">
         <h2>Pilares de CreSer</h2>
-        <span class="small">Metodología integral centrada en el bienestar</span>
+        <span class="small">MetodologÃƒÂ­a integral centrada en el bienestar</span>
       </div>
 
-      <!-- Cuadrícula con las 4 tarjetas de pilares principales -->
+      <!-- CuadrÃƒÂ­cula con las 4 tarjetas de pilares principales -->
       <div class="grid">
         <!-- Tarjeta 1: Bienestar -->
         <div class="card">
@@ -153,8 +153,8 @@
             <img src="assets/img/cuidado.gif" alt="Cuidado emocional" class="card-icon">
           </div>
           <h3>Bienestar Emocional</h3>
-          <p>Seguimiento diario de tu estado anímico, ejercicios guiados y herramientas de autorregulación emocional.</p>
-          <a href="pages/bienestar.html" class="secondary mt-2">Ir a Bienestar →</a>
+          <p>Seguimiento diario de tu estado anÃƒÂ­mico, ejercicios guiados y herramientas de autorregulaciÃƒÂ³n emocional.</p>
+          <a href="pages/bienestar.html" class="secondary mt-2">Ir a Bienestar Ã¢â€ â€™</a>
         </div>
 
         <!-- Tarjeta 2: Aprendizaje -->
@@ -163,8 +163,8 @@
             <img src="assets/img/libros.gif" alt="Aprendizaje" class="card-icon">
           </div>
           <h3>Recursos Educativos</h3>
-          <p>Biblioteca preventiva basada en evidencia con artículos, podcasts e infografías de fácil comprensión.</p>
-          <a href="pages/recursos.html" class="secondary mt-2">Ver Biblioteca →</a>
+          <p>Biblioteca preventiva basada en evidencia con artÃƒÂ­culos, podcasts e infografÃƒÂ­as de fÃƒÂ¡cil comprensiÃƒÂ³n.</p>
+          <a href="pages/recursos.html" class="secondary mt-2">Ver Biblioteca Ã¢â€ â€™</a>
         </div>
 
         <!-- Tarjeta 3: Asistencia IA -->
@@ -173,8 +173,8 @@
             <img src="assets/img/arte-de-ia.gif" alt="Asistente KIRI" class="card-icon">
           </div>
           <h3>Asistencia con KIRI</h3>
-          <p>Orientación inteligente 24/7 para sugerirte lecturas, audios relajantes y ejercicios prácticos en cada momento.</p>
-          <a href="pages/kiri.html" class="secondary mt-2">Abrir KIRI →</a>
+          <p>OrientaciÃƒÂ³n inteligente 24/7 para sugerirte lecturas, audios relajantes y ejercicios prÃƒÂ¡cticos en cada momento.</p>
+          <a href="pages/kiri.html" class="secondary mt-2">Abrir KIRI Ã¢â€ â€™</a>
         </div>
 
         <!-- Tarjeta 4: Privacidad -->
@@ -184,39 +184,39 @@
           </div>
           <h3>Privacidad Absoluta</h3>
           <p>Tus reflexiones y notas se mantienen protegidas en tu dispositivo bajo rigurosos criterios de confidencialidad.</p>
-          <a href="pages/perfil.html" class="secondary mt-2">Ver Ajustes →</a>
+          <a href="pages/perfil.html" class="secondary mt-2">Ver Ajustes Ã¢â€ â€™</a>
         </div>
       </div>
 
     </main>
 
     <!-- =========================================================================
-         Pie de Página (Footer)
+         Pie de PÃƒÂ¡gina (Footer)
          ========================================================================= -->
     <footer class="footer">
       <div class="footer-inner">
-        <!-- Enlaces legales a páginas dedicadas profesionales -->
+        <!-- Enlaces legales a pÃƒÂ¡ginas dedicadas profesionales -->
         <div class="footer-links">
-          <a href="pages/privacidad.html">Política de Privacidad</a>
-          <a href="pages/terminos.html">Términos y Condiciones</a>
-          <a href="pages/cookies.html">Gestión de Cookies</a>
+          <a href="pages/privacidad.html">PolÃƒÂ­tica de Privacidad</a>
+          <a href="pages/terminos.html">TÃƒÂ©rminos y Condiciones</a>
+          <a href="pages/cookies.html">GestiÃƒÂ³n de Cookies</a>
           <a href="pages/convivencia.html">Normas de Convivencia</a>
           <a href="pages/legal.html">Aviso Legal</a>
         </div>
         <!-- Derechos reservados -->
-        <p class="footer-copy">© 2026 CreSer — Plataforma de Bienestar Emocional en Nicaragua. Todos los derechos reservados.</p>
+        <p class="footer-copy">Ã‚Â© 2026 CreSer Ã¢â‚¬â€ Plataforma de Bienestar Emocional en Nicaragua. Todos los derechos reservados.</p>
       </div>
     </footer>
   </div>
 
   <!-- =========================================================================
-       Modal de Información y Legal Accesible
+       Modal de InformaciÃƒÂ³n y Legal Accesible
        ========================================================================= -->
   <div id="infoModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-dialog">
       <div class="modal-header">
-        <h3 id="modalTitle" class="modal-title-text">Información</h3>
-        <button class="ghost" onclick="closeModal('infoModal')" aria-label="Cerrar modal">✕</button>
+        <h3 id="modalTitle" class="modal-title-text">InformaciÃƒÂ³n</h3>
+        <button class="ghost" onclick="closeModal('infoModal')" aria-label="Cerrar modal">Ã¢Å“â€¢</button>
       </div>
       <div id="modalBody"></div>
       <div class="modal-footer">
@@ -225,9 +225,10 @@
     </div>
   </div>
 
-  <!-- Inclusión de la configuración y SDK de Google Firebase -->
+  <!-- InclusiÃƒÂ³n de la configuraciÃƒÂ³n y SDK de Google Firebase -->
   <script type="module" src="assets/js/firebase-config.js?v=1.0"></script>
-  <!-- Inclusión del script general de la aplicación -->
+  <!-- InclusiÃƒÂ³n del script general de la aplicaciÃƒÂ³n -->
   <script src="assets/js/app.js?v=3.2"></script>
+  <script src="assets/js/i18n.js"></script>
 </body>
 </html>

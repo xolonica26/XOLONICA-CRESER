@@ -1,208 +1,30 @@
-/**
- * ============================================================================
- * CreSer — Controlador del Portal de Perfil de Usuario (perfil.js)
- * ============================================================================
- * 
- * ¿POR QUÉ?:
- * Gestionar la sesión personal, preferencias de accesibilidad, métricas de actividad
- * y control de acceso al panel administrativo de forma privada y modular.
- * 
- * ¿CÓMO?:
- * Utilizando Web Storage API (localStorage), manipulación del DOM y registro de
- * auditoría para eventos de seguridad.
- * 
- * ¿PARA QUÉ?:
- * Brindar al usuario control total sobre sus datos personales y preferencias visuales.
- * ============================================================================
- */
+(() => {
+  'use strict';
+  const PROFILE_KEY = 'creser-profile-settings';
+  const MOODS = { excelente:['ÃƒÂ°Ã…Â¸Ã‹Å“Ã…Â ','Excelente'], bien:['ÃƒÂ°Ã…Â¸Ã¢â€žÂ¢Ã¢â‚¬Å¡','Bien'], neutral:['ÃƒÂ°Ã…Â¸Ã‹Å“Ã‚Â','Neutral'], preocupado:['ÃƒÂ°Ã…Â¸Ã‹Å“Ã…Â¸','Preocupado'], triste:['ÃƒÂ°Ã…Â¸Ã‹Å“Ã¢â‚¬Â','Triste'], abrumado:['ÃƒÂ°Ã…Â¸Ã‹Å“Ã‚Â£','Abrumado'], frustrado:['ÃƒÂ°Ã…Â¸Ã‹Å“Ã‚Â¡','Frustrado'], cansado:['ÃƒÂ°Ã…Â¸Ã‹Å“Ã‚Â´','Cansado'] };
+  const email = () => localStorage.getItem('creser-user-email') || '';
+  const profileKey = () => PROFILE_KEY + ':' + encodeURIComponent(email());
+  const settings = () => { try { return JSON.parse(localStorage.getItem(profileKey()) || '{}'); } catch { return {}; } };
+  const save = values => localStorage.setItem(profileKey(), JSON.stringify({ ...settings(), ...values }));
+  document.addEventListener('DOMContentLoaded', () => { if (!email()) { location.replace('login.html'); return; } initIdentity(); initMood(); initForm(); initPreferences(); initLogout(); });
+  function initIdentity() { const data=settings(), fallback=localStorage.getItem('creser-user-name')||email().split('@')[0], name=data.displayName||fallback, initial=name.trim()[0]?.toUpperCase()||'U'; document.getElementById('profileUserName').textContent=name; document.getElementById('profileHandle').textContent='@'+email().split('@')[0]; ['profileAvatar','photoPreview'].forEach(id=>{const el=document.getElementById(id); if(data.photo) el.innerHTML='<img src="'+data.photo+'" alt="">'; else el.textContent=initial;}); document.getElementById('currentDevice').textContent=(navigator.userAgent.includes('Windows')?'Windows':'Este dispositivo')+' Ãƒâ€šÃ‚Â· SesiÃƒÆ’Ã‚Â³n actual'; }
+  function initMood() { const loading=document.getElementById('moodLoading'), value=document.getElementById('moodValue'), empty=document.getElementById('moodEmpty'), error=document.getElementById('moodError'); const render=()=>{loading.hidden=false;value.hidden=true;empty.hidden=true;error.hidden=true;try { const logs=JSON.parse(localStorage.getItem('creser-mood-history')||'[]'); const current=logs.filter(x=>x&&x.userEmail===email()).sort((a,b)=>new Date(b.timestamp||0)-new Date(a.timestamp||0))[0]; loading.hidden=true;if(!current){empty.hidden=false;return;}const info=MOODS[current.animo]||['ÃƒÂ°Ã…Â¸Ã‚Â§Ã‚Â ',current.animo];document.getElementById('moodEmoji').textContent=info[0];document.getElementById('moodLabel').textContent=info[1];document.getElementById('moodUpdatedAt').textContent=current.timestamp?'Actualizado '+new Intl.DateTimeFormat('es-NI',{dateStyle:'long'}).format(new Date(current.timestamp)):'Actualizado hoy';value.hidden=false;}catch(_){loading.hidden=true;error.hidden=false;}};document.getElementById('retryMood').addEventListener('click',render);render(); }
+  function initForm() { const data=settings(), fallback=localStorage.getItem('creser-user-name')||email().split('@')[0]; document.getElementById('firstName').value=data.firstName||fallback.split(' ')[0];document.getElementById('lastName').value=data.lastName||'';document.getElementById('displayName').value=data.displayName||fallback;document.getElementById('email').value=email();document.getElementById('country').value=data.country||'Nicaragua';document.getElementById('city').value=data.city||'';document.getElementById('timezone').value=data.timezone||'America/Managua'; const photo=document.getElementById('photoInput'), remove=document.getElementById('removePhoto');remove.hidden=!data.photo;photo.addEventListener('change',e=>{const file=e.target.files[0];if(!file)return;if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>2097152){alert('Elige una imagen JPG, PNG o WebP de hasta 2 MB.');photo.value='';return;}const reader=new FileReader();reader.onload=()=>{save({photo:reader.result});initIdentity();remove.hidden=false;};reader.readAsDataURL(file);});remove.addEventListener('click',()=>{const data=settings();delete data.photo;localStorage.setItem(profileKey(),JSON.stringify(data));photo.value='';remove.hidden=true;initIdentity();});document.getElementById('personalForm').addEventListener('submit',e=>{e.preventDefault();const form=e.currentTarget,status=document.getElementById('personalStatus');if(!form.reportValidity())return;status.textContent='GuardandoÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦';const values=Object.fromEntries(new FormData(form));save(values);localStorage.setItem('creser-user-name',values.displayName);initIdentity();status.textContent='ÃƒÂ¢Ã…â€œÃ¢â‚¬Å“ Cambios guardados';setTimeout(()=>status.textContent='',3000);}); }
+  function initPreferences(){const data=settings(), appearance=document.getElementById('appearance');appearance.value=data.appearance||(localStorage.getItem('creser-dark')==='1'?'dark':'light');const apply=()=>{const dark=appearance.value==='dark'||(appearance.value==='system'&&matchMedia('(prefers-color-scheme: dark)').matches);document.body.classList.toggle('dark',dark);localStorage.setItem('creser-dark',dark?'1':'0');save({appearance:appearance.value});};appearance.addEventListener('change',apply);apply();const status=document.getElementById('notificationStatus'),test=document.getElementById('testNotification'),supported='Notification' in window;const updateStatus=()=>{if(!supported){status.textContent='Tu navegador no admite notificaciones.';test.disabled=true;return;}const permission=Notification.permission;status.textContent=permission==='granted'?'Notificaciones permitidas en este dispositivo.':permission==='denied'?'Las notificaciones estÃƒÂ¡n bloqueadas en el navegador. Puedes activarlas desde la configuraciÃƒÂ³n del sitio.':'Activa un aviso para permitir notificaciones en este dispositivo.';test.disabled=permission!=='granted'||(!document.getElementById('wellnessNotifications').checked&&!document.getElementById('platformNotifications').checked);};['wellnessNotifications','platformNotifications'].forEach(id=>{const el=document.getElementById(id);el.checked=Boolean(data[id]);el.setAttribute('aria-checked',String(el.checked));el.addEventListener('change',async()=>{if(el.checked&&supported&&Notification.permission==='default'){const result=await Notification.requestPermission();if(result!=='granted'){el.checked=false;}}el.setAttribute('aria-checked',String(el.checked));save({[id]:el.checked});updateStatus();});});test.addEventListener('click',()=>{if(Notification.permission==='granted')new Notification('CreSer',{body:'Las notificaciones estÃƒÂ¡n activas. Cuidarte tambiÃƒÂ©n cuenta.'});});updateStatus();}  function initLogout(){document.getElementById('profileLogoutBtn').addEventListener('click',async()=>{if(!confirm('Ãƒâ€šÃ‚Â¿Deseas cerrar sesiÃƒÆ’Ã‚Â³n en este dispositivo?'))return;localStorage.removeItem('creser-user-email');localStorage.removeItem('creser-user-name');localStorage.removeItem('creser-user-role');location.assign('login.html');});}
+})();
 
+// Internationalization for the complete Profile settings experience.
 document.addEventListener('DOMContentLoaded', () => {
-  initUserProfile();
-  initProfilePreferences();
-  initProfileDataManagement();
+  const language = document.getElementById('language');
+  if (!language) return;
+  const key = 'creser-profile-settings:' + encodeURIComponent(localStorage.getItem('creser-user-email') || '');
+  let stored = {}; try { stored = JSON.parse(localStorage.getItem(key) || '{}'); } catch (_) {}
+  const copy = {
+    es: {space:'ESPACIO PERSONAL',title:'Mi perfil',intro:'Tu espacio, a tu manera',introP:'Administra tus datos y preferencias. Tu estado emocional se mantiene privado.',nav:['InformaciÃƒÂ³n personal','Seguridad','Privacidad','Notificaciones','Preferencias','Sesiones','Cuenta'],personal:'InformaciÃƒÂ³n personal',personalP:'Personaliza tu experiencia, sin incluir informaciÃƒÂ³n clÃƒÂ­nica.',photo:'Foto de perfil',choose:'Elegir foto',remove:'Eliminar foto',save:'Guardar cambios',security:'Seguridad',securityP:'Protege el acceso a tu cuenta.',password:'ContraseÃƒÂ±a',manage:'Gestionar acceso',privacy:'Privacidad',privacyP:'Tu estado emocional nunca se comparte en tu perfil.',private:'Privado',notifications:'Notificaciones',notificationsP:'Elige los avisos que deseas recibir.',reminder:'Recordatorios de bienestar',updates:'Actualizaciones de CreSer',test:'Enviar notificaciÃƒÂ³n de prueba',preferences:'Preferencias',preferencesP:'Personaliza cÃƒÂ³mo se ve CreSer.',appearance:'Apariencia',language:'Idioma',languageHelp:'El espaÃƒÂ±ol estÃƒÂ¡ configurado como idioma principal.',sessions:'Dispositivos y sesiones',sessionsP:'Revisa dÃƒÂ³nde tienes una sesiÃƒÂ³n activa.',account:'Cuenta',accountP:'Acciones sobre tu sesiÃƒÂ³n actual.',logout:'Cerrar sesiÃƒÂ³n',light:'Claro',dark:'Oscuro',system:'AutomÃƒÂ¡tico'},
+    en: {space:'PERSONAL SPACE',title:'My profile',intro:'Your space, your way',introP:'Manage your details and preferences. Your emotional status stays private.',nav:['Personal information','Security','Privacy','Notifications','Preferences','Sessions','Account'],personal:'Personal information',personalP:'Personalize your experience without including clinical information.',photo:'Profile photo',choose:'Choose photo',remove:'Remove photo',save:'Save changes',security:'Security',securityP:'Protect access to your account.',password:'Password',manage:'Manage access',privacy:'Privacy',privacyP:'Your emotional status is never shared on your profile.',private:'Private',notifications:'Notifications',notificationsP:'Choose the alerts you want to receive.',reminder:'Wellness reminders',updates:'CreSer updates',test:'Send test notification',preferences:'Preferences',preferencesP:'Customize how CreSer looks.',appearance:'Appearance',language:'Language',languageHelp:'English is selected for this profile.',sessions:'Devices and sessions',sessionsP:'Review where you have an active session.',account:'Account',accountP:'Actions for your current session.',logout:'Sign out',light:'Light',dark:'Dark',system:'System'}
+  };
+  const set = (selector, value) => { const el = document.querySelector(selector); if (el) el.textContent = value; };
+  const apply = locale => { const t = copy[locale] || copy.es; document.documentElement.lang = locale; set('.profile-sidebar .eyebrow',t.space); set('.profile-sidebar h1',t.title); set('.profile-intro h2',t.intro); set('.profile-intro p:last-child',t.introP); document.querySelectorAll('.profile-nav a').forEach((el,i)=>el.textContent=t.nav[i]); set('#personal h2',t.personal);set('#personal .section-heading p',t.personalP);set('#personal .photo-row strong',t.photo);set('label[for="photoInput"]',t.choose);set('#removePhoto',t.remove);set('#personalForm .button-primary',t.save);set('#security h2',t.security);set('#security .section-heading p',t.securityP);set('#security .setting-line strong',t.password);set('#security .button-secondary',t.manage);set('#privacy h2',t.privacy);set('#privacy .section-heading p',t.privacyP);set('#privacy .privacy-badge',t.private);set('#notifications h2',t.notifications);set('#notifications .section-heading p',t.notificationsP);document.querySelector('#wellnessNotifications').closest('label').querySelector('strong').textContent=t.reminder;document.querySelector('#platformNotifications').closest('label').querySelector('strong').textContent=t.updates;set('#testNotification',t.test);set('#preferences h2',t.preferences);set('#preferences .section-heading p',t.preferencesP);set('#preferences .setting-line strong',t.appearance);set('#languageLabel',t.language);set('#languageHelp',t.languageHelp);set('#sessions h2',t.sessions);set('#sessions .section-heading p',t.sessionsP);set('#account h2',t.account);set('#account .section-heading p',t.accountP);set('#profileLogoutBtn',t.logout);const appearance=document.getElementById('appearance');if(appearance){appearance.options[0].text=t.light;appearance.options[1].text=t.dark;appearance.options[2].text=t.system;}};
+  language.value = stored.language || localStorage.getItem('creser-language') || 'es'; localStorage.setItem('creser-language', language.value); apply(language.value);
+  language.addEventListener('change', () => { stored = {...stored,language:language.value}; localStorage.setItem(key,JSON.stringify(stored)); localStorage.setItem('creser-language', language.value); if (window.CreSerI18n) window.CreSerI18n.set(language.value); apply(language.value); });
 });
-
-/**
- * ¿POR QUÉ?: Cargar y presentar la identidad, rol y acceso administrativo del usuario.
- * ¿CÓMO?: Leyendo 'creser-user-name', 'creser-user-email' y 'creser-user-role' desde localStorage.
- * ¿PARA QUÉ?: Adaptar la interfaz dinámicamente mostrando el banner de administrador solo si corresponde.
- */
-function initUserProfile() {
-  const nameEl = document.getElementById('profileUserName');
-  const emailEl = document.getElementById('profileUserEmail');
-  const roleBadgeEl = document.getElementById('profileRoleBadge');
-  const avatarBox = document.getElementById('profileAvatarBox');
-  const adminBanner = document.getElementById('profileAdminBanner');
-  const joinDateEl = document.getElementById('profileJoinDate');
-  const btnLogout = document.getElementById('profileLogoutBtn');
-
-  const storedEmail = localStorage.getItem('creser-user-email') || 'invitado@creser.org';
-  const storedName = localStorage.getItem('creser-user-name') || (storedEmail ? storedEmail.split('@')[0] : 'Usuario');
-  const storedRole = (localStorage.getItem('creser-user-role') || 'usuario').toLowerCase();
-
-  const formattedName = storedName.charAt(0).toUpperCase() + storedName.slice(1);
-  const initial = formattedName.charAt(0).toUpperCase();
-
-  // Actualizar textos e iniciales
-  if (nameEl) nameEl.textContent = formattedName;
-  if (emailEl) emailEl.textContent = storedEmail;
-  if (avatarBox) avatarBox.textContent = initial || '👤';
-  if (joinDateEl) joinDateEl.textContent = 'Miembro activo desde 2026';
-
-  // Configurar badge de rol con estilos acordes
-  if (roleBadgeEl) {
-    roleBadgeEl.className = `role-badge ${storedRole}`;
-    const roleIcon = storedRole === 'admin' ? '👑' : storedRole === 'auditor' ? '🛡️' : '🌱';
-    roleBadgeEl.innerHTML = `${roleIcon} ${storedRole.toUpperCase()}`;
-  }
-
-  // Mostrar el banner de acceso administrativo ÚNICAMENTE a Admin y Auditor
-  if (adminBanner) {
-    if (storedRole === 'admin' || storedRole === 'auditor') {
-      adminBanner.classList.add('is-visible');
-      const infoText = adminBanner.querySelector('.admin-banner-info p');
-      if (infoText) {
-        infoText.textContent = storedRole === 'admin' 
-          ? 'Tienes permisos completos de edición CMS, gestión de usuarios y configuración.'
-          : 'Tienes permisos de supervisión, bitácora de auditoría y trazabilidad de seguridad.';
-      }
-    } else {
-      adminBanner.classList.remove('is-visible');
-    }
-  }
-
-  // Cargar métricas personales de actividad
-  loadUserActivityMetrics();
-
-  // Cerrar Sesión
-  if (btnLogout) {
-    btnLogout.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (confirm(`¿Estás seguro/a de que deseas cerrar la sesión de ${formattedName}?`)) {
-        localStorage.removeItem('creser-user-email');
-        localStorage.removeItem('creser-user-name');
-        localStorage.setItem('creser-user-role', 'usuario');
-        if (typeof recordAuditLog === 'function') {
-          recordAuditLog(`Cierre de sesión de ${formattedName} (${storedEmail})`);
-        }
-        window.location.href = 'login.html';
-      }
-    });
-  }
-}
-
-/**
- * ¿POR QUÉ?: Calcular y mostrar métricas de autocuidado registradas en el dispositivo.
- * ¿CÓMO?: Contando reflexiones en 'creser-journal-entries' y pausas en 'creser-weekly-pauses'.
- * ¿PARA QUÉ?: Motivar al usuario mostrando su progreso y constancia en la plataforma.
- */
-function loadUserActivityMetrics() {
-  const kpiReflections = document.getElementById('userKpiReflections');
-  const kpiPauses = document.getElementById('userKpiPauses');
-  const kpiStreak = document.getElementById('userKpiStreak');
-
-  const journalEntries = JSON.parse(localStorage.getItem('creser-journal-entries') || '[]');
-  const pausesCount = localStorage.getItem('creser-weekly-pauses') || '12';
-
-  if (kpiReflections) kpiReflections.textContent = journalEntries.length;
-  if (kpiPauses) kpiPauses.textContent = pausesCount;
-  if (kpiStreak) kpiStreak.textContent = '5 días';
-}
-
-/**
- * ¿POR QUÉ?: Gestionar los alternadores de Modo Oscuro y Texto Aumentado.
- * ¿CÓMO?: Sincronizando clases en el documento y guardando los estados en localStorage.
- * ¿PARA QUÉ?: Ofrecer una experiencia de lectura personalizada y accesible.
- */
-function initProfilePreferences() {
-  const darkSwitch = document.getElementById('profileDarkSwitch');
-  const textSwitch = document.getElementById('profileTextSwitch');
-
-  // 1. Modo Oscuro
-  if (darkSwitch) {
-    const isDark = localStorage.getItem('creser-dark') === '1' || document.body.classList.contains('dark');
-    darkSwitch.classList.toggle('on', isDark);
-    darkSwitch.setAttribute('aria-checked', isDark ? 'true' : 'false');
-
-    darkSwitch.addEventListener('click', () => {
-      const active = document.body.classList.toggle('dark');
-      darkSwitch.classList.toggle('on', active);
-      darkSwitch.setAttribute('aria-checked', active ? 'true' : 'false');
-      localStorage.setItem('creser-dark', active ? '1' : '0');
-    });
-  }
-
-  // 2. Texto Aumentado
-  if (textSwitch) {
-    const isLarge = localStorage.getItem('creser-large-text') === '1';
-    textSwitch.classList.toggle('on', isLarge);
-    textSwitch.setAttribute('aria-checked', isLarge ? 'true' : 'false');
-
-    textSwitch.addEventListener('click', () => {
-      const isCurrentlyLarge = document.documentElement.style.fontSize === '112.5%';
-      if (isCurrentlyLarge) {
-        document.documentElement.style.fontSize = '100%';
-        textSwitch.classList.remove('on');
-        textSwitch.setAttribute('aria-checked', 'false');
-        localStorage.setItem('creser-large-text', '0');
-      } else {
-        document.documentElement.style.fontSize = '112.5%';
-        textSwitch.classList.add('on');
-        textSwitch.setAttribute('aria-checked', 'true');
-        localStorage.setItem('creser-large-text', '1');
-      }
-    });
-  }
-}
-
-/**
- * ¿POR QUÉ?: Permitir la descarga y borrado selectivo de datos personales.
- * ¿CÓMO?: Extrayendo todas las llaves de CreSer del localStorage o reiniciándolas.
- * ¿PARA QUÉ?: Cumplir con los derechos de privacidad y soberanía de datos del usuario.
- */
-function initProfileDataManagement() {
-  const btnExportData = document.getElementById('profileExportDataBtn');
-  const btnClearData = document.getElementById('profileClearDataBtn');
-
-  // Exportar todos los datos personales en archivo JSON
-  if (btnExportData) {
-    btnExportData.addEventListener('click', () => {
-      const userPayload = {
-        plataforma: "CreSer Nicaragua",
-        usuario: localStorage.getItem('creser-user-name') || "Usuario",
-        email: localStorage.getItem('creser-user-email') || "invitado@creser.org",
-        rol: localStorage.getItem('creser-user-role') || "usuario",
-        fechaExportacion: new Date().toISOString(),
-        diarioEmocional: JSON.parse(localStorage.getItem('creser-journal-entries') || '[]'),
-        ultimoSueno: JSON.parse(localStorage.getItem('creser-last-sleep-log') || '{}'),
-        habitos: JSON.parse(localStorage.getItem('creser-wellness-habits') || '{}'),
-        pausasCompletadas: localStorage.getItem('creser-weekly-pauses') || '0'
-      };
-
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(userPayload, null, 2));
-      const downloadAnchor = document.createElement('a');
-      downloadAnchor.setAttribute("href", dataStr);
-      downloadAnchor.setAttribute("download", `Mis_Datos_CreSer_${new Date().toISOString().slice(0, 10)}.json`);
-      document.body.appendChild(downloadAnchor);
-      downloadAnchor.click();
-      downloadAnchor.remove();
-
-      alert("📥 Copia de seguridad de tus datos descargada con éxito.");
-    });
-  }
-
-  // Borrado de registros locales
-  if (btnClearData) {
-    btnClearData.addEventListener('click', () => {
-      if (confirm("⚠️ ¿Estás seguro/a de que deseas borrar tus registros locales (diario, métricas de pausas y hábitos)? Esta acción es irreversible.")) {
-        localStorage.removeItem('creser-journal-entries');
-        localStorage.removeItem('creser-weekly-pauses');
-        localStorage.removeItem('creser-last-sleep-log');
-        localStorage.removeItem('creser-wellness-habits');
-        
-        loadUserActivityMetrics();
-        alert("✨ Tus registros locales han sido eliminados de este navegador.");
-      }
-    });
-  }
-}

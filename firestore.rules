@@ -1,155 +1,32 @@
 rules_version = '2';
-
-/**
- * ============================================================================
- * CreSer — Reglas de Seguridad y Control de Acceso de Cloud Firestore (firestore.rules)
- * ============================================================================
- * 
- * ¿POR QUÉ?:
- * Proteger la integridad de los datos, resguardar la privacidad de los usuarios
- * y aplicar la matriz de roles RBAC (Administrador, Auditor, Usuario) en el backend.
- * 
- * ¿CÓMO?:
- * Utilizando el lenguaje declarativo de reglas de seguridad de Cloud Firestore v2,
- * validando tokens de autenticación (request.auth) y direcciones de correo autorizadas.
- * 
- * ¿PARA QUÉ?:
- * Evitar escrituras/borrados no autorizados, garantizar la confidencialidad de los diarios
- * y permitir la lectura pública o supervisada de recursos y bitácoras de auditoría.
- * ============================================================================
- */
-
 service cloud.firestore {
   match /databases/{database}/documents {
-    
-    /**
-     * Función: isAdmin()
-     * ¿POR QUÉ?: Verificar si quien realiza la petición tiene privilegios de superadministrador.
-     * ¿CÓMO?: Evaluando que el token de autenticación exista y coincida con los correos de administración.
-     * ¿PARA QUÉ?: Conceder permisos de borrado, gestión de catálogo y configuración general.
-     */
-    function isAdmin() {
-      return request.auth != null && (
-        request.auth.token.email == 'byoscarelieser@gmail.com' ||
-        request.auth.token.email == 'xolonica26@gmail.com'
-      );
-    }
+    function signedIn() { return request.auth != null; }
+    function isAdmin() { return signedIn() && (request.auth.token.email == 'byoscarelieser@gmail.com' || request.auth.token.email == 'xolonica26@gmail.com'); }
+    function isAuditorOrAdmin() { return isAdmin() || (signedIn() && (request.auth.token.email.matches('.*auditor.*') || request.auth.token.email == 'auditoria@creser.org')); }
+    function owns(email) { return signedIn() && request.auth.token.email == email; }
 
-    /**
-     * Función: isAuditorOrAdmin()
-     * ¿POR QUÉ?: Validar acceso de solo lectura o supervisión para roles de control.
-     * ¿CÓMO?: Comprobando si el usuario es Admin o si su correo corresponde a la entidad auditora.
-     * ¿PARA QUÉ?: Permitir la inspección de bitácoras de trazabilidad y eventos del sistema.
-     */
-    function isAuditorOrAdmin() {
-      return isAdmin() || (
-        request.auth != null && (
-          request.auth.token.email.matches('.*auditor.*') ||
-          request.auth.token.email == 'auditoria@creser.org'
-        )
-      );
-    }
-
-    /**
-     * Regla Global de Fallback
-     * ¿POR QUÉ?: Habilitar la disponibilidad en el entorno de desarrollo y prototipado.
-     * ¿CÓMO?: Permitiendo operaciones generales mientras se refinan las colecciones específicas.
-     * ¿PARA QUÉ?: Asegurar la sincronización continua sin bloqueos durante las pruebas en vivo.
-     */
-    match /{document=**} {
-      allow read, write: if true;
-    }
-
-    /**
-     * Colección: /users/{userId}
-     * ¿POR QUÉ?: Almacenar perfiles, configuraciones y asignación de roles de los miembros.
-     * ¿CÓMO?: Gestionando lectura y escritura vinculada al identificador del usuario.
-     * ¿PARA QUÉ?: Mantener el directorio de usuarios y la sincronización de estados.
-     */
     match /users/{userId} {
-      allow read: if true;
-      allow write: if true;
+      allow get: if owns(resource.data.email) || isAdmin();
+      allow create: if owns(request.resource.data.email);
+      allow update: if isAdmin() || (owns(resource.data.email) && owns(request.resource.data.email));
+      allow delete: if false;
     }
-
-    /**
-     * Colección: /mood_logs/{logId}
-     * ¿POR QUÉ?: Registrar estados emocionales diarios y niveles de bienestar.
-     * ¿CÓMO?: Permitiendo creación libre para el usuario y restringiendo el borrado al Administrador.
-     * ¿PARA QUÉ?: Alimentar los gráficos de progreso emocional y preservar el histórico.
-     */
     match /mood_logs/{logId} {
-      allow read: if true;
-      allow create, update: if true;
-      allow delete: if isAdmin();
+      allow get, list: if owns(resource.data.userEmail);
+      allow create: if owns(request.resource.data.userEmail);
+      allow update, delete: if owns(resource.data.userEmail) && owns(request.resource.data.userEmail);
     }
-
-    /**
-     * Colección: /journal_entries/{entryId}
-     * ¿POR QUÉ?: Guardar reflexiones personales, ejercicios de gratitud y notas privadas.
-     * ¿CÓMO?: Con permisos de creación/actualización para el autor y borrado restringido.
-     * ¿PARA QUÉ?: Resguardar la privacidad e intimidad del usuario en sus notas de autorreflexión.
-     */
     match /journal_entries/{entryId} {
-      allow read: if true;
-      allow create, update: if true;
-      allow delete: if isAdmin();
+      allow get, list: if owns(resource.data.userEmail);
+      allow create: if owns(request.resource.data.userEmail);
+      allow update, delete: if owns(resource.data.userEmail) && owns(request.resource.data.userEmail);
     }
-
-    /**
-     * Colección: /resources/{resId}
-     * ¿POR QUÉ?: Publicar artículos, guías de salud mental, infografías y podcasts.
-     * ¿CÓMO?: Permitiendo lectura pública y actualización de contenidos educativos.
-     * ¿PARA QUÉ?: Facilitar el acceso universal al material formativo de la plataforma.
-     */
-    match /resources/{resId} {
-      allow read: if true;
-      allow write: if true;
-    }
-
-    /**
-     * Colección: /emergency_contacts/{contactId}
-     * ¿POR QUÉ?: Proveer líneas telefónicas de crisis, centros de atención y contactos de ayuda.
-     * ¿CÓMO?: Catálogo de acceso inmediato para consulta pública 24/7.
-     * ¿PARA QUÉ?: Brindar asistencia y orientación en situaciones de riesgo o emergencia.
-     */
-    match /emergency_contacts/{contactId} {
-      allow read: if true;
-      allow write: if true;
-    }
-
-    /**
-     * Colección: /audit_logs/{logId}
-     * ¿POR QUÉ?: Mantener un registro inmutable de accesos, cambios de rol y eventos de seguridad.
-     * ¿CÓMO?: Permitiendo creación de logs y limitando su modificación/eliminación exclusivamente a Administradores.
-     * ¿PARA QUÉ?: Cumplir con los estándares de trazabilidad, transparencia y rendición de cuentas.
-     */
-    match /audit_logs/{logId} {
-      allow read: if true;
-      allow create: if true;
-      allow update, delete: if isAdmin();
-    }
-
-    /**
-     * Colección: /system/{configDoc}
-     * ¿POR QUÉ?: Centralizar banderas de configuración, versión de plataforma y parámetros globales.
-     * ¿CÓMO?: Almacenando pares clave-valor consumibles por la interfaz web.
-     * ¿PARA QUÉ?: Controlar el comportamiento dinámico de la plataforma sin desplegar nuevo código.
-     */
-    match /system/{configDoc} {
-      allow read: if true;
-      allow write: if true;
-    }
-
-    /**
-     * Colección: /community_posts/{postId}
-     * ¿POR QUÉ?: Fomentar la interacción social positiva y mensajes de apoyo mutuo.
-     * ¿CÓMO?: Permitir aportes a la comunidad con moderación administrativa para eliminación.
-     * ¿PARA QUÉ?: Crear una red de acompañamiento segura, libre de acoso y constructiva.
-     */
-    match /community_posts/{postId} {
-      allow read: if true;
-      allow create, update: if true;
-      allow delete: if isAdmin();
-    }
+    match /resources/{resourceId} { allow read: if true; allow write: if isAdmin(); }
+    match /emergency_contacts/{contactId} { allow read: if true; allow write: if isAdmin(); }
+    match /cms_content/{contentId} { allow read: if true; allow write: if isAdmin(); }
+    match /community_posts/{postId} { allow read: if true; allow create: if signedIn(); allow update, delete: if isAdmin(); }
+    match /audit_logs/{logId} { allow read: if isAuditorOrAdmin(); allow create: if signedIn() && owns(request.resource.data.usuario); allow update, delete: if false; }
+    match /system/{configDoc} { allow read: if true; allow write: if isAdmin(); }
   }
 }

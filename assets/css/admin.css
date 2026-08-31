@@ -357,3 +357,7 @@ body.dark .admin-card {
   color: var(--ink-primary);
   font-family: inherit;
 }
+
+.admin-report{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin:0 0 1.25rem;padding:1rem 1.1rem;border:1px solid rgba(59,130,246,.25);background:var(--primary-light);border-radius:14px}.admin-report strong{display:block;color:var(--ink-primary)}.admin-report p{margin:.15rem 0 0}.role-badge.auditor{background:rgba(245,158,11,.12);color:#b45309;border:1px solid rgba(245,158,11,.3)}button:disabled,select:disabled,input:disabled,textarea:disabled{cursor:not-allowed!important;opacity:.6}@media(max-width:620px){.admin-report{align-items:flex-start;flex-direction:column}.admin-report .btn{width:100%}}
+
+.cms-visual-controls{border:1px solid var(--line);border-radius:14px;padding:1rem;margin:0 0 1.5rem}.cms-visual-controls legend{font-weight:800;color:var(--ink-primary);padding:0 .4rem}.cms-visual-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:.8rem}.cms-visual-grid label{font-size:.84rem;font-weight:700;color:var(--ink-primary)}.cms-visual-grid input{display:block;width:100%;margin-top:.35rem}.cms-visual-grid input[type=color]{height:40px;padding:3px}.cms-wide{grid-column:1/-1}@media(max-width:620px){.cms-visual-grid{grid-template-columns:1fr}}

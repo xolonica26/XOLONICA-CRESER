@@ -1401,3 +1401,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+
+// Apply administrator-controlled visual identity across public pages.
+document.addEventListener('DOMContentLoaded', () => {
+  try {
+    const cms = JSON.parse(localStorage.getItem('creser-cms-content') || '{}');
+    if (cms.primaryColor) document.documentElement.style.setProperty('--primary', cms.primaryColor);
+    if (cms.secondaryColor) document.documentElement.style.setProperty('--secondary', cms.secondaryColor);
+    if (cms.heroImage && /^https:\/\//i.test(cms.heroImage)) {
+      const hero = document.querySelector('.hero, .home-hero, .wellness-hero');
+      if (hero) { hero.style.backgroundImage = `linear-gradient(rgba(255,255,255,.76), rgba(255,255,255,.76)), url("${cms.heroImage.replace(/"/g, '%22')}")`; hero.style.backgroundSize = 'cover'; hero.style.backgroundPosition = 'center'; }
+    }
+  } catch (_) {}
+});

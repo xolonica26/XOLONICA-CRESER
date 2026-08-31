@@ -1,0 +1,19 @@
+﻿/* CreSer global interface language. The selected language is shared by every page. */
+(() => {
+  'use strict';
+  const KEY = 'creser-language';
+  const dictionary = {
+    'Inicio':'Home','Bienestar':'Wellness','Recursos':'Resources','Herramientas':'Tools','Ayuda':'Help','Perfil':'Profile','Mi Perfil':'My profile','Acceder':'Sign in','Cerrar sesión':'Sign out','Iniciar sesión':'Sign in','Registro':'Sign up','Privacidad':'Privacy','Seguridad':'Security','Notificaciones':'Notifications','Preferencias':'Preferences','Sesiones':'Sessions','Cuenta':'Account','Información personal':'Personal information','Guardar cambios':'Save changes','Cancelar':'Cancel','Eliminar':'Delete','Editar':'Edit','Agregar':'Add','Buscar':'Search','Enviar':'Send','Volver':'Back','Ver más':'View more','Leer más':'Read more','Idioma':'Language','Español':'Spanish','Claro':'Light','Oscuro':'Dark','Automático':'System','Términos y Condiciones':'Terms and Conditions','Política de Privacidad':'Privacy Policy','Todos los derechos reservados.':'All rights reserved.','¿Cómo te sientes hoy?':'How are you feeling today?','Ver mi bienestar':'View my wellness','Registrar cómo me siento':'Record how I feel','Aún no has registrado cómo te sientes hoy.':'You have not recorded how you feel today.','No pudimos cargar tu estado actual.':'We could not load your current status.','Reintentar':'Try again','Foto de perfil':'Profile photo','Elegir foto':'Choose photo','Eliminar foto':'Remove photo','Nombre':'First name','Apellido':'Last name','Nombre visible':'Display name','Correo electrónico':'Email address','País':'Country','Ciudad':'City','Zona horaria':'Time zone','Contraseña':'Password','Gestionar acceso':'Manage access','Estado emocional':'Emotional status','Privado':'Private','Recordatorios de bienestar':'Wellness reminders','Actualizaciones de CreSer':'CreSer updates','Enviar notificación de prueba':'Send test notification','Apariencia':'Appearance','Dispositivos y sesiones':'Devices and sessions','Este dispositivo':'This device','Sesión actual':'Current session','Mi perfil':'My profile','Tu espacio, a tu manera':'Your space, your way','Tu estado emocional nunca se comparte en tu perfil.':'Your emotional status is never shared on your profile.','Elige los avisos que deseas recibir.':'Choose the alerts you want to receive.','Personaliza cómo se ve CreSer.':'Customize how CreSer looks.','Finaliza la sesión de este dispositivo.':'End the session on this device.','Página no encontrada':'Page not found','Centro de Bienestar Emocional':'Emotional Wellness Center','Panel de Control':'Control Panel','Panel Administrativo':'Administration Panel','Cerrar':'Close','Abrir menú de navegación':'Open navigation menu'
+  };
+  const translateText = root => {
+    if ((localStorage.getItem(KEY) || 'es') !== 'en') return;
+    const walker = document.createTreeWalker(root || document.body, NodeFilter.SHOW_TEXT);
+    const nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(node => { const value = node.nodeValue; const trimmed = value.trim(); if (dictionary[trimmed]) node.nodeValue = value.replace(trimmed, dictionary[trimmed]); });
+    document.querySelectorAll('[placeholder]').forEach(el => { if (dictionary[el.placeholder]) el.placeholder = dictionary[el.placeholder]; });
+    document.querySelectorAll('[aria-label]').forEach(el => { if (dictionary[el.getAttribute('aria-label')]) el.setAttribute('aria-label', dictionary[el.getAttribute('aria-label')]); });
+  };
+  const apply = () => { const locale = localStorage.getItem(KEY) || 'es'; document.documentElement.lang = locale; if (locale === 'en') translateText(); };
+  window.CreSerI18n = { apply, language: () => localStorage.getItem(KEY) || 'es', set: language => { localStorage.setItem(KEY, language); apply(); } };
+  document.addEventListener('DOMContentLoaded', apply);
+})();

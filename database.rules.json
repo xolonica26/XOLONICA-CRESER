@@ -1,31 +1,31 @@
 {
   "rules": {
-    ".read": true,
-    ".write": true,
+    ".read": false,
+    ".write": false,
     "users": {
-      ".indexOn": ["email", "role"]
+      "$userId": {
+        ".read": "auth != null && (data.child('email').val() === auth.token.email || auth.token.email === 'byoscarelieser@gmail.com' || auth.token.email === 'xolonica26@gmail.com')",
+        ".write": "auth != null && (newData.child('email').val() === auth.token.email || auth.token.email === 'byoscarelieser@gmail.com' || auth.token.email === 'xolonica26@gmail.com')"
+      }
     },
     "mood_logs": {
-      ".indexOn": ["userEmail", "fecha"]
+      "$user": {
+        "$logId": {
+          ".read": "auth != null && data.child('userEmail').val() === auth.token.email",
+          ".write": "auth != null && newData.child('userEmail').val() === auth.token.email"
+        }
+      }
     },
     "journal_entries": {
-      ".indexOn": ["userEmail", "fecha"]
+      "$user": {
+        "$entryId": {
+          ".read": "auth != null && data.child('userEmail').val() === auth.token.email",
+          ".write": "auth != null && newData.child('userEmail').val() === auth.token.email"
+        }
+      }
     },
-    "resources": {
-      ".indexOn": ["categoria", "titulo"]
-    },
-    "emergency_contacts": {
-      ".indexOn": ["tipo", "institucion"]
-    },
-    "audit_logs": {
-      ".indexOn": ["usuario", "timestamp", "rol"]
-    },
-    "cms_content": {
-      ".read": true,
-      ".write": true
-    },
-    "community_posts": {
-      ".indexOn": ["timestamp", "categoria"]
-    }
+    "resources": { ".read": true, ".write": "auth != null && (auth.token.email === 'byoscarelieser@gmail.com' || auth.token.email === 'xolonica26@gmail.com')" },
+    "emergency_contacts": { ".read": true, ".write": "auth != null && (auth.token.email === 'byoscarelieser@gmail.com' || auth.token.email === 'xolonica26@gmail.com')" },
+    "cms_content": { ".read": true, ".write": "auth != null && (auth.token.email === 'byoscarelieser@gmail.com' || auth.token.email === 'xolonica26@gmail.com')" }
   }
 }

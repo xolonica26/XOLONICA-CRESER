@@ -59,7 +59,7 @@ function initUserProfile() {
   // Mostrar el banner de acceso administrativo ÚNICAMENTE a Admin y Auditor
   if (adminBanner) {
     if (storedRole === 'admin' || storedRole === 'auditor') {
-      adminBanner.style.display = 'flex';
+      adminBanner.classList.add('is-visible');
       const infoText = adminBanner.querySelector('.admin-banner-info p');
       if (infoText) {
         infoText.textContent = storedRole === 'admin' 
@@ -67,7 +67,7 @@ function initUserProfile() {
           : 'Tienes permisos de supervisión, bitácora de auditoría y trazabilidad de seguridad.';
       }
     } else {
-      adminBanner.style.display = 'none';
+      adminBanner.classList.remove('is-visible');
     }
   }
 

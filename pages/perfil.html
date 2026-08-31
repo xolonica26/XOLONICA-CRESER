@@ -114,7 +114,7 @@
       </section>
 
       <!-- 2. Banner VIP de Acceso al Panel Administrativo (Visible solo para Admin y Auditor) -->
-      <section class="admin-access-banner" id="profileAdminBanner" style="display:none;">
+      <section class="admin-access-banner" id="profileAdminBanner">
         <div class="admin-banner-text">
           <div class="admin-banner-icon">👑</div>
           <div class="admin-banner-info">
@@ -145,7 +145,7 @@
                   <strong>Modo Oscuro</strong>
                   <span>Reduce la fatiga visual nocturna</span>
                 </div>
-                <div id="profileDarkSwitch" class="profile-switch" role="switch" aria-checked="false" tabindex="0"></div>
+                <div id="profileDarkSwitch" class="profile-switch" role="switch" aria-checked="false" tabindex="0" aria-label="Activar modo oscuro" title="Modo Oscuro"></div>
               </div>
 
               <!-- Texto Aumentado -->
@@ -154,7 +154,7 @@
                   <strong>Texto Aumentado</strong>
                   <span>Mejora la legibilidad del contenido</span>
                 </div>
-                <div id="profileTextSwitch" class="profile-switch" role="switch" aria-checked="false" tabindex="0"></div>
+                <div id="profileTextSwitch" class="profile-switch" role="switch" aria-checked="false" tabindex="0" aria-label="Activar texto aumentado" title="Texto Aumentado"></div>
               </div>
             </div>
           </div>
@@ -177,7 +177,7 @@
                 <div class="profile-kpi-box-num" id="userKpiReflections">0</div>
                 <div class="profile-kpi-box-lbl">Reflexiones</div>
               </div>
-              <div class="profile-kpi-box" style="grid-column: span 2;">
+              <div class="profile-kpi-box profile-kpi-span-full">
                 <div class="profile-kpi-box-num" id="userKpiPauses">12</div>
                 <div class="profile-kpi-box-lbl">Pausas y Micro-Herramientas Completadas</div>
               </div>
@@ -192,9 +192,9 @@
               <div class="profile-card-icon">🔒</div>
               <h3 class="profile-card-title">Control de Privacidad</h3>
             </div>
-            <p class="small text-muted" style="margin-bottom:1.25rem;">Tus reflexiones y registros se almacenan de forma local y confidencial en tu dispositivo.</p>
+            <p class="small text-muted profile-privacy-note">Tus reflexiones y registros se almacenan de forma local y confidencial en tu dispositivo.</p>
             
-            <div style="display:flex; flex-direction:column; gap:0.75rem;">
+            <div class="profile-action-stack">
               <button class="profile-action-btn" id="profileExportDataBtn">
                 <span>📥 Descargar Mis Datos (JSON)</span>
               </button>

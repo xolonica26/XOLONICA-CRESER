@@ -1,5 +1,8 @@
 <!doctype html>
-<!-- Declaración de documento HTML5 -->
+<!-- 
+  CreSer — Ayuda Profesional, Directorio de Especialistas y Soporte Humano
+  Documento HTML5 de Alta Fidelidad y Accesibilidad
+-->
 <html lang="es">
 <head>
   <!-- Codificación universal de caracteres -->
@@ -7,11 +10,12 @@
   <!-- Adaptabilidad responsive -->
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <!-- Título de la página de Ayuda Profesional -->
-  <title>CreSer — Ayuda Profesional | Directorio y Asistencia</title>
+  <title>CreSer — Ayuda Profesional | Directorio de Especialistas y Locales</title>
   <!-- Descripción -->
-  <meta name="description" content="Directorio de profesionales verificados, centros de atención y líneas de ayuda de emergencia psicológica."/>
-  <!-- Enlace a estilos CSS -->
+  <meta name="description" content="Directorio verificado de psicólogos, psiquiatras, centros clínicos y líneas de ayuda de emergencia psicológica en Nicaragua."/>
+  <!-- Enlace a estilos CSS principales y específicos de Ayuda -->
   <link rel="stylesheet" href="../assets/css/main.css?v=3.2">
+  <link rel="stylesheet" href="../assets/css/ayuda.css?v=1.0">
 </head>
 <body>
 
@@ -81,67 +85,219 @@
   </nav>
 
   <!-- =========================================================================
-       Contenido Central: Orientación y Ayuda Profesional
+       Contenido Central: Orientación y Directorio Profesional
        ========================================================================= -->
   <div class="app">
     <main>
       
-      <!-- Título de cabecera -->
-      <div class="section-title">
-        <div>
-          <h2>Orientación y Ayuda Profesional</h2>
-          <p class="small">Directorio verificado y servicios de soporte humano especializado</p>
+      <!-- 1. Hero Premium de Orientación y Confianza -->
+      <section class="ayuda-hero">
+        <div class="ayuda-hero-content">
+          <div class="ayuda-hero-badge">
+            <span>🛡️</span> Red Nacional de Salud Mental & Bienestar
+          </div>
+          <h1 class="ayuda-hero-title">Encuentra el Acompañamiento Profesional Adecuado</h1>
+          <p class="ayuda-hero-subtitle">
+            Conecta con psicólogos colegiados, médicos psiquiatras y centros clínicos verificados en Nicaragua y en línea. Solicita tu cita, ubica consultorios en el mapa o contacta directamente por WhatsApp.
+          </p>
+          <div class="ayuda-trust-pills">
+            <span class="trust-pill"><span>🔒</span> 100% Confidencial</span>
+            <span class="trust-pill"><span>🩺</span> Especialistas Verificados</span>
+            <span class="trust-pill"><span>📍</span> Atención Presencial y Online</span>
+            <span class="trust-pill"><span>⚡</span> Citas y Respuesta Rápida</span>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Cuadrícula con las opciones de asistencia -->
-      <div class="grid">
+      <!-- 2. Hub de Acceso Rápido / Servicios de Ayuda -->
+      <div class="service-hub-grid">
         <!-- Servicio 1: Directorio -->
-        <div class="card">
-          <div class="icon-badge-sm">🧑‍⚕️</div>
-          <h3>Directorio de Profesionales</h3>
-          <p>Red de psicólogos, terapeutas y centros de salud mental verificados con atención presencial y en línea.</p>
-          <button class="primary mt-2">Consultar Directorio</button>
+        <div class="service-card-premium featured">
+          <div>
+            <div class="service-card-icon">🧑‍⚕️</div>
+            <h3>Directorio de Profesionales y Locales</h3>
+            <p>Explora terapeutas, psiquiatras y clínicas de atención presencial y virtual con horarios, fotos, direcciones y mapa GPS.</p>
+          </div>
+          <button class="primary mt-2" data-action="scroll-directory">
+            <span>🔍</span> Consultar Directorio
+          </button>
         </div>
 
-        <!-- Servicio 2: Líneas oficiales -->
-        <div class="card">
-          <div class="icon-badge-sm">📞</div>
-          <h3>Líneas Oficiales de Apoyo</h3>
-          <p>Canales telefónicos y de chat 24/7 gratuitos y confidenciales brindados por instituciones de salud pública.</p>
-          <button class="secondary mt-2" data-modal="legal">Ver Teléfonos de Urgencia</button>
+        <!-- Servicio 2: Líneas de emergencia -->
+        <div class="service-card-premium">
+          <div>
+            <div class="service-card-icon">📞</div>
+            <h3>Líneas de Crisis y Apoyo 24/7</h3>
+            <p>Canales telefónicos y de asistencia de primeros auxilios psicológicos confidenciales y gratuitos.</p>
+          </div>
+          <a href="#lineasEmergencia" class="secondary mt-2 text-center btn-service-link">
+            Ver Teléfonos de Urgencia
+          </a>
         </div>
 
-        <!-- Servicio 3: Preguntas frecuentes -->
-        <div class="card">
-          <div class="icon-badge-sm">❓</div>
-          <h3>Centro de Preguntas Frecuentes</h3>
-          <p>Respuestas claras a dudas comunes sobre cuándo acudir a terapia y cómo prepararse para una primera sesión.</p>
-          <button class="secondary mt-2" data-modal="terms">Revisar Guía</button>
+        <!-- Servicio 3: Triaje / Orientador Rápido -->
+        <div class="service-card-premium">
+          <div>
+            <div class="service-card-icon">🧭</div>
+            <h3>Orientador de Especialidad</h3>
+            <p>¿No sabes a quién acudir? Responde 3 breves preguntas para recomendarte el profesional o centro ideal.</p>
+          </div>
+          <button class="secondary mt-2" onclick="openAyudaModal('triageModal')">
+            Iniciar Triaje Rápido
+          </button>
         </div>
 
-        <!-- Servicio 4: Agenda -->
-        <div class="card">
-          <div class="icon-badge-sm">🗓️</div>
-          <h3>Agenda de Sesiones</h3>
-          <p>Módulo para sincronizar tus citas y recibir recordatorios de tus sesiones de apoyo.</p>
-          <span class="badge mt-2">Módulo en Integración</span>
+        <!-- Servicio 4: Preguntas Frecuentes -->
+        <div class="service-card-premium">
+          <div>
+            <div class="service-card-icon">❓</div>
+            <h3>Guía de la Primera Sesión</h3>
+            <p>Conoce cómo prepararte, qué esperar de tu terapeuta, tarifas y criterios de confidencialidad.</p>
+          </div>
+          <a href="#faqSection" class="secondary mt-2 text-center btn-service-link">
+            Revisar Preguntas Frecuentes
+          </a>
+        </div>
       </div>
 
-      <!-- Directorio de Contactos de Emergencia y Soporte -->
-      <div class="card mt-4">
-        <h3 class="mb-2">📞 Directorio Oficial de Ayuda y Emergencias (Nicaragua)</h3>
-        <p class="card-desc mb-3">Líneas telefónicas de asistencia psicológica y primeros auxilios emocionales.</p>
+      <!-- 3. Sección Central del Directorio de Profesionales y Locales -->
+      <section id="directorioSection" class="directory-section">
+        <div class="directory-header-wrap">
+          <div class="directory-header-info">
+            <h2><span>🧑‍⚕️</span> Directorio de Especialistas y Centros Clínicos</h2>
+            <p>Filtra por especialidad, ciudad o modalidad para encontrar la atención que necesitas.</p>
+          </div>
+          <div id="dirResultsCount" class="directory-stats-badge">
+            Cargando directorio...
+          </div>
+        </div>
+
+        <!-- Barra de Control, Búsqueda y Filtros -->
+        <div class="directory-controls-bar">
+          <div class="directory-search-row">
+            <!-- Entrada de Búsqueda -->
+            <div class="search-input-group">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="dirSearchInput" placeholder="Buscar por nombre, especialidad (ansiedad, TDAH), clínica o dirección..." autocomplete="off">
+            </div>
+
+            <!-- Selector de Ciudad / Departamento -->
+            <select id="dirCitySelect" class="filter-select" aria-label="Filtrar por ciudad">
+              <option value="todas">📍 Todas las Ciudades</option>
+              <option value="Managua">Managua</option>
+              <option value="León">León</option>
+              <option value="Matagalpa">Matagalpa</option>
+              <option value="Estelí">Estelí</option>
+            </select>
+          </div>
+
+          <!-- Píldoras de Categoría -->
+          <div class="category-pills-row">
+            <button type="button" class="cat-pill active" data-cat="todos">✨ Todos</button>
+            <button type="button" class="cat-pill" data-cat="psicologia">🧠 Psicólogos & Terapeutas</button>
+            <button type="button" class="cat-pill" data-cat="psiquiatria">🩺 Psiquiatras & Médicos</button>
+            <button type="button" class="cat-pill" data-cat="centro">🏥 Centros Clínicos & Locales</button>
+            <button type="button" class="cat-pill" data-cat="online">💻 Atención Online</button>
+            <button type="button" class="cat-pill" data-cat="presencial">📍 Atención Presencial</button>
+          </div>
+        </div>
+
+        <!-- Rejilla Dinámica de Tarjetas de Profesionales -->
+        <div id="directoryCardsGrid" class="directory-cards-grid">
+          <!-- Renderizado dinámico desde ayuda.js -->
+        </div>
+      </section>
+
+      <!-- 4. Directorio de Contactos de Emergencia y Soporte Oficial (Nicaragua) -->
+      <section id="lineasEmergencia" class="card mt-4">
+        <div class="emergency-header">
+          <div>
+            <h3 class="emergency-title">📞 Directorio Oficial de Ayuda y Emergencias (Nicaragua)</h3>
+            <p class="card-desc">Líneas telefónicas directas de asistencia psicológica, rescate y primeros auxilios emocionales.</p>
+          </div>
+          <span class="badge badge-emergency-urgent">
+            🚨 Asistencia Inmediata
+          </span>
+        </div>
+
         <div id="helpDirectoryList" class="audit-table-wrap">
           <!-- Renderizado dinámico desde app.js / CMS -->
         </div>
-      </div>
 
-      <!-- Cuadro de aviso importante sobre emergencias -->
+        <div class="emergency-quick-grid">
+          <a href="tel:118" class="emergency-quick-card emergency-card-blue">
+            <div class="emergency-card-icon">🚑</div>
+            <strong class="emergency-card-name">Línea 118</strong>
+            <p class="small emergency-card-desc">Emergencias Nacionales 24/7</p>
+          </a>
+          <a href="tel:102" class="emergency-quick-card emergency-card-green">
+            <div class="emergency-card-icon">🏥</div>
+            <strong class="emergency-card-name">Línea 102</strong>
+            <p class="small emergency-card-desc">Cruz Roja Nicaragüense</p>
+          </a>
+          <a href="tel:+50522703344" class="emergency-quick-card emergency-card-purple">
+            <div class="emergency-card-icon">🛟</div>
+            <strong class="emergency-card-name">Línea CreSer</strong>
+            <p class="small emergency-card-desc">Orientación Psicológica</p>
+          </a>
+        </div>
+      </section>
+
+      <!-- 5. Cuadro de Aviso de Seguridad y Emergencias -->
       <div class="card card-alert-blue mt-4">
         <h4 class="text-primary-blue mb-1">Información de Seguridad y Emergencias</h4>
-        <p class="small">CreSer es una plataforma preventiva. Ante ideaciones de riesgo o crisis agudas, contacta inmediatamente los servicios de emergencias médicas de tu localidad o acude al centro hospitalario más cercano.</p>
+        <p class="small">CreSer es una plataforma preventiva y de vinculación. Ante ideaciones de riesgo inminente o crisis agudas, contacta inmediatamente los servicios de emergencias médicas de tu localidad o acude al centro hospitalario más cercano.</p>
       </div>
+
+      <!-- 6. Centro de Preguntas Frecuentes (FAQ Accordion) -->
+      <section id="faqSection" class="ayuda-faq-container">
+        <div class="section-title">
+          <div>
+            <h2>Preguntas Frecuentes sobre Terapia y Atención</h2>
+            <p class="small">Todo lo que necesitas saber antes de dar el primer paso hacia tu bienestar</p>
+          </div>
+        </div>
+
+        <div class="faq-item-premium">
+          <button class="faq-trigger" type="button">
+            <span>¿Cómo sé si debo consultar a un psicólogo o a un psiquiatra?</span>
+            <span class="faq-icon-toggle">▼</span>
+          </button>
+          <div class="faq-content-pane">
+            <p>El <strong>psicólogo</strong> realiza psicoterapia mediante diálogo, técnicas cognitivas y emocionales para el manejo de la ansiedad, el duelo, relaciones y hábitos. El <strong>médico psiquiatra</strong> evalúa bases neurobiológicas y puede prescribir tratamientos farmacológicos si la intensidad de los síntomas lo requiere. Ambos profesionales suelen trabajar de forma complementaria.</p>
+          </div>
+        </div>
+
+        <div class="faq-item-premium">
+          <button class="faq-trigger" type="button">
+            <span>¿Es completamente confidencial la información de mis citas?</span>
+            <span class="faq-icon-toggle">▼</span>
+          </button>
+          <div class="faq-content-pane">
+            <p>Absolutamente. Todos los profesionales listados en CreSer están sujetos al secreto profesional y al código de ética deontológico. Tus datos de reserva están protegidos y solo se comparten con el especialista seleccionado para la coordinación de la sesión.</p>
+          </div>
+        </div>
+
+        <div class="faq-item-premium">
+          <button class="faq-trigger" type="button">
+            <span>¿Cómo funcionan las sesiones en línea (Telepsicología)?</span>
+            <span class="faq-icon-toggle">▼</span>
+          </button>
+          <div class="faq-content-pane">
+            <p>Se realizan mediante videollamada cifrada de alta calidad (Google Meet / Zoom). Solo necesitas un espacio privado, auriculares y conexión a internet estable. Los estudios demuestran que la efectividad es equivalente a la terapia presencial para la mayoría de los motivos de consulta.</p>
+          </div>
+        </div>
+
+        <div class="faq-item-premium">
+          <button class="faq-trigger" type="button">
+            <span>¿Qué sucede si necesito cancelar o reprogramar una cita?</span>
+            <span class="faq-icon-toggle">▼</span>
+          </button>
+          <div class="faq-content-pane">
+            <p>Puedes comunicarte directamente con el profesional o centro mediante el número o WhatsApp facilitado en la confirmación con al menos 24 horas de antelación para reagendar sin ningún inconveniente.</p>
+          </div>
+        </div>
+      </section>
 
     </main>
 
@@ -160,7 +316,180 @@
     </footer>
   </div>
 
-  <!-- Modal legal -->
+  <!-- =========================================================================
+       MODALES INTERACTIVOS
+       ========================================================================= -->
+
+  <!-- Modal 1: Solicitud de Cita Médica / Psicológica -->
+  <div id="appointmentModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="appointmentModalTitle">
+    <div class="ayuda-modal-dialog">
+      <div class="modal-header-banner">
+        <div>
+          <h3 id="appointmentModalTitle">📅 Solicitar Cita de Atención</h3>
+          <p>Coordina tu sesión de orientación y valoración profesional</p>
+        </div>
+        <button class="ghost" onclick="closeAyudaModal('appointmentModal')" aria-label="Cerrar modal">✕</button>
+      </div>
+
+      <div class="ayuda-modal-body">
+        <!-- Resumen del Profesional o Centro Seleccionado -->
+        <div id="modalAppointmentTargetSummary" class="modal-target-summary">
+          <!-- Poblado dinámicamente desde ayuda.js -->
+        </div>
+
+        <form id="appointmentForm">
+          <!-- Modalidad de la sesión -->
+          <div class="form-section-title"><span>🌐</span> Modalidad de Consulta</div>
+          <div class="appointment-modality-toggle">
+            <button type="button" class="modality-opt-btn active" data-modality="Presencial">
+              📍 Presencial en Consultorio
+            </button>
+            <button type="button" class="modality-opt-btn" data-modality="Online">
+              💻 Sesión Virtual (Video)
+            </button>
+          </div>
+
+          <!-- Selección de Fecha y Horario -->
+          <div class="form-section-title"><span>🕒</span> Fecha y Horario Preferido</div>
+          <div class="modal-grid-2col">
+            <div>
+              <label for="appointmentDate" class="small form-field-label">Fecha deseada:</label>
+              <input type="date" id="appointmentDate" required class="form-field-input">
+            </div>
+            <div>
+              <label class="small form-field-label">Hora disponible:</label>
+              <div class="time-slots-grid no-margin">
+                <button type="button" class="time-slot-pill active" data-time="09:00 AM">09:00 AM</button>
+                <button type="button" class="time-slot-pill" data-time="11:00 AM">11:00 AM</button>
+                <button type="button" class="time-slot-pill" data-time="02:30 PM">02:30 PM</button>
+                <button type="button" class="time-slot-pill" data-time="04:30 PM">04:30 PM</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Datos del Paciente -->
+          <div class="form-section-title"><span>👤</span> Tus Datos de Contacto</div>
+          <div class="mb-3">
+            <label for="patientName" class="small form-field-label">Nombre Completo:</label>
+            <input type="text" id="patientName" required placeholder="Ej: Marcela Navarrete" class="form-field-input">
+          </div>
+
+          <div class="modal-grid-2col">
+            <div>
+              <label for="patientPhone" class="small form-field-label">Teléfono / WhatsApp:</label>
+              <input type="tel" id="patientPhone" required placeholder="+505 8888-0000" class="form-field-input">
+            </div>
+            <div>
+              <label for="patientEmail" class="small form-field-label">Correo Electrónico (opcional):</label>
+              <input type="email" id="patientEmail" placeholder="ejemplo@correo.com" class="form-field-input">
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="appointmentReason" class="small form-field-label">Motivo de la consulta (confidencial):</label>
+            <textarea id="appointmentReason" rows="2" placeholder="Describe brevemente tus motivos o inquietudes principales (ej: manejo de ansiedad, dificultades de pareja, estrés laboral)..." class="form-field-input form-field-textarea"></textarea>
+          </div>
+
+          <div class="modal-footer-actions">
+            <button type="button" class="ghost" onclick="closeAyudaModal('appointmentModal')">Cancelar</button>
+            <button type="submit" class="primary btn-submit-appointment">
+              <span>✅</span> Confirmar y Solicitar Cita
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Mapa Interactivo y Ubicación GPS -->
+  <div id="mapModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="mapModalTitle">
+    <div class="ayuda-modal-dialog">
+      <div class="modal-header-banner">
+        <div>
+          <h3 id="mapModalTitle">📍 Ubicación del Consultorio</h3>
+          <p id="mapModalAddress">Dirección y coordenadas del centro</p>
+        </div>
+        <button class="ghost" onclick="closeAyudaModal('mapModal')" aria-label="Cerrar modal">✕</button>
+      </div>
+
+      <div class="ayuda-modal-body-static">
+        <!-- Contenedor del Mapa con Iframe responsivo -->
+        <div class="map-embed-container">
+          <iframe id="mapModalIframe" src="about:blank" title="Mapa de ubicación" loading="lazy"></iframe>
+        </div>
+
+        <p id="mapModalPhone" class="small mb-3 map-modal-phone-text"></p>
+
+        <div class="map-directions-bar">
+          <a id="mapGmapsLink" href="#" target="_blank" rel="noopener noreferrer" class="primary map-action-btn">
+            <span>🗺️</span> Abrir en Google Maps
+          </a>
+          <a id="mapWazeLink" href="#" target="_blank" rel="noopener noreferrer" class="secondary map-action-btn">
+            <span>🚙</span> Navegar con Waze
+          </a>
+          <button type="button" class="ghost map-copy-btn" onclick="copyAddressToClipboard(document.getElementById('mapModalAddress').innerText)">
+            <span>📋</span> Copiar Dirección
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Triaje Rápido Orientativo -->
+  <div id="triageModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="triageModalTitle">
+    <div class="ayuda-modal-dialog">
+      <div class="modal-header-banner">
+        <div>
+          <h3 id="triageModalTitle">🧭 Triaje Rápido Orientativo</h3>
+          <p>Te ayudamos a elegir el profesional adecuado para tu situación</p>
+        </div>
+        <button class="ghost" onclick="closeAyudaModal('triageModal')" aria-label="Cerrar modal">✕</button>
+      </div>
+
+      <div class="ayuda-modal-body-static">
+        <form id="triageQuizForm">
+          <div class="mb-3">
+            <label class="form-section-title">1. ¿Cuál es tu principal motivo de búsqueda?</label>
+            <div class="triage-options-group">
+              <label class="triage-option-label">
+                <input type="radio" name="triageReason" value="ansiedad" checked> Ansiedad, estrés, ataques de pánico o preocupación constante
+              </label>
+              <label class="triage-option-label">
+                <input type="radio" name="triageReason" value="depresion"> Tristeza profunda, falta de motivación o desánimo prolongado
+              </label>
+              <label class="triage-option-label">
+                <input type="radio" name="triageReason" value="pareja"> Dificultades de pareja, comunicación o conflictos familiares
+              </label>
+              <label class="triage-option-label">
+                <input type="radio" name="triageReason" value="medico"> Sospecha de condición médica/psiquiátrica o requerimiento de medicación
+              </label>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-section-title">2. ¿Para quién es la atención?</label>
+            <div class="triage-options-group">
+              <label class="triage-option-label">
+                <input type="radio" name="triageAge" value="adulto" checked> Para mí (Adulto o joven)
+              </label>
+              <label class="triage-option-label">
+                <input type="radio" name="triageAge" value="infantil"> Para mi hijo/a (Niño o adolescente)
+              </label>
+            </div>
+          </div>
+
+          <div class="modal-footer-actions">
+            <button type="button" class="ghost" onclick="closeAyudaModal('triageModal')">Cerrar</button>
+            <button type="submit" class="primary">
+              <span>🔍</span> Ver Especialistas Recomendados
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4: Información Legal General (Reutilizable) -->
   <div id="infoModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-dialog">
       <div class="modal-header">
@@ -176,7 +505,9 @@
 
   <!-- Inclusión de la configuración y SDK de Google Firebase -->
   <script type="module" src="../assets/js/firebase-config.js?v=1.0"></script>
-  <!-- Lógica JavaScript -->
+  <!-- Lógica JavaScript Principal -->
   <script src="../assets/js/app.js?v=3.2"></script>
+  <!-- Lógica Interactiva Específica de Ayuda y Directorio -->
+  <script src="../assets/js/ayuda.js?v=1.0"></script>
 </body>
 </html>
